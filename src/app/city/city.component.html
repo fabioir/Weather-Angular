@@ -1,7 +1,8 @@
 <p>
  This is the current weather data in {{cityShown.name}}:
 </p>
-
+<button (click)="saveCity()" mat-fab>Save city to favourites</button>
+<div  align="center">
 <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="parameter">
                 <mat-header-cell *matHeaderCellDef> Parameter </mat-header-cell>
@@ -16,6 +17,5 @@
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </table>
-
+</div>
 <br>
-<button (click)="saveCity()" mat-fab>Save city to favourites</button>
