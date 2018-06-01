@@ -52,4 +52,5 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 /*
 This component picks the saved cities from the SavedCitiesService and displays the links to city/cod
+
 */ 
