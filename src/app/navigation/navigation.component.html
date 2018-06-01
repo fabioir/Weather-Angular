@@ -1,0 +1,5 @@
+<li *ngFor="let savedCity of savedCities">
+  <a routerLink="/city/{{savedCity.id}}/{{savedCity.name}}">
+    <span class="badge">{{savedCity.name}}</span>
+  </a>
+</li> 
