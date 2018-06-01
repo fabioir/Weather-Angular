@@ -10,7 +10,9 @@ import { AppRoutingModule } from './/app-routing.module';
 import { CityComponent } from './city/city.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
+import { MaterialModule } from './material/material.module';
 //import { CookieService } from 'ngx-cookie-service';
+import 'hammerjs';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { NavigationComponent } from './navigation/navigation.component';
   ],
   imports: [
     BrowserModule,
+    MaterialModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule

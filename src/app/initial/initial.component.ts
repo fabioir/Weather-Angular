@@ -92,10 +92,10 @@ export class InitialComponent implements OnInit {
     //This function shows messages about the search results
 
     if(!this.found){
-      console.log("We've found a city! ");
-      //console.log('The city searched has not been found');
+      console.log('The city searched has not been found');
+      
     }else{
-      //console.log('The search was successful');
+      console.log('The search was successful');
     }
   }
 

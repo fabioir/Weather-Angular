@@ -1,7 +1,21 @@
 <p>
- This is the current weather description in the city you have searched:
+ This is the current weather data in {{cityShown.name}}:
 </p>
-{{valuesDisplayed}}
+
+<table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="parameter">
+                <mat-header-cell *matHeaderCellDef> Parameter </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.parameter}} </mat-cell>
+              </ng-container>
+          
+              <ng-container matColumnDef="value">
+                <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.value}}  </mat-cell>
+              </ng-container>
+              
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</table>
 
 <br>
-<button (click)="saveCity()">Save city to favourites</button>
+<button (click)="saveCity()" mat-fab>Save city to favourites</button>

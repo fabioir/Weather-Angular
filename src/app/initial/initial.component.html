@@ -1,21 +1,22 @@
-<p>{{weather}}</p>
-
+<div align="center">
 <div>
 
   <h2>Look for a city: {{ city | uppercase }}</h2>
   
   <div>
-    <label>search:
+    
       <input (keydown.enter) = "refresh()" [(ngModel)]="city" placeholder="Search city"/>
-    </label>
+    
   </div>
 
 </div>
 
 
-<button (click)="refresh()">Refresh!</button>
+<button (click)="refresh()" mat-raised-button>Search with Weather-Angular!</button>
 
 
-<a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}">
+<a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}" mat-button>
   <span class="badge">{{cityMatch.name}}</span>
 </a>
+
+</div>

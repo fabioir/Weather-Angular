@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { InitialComponent } from './initial/initial.component';
 import { CityComponent } from './city/city.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 
 const routes: Routes = [
   { path: '', redirectTo: '/initial', pathMatch: 'full' },
@@ -11,7 +13,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ 
+    RouterModule.forRoot(routes),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule
+  ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

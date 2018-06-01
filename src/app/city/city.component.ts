@@ -7,6 +7,11 @@ import { Location } from '@angular/common';
 
 import { SavedCitiesService } from '../saved-cities.service';
 
+import {DataSource} from '@angular/cdk/collections';
+import {MatTableDataSource} from '@angular/material';
+
+import { Data } from './data'
+
 @Component({
   selector: 'app-city',
   templateUrl: './city.component.html',
@@ -17,7 +22,9 @@ export class CityComponent implements OnInit, OnChanges {
   cityShown: SavedCity;
   weatherNow : WeatherNow;
   rx : Object;
-  valuesDisplayed : string = '';
+  valuesDisplayed : Array<Data>;
+  dataSource;
+  displayedColumns = ['parameter','value'];
 
   constructor(
     private route: ActivatedRoute,
@@ -57,6 +64,7 @@ export class CityComponent implements OnInit, OnChanges {
 
       //Display the values
       this.valuesDisplayed = this.weatherNow.displayValues();
+      this.dataSource = new MatTableDataSource(this.valuesDisplayed);
     });
   }
 

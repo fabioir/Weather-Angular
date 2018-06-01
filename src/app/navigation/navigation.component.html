@@ -1,5 +1,12 @@
-<li *ngFor="let savedCity of savedCities">
-  <a routerLink="/city/{{savedCity.id}}/{{savedCity.name}}">
-    <span class="badge">{{savedCity.name}}</span>
-  </a>
-</li> 
+
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Weather Angular</span>
+      <span class="example-spacer"></span>
+      <a routerLink="/initial" mat-button>Home</a>
+      <a *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
+        <span class="badge"> {{savedCity.name}} </span>
+      </a>
+    </mat-toolbar-row>
+  </mat-toolbar>
