@@ -5,7 +5,7 @@
   
   <div>
     
-      <input (keydown.enter) = "refresh()" [(ngModel)]="city" placeholder="Search city"/>
+      <input (keydown.enter) = "search()" [(ngModel)]="city" placeholder="Search city"/>
 
       <h1 [ngStyle]="{'display':loading}">Searching...</h1>
     
@@ -14,7 +14,7 @@
 </div>
 
 
-<button (click)="refresh()" mat-raised-button>Search with Weather-Angular!</button>
+<button (click)="search()" mat-raised-button>Search with Weather-Angular!</button>
 
 
 <a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}" mat-button>

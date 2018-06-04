@@ -16,7 +16,6 @@ import { SavedCitiesService } from '../saved-cities.service';
 export class InitialComponent implements OnInit {
 
   rxCity : SavedCity;
-  savedCities : SavedCity[];
   cityMatch : SavedCity;
   found = false;
   loading = 'none';
@@ -25,12 +24,9 @@ export class InitialComponent implements OnInit {
   
   @Input() city: string = '';
 
-  constructor(
-    private weatherService: WeatherService, 
-    private savedCitiesService: SavedCitiesService) { }
+  constructor(private weatherService: WeatherService) { }
 
   ngOnInit() {
-     this.getCities();
   }
 
 
@@ -51,39 +47,22 @@ export class InitialComponent implements OnInit {
         this.cityMatch = new SavedCity(this.rxCity.name + ' (' + (this.rxCity.sys.country || '') + ')',this.rxCity.id);
         this.found = true;
         this.loading = 'none';
-        this.messages();
       },
       error => {
         this.found = false;
         this.loading = 'none';
-        this.messages();
         this.wasFound = 'block';
       });
   
   }
 
 
-  refresh(): void {
+  search(): void {
    
       this.getCity();
       
   }
 
-  messages(){
-
-    //This function shows messages about the search results
-
-    if(!this.found){
-      console.log('The city searched has not been found');
-      
-    }else{
-      console.log('The search was successful');
-    }
-  }
-
-  getCities() {
-    this.savedCities = this.savedCitiesService.getSavedCities();
-  }
   
 }
 /*

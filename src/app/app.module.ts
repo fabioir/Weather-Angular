@@ -11,7 +11,6 @@ import { CityComponent } from './city/city.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 import { MaterialModule } from './material/material.module';
-//import { CookieService } from 'ngx-cookie-service';
 import 'hammerjs';
 
 @NgModule({
@@ -28,7 +27,7 @@ import 'hammerjs';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [/*CookieService*/],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

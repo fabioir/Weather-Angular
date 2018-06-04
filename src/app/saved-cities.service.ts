@@ -51,5 +51,11 @@ export class SavedCitiesService {
   }
 
   }
+
+  deleteCities(){
+    localStorage.removeItem("favouriteCities");
+    this.getSavedCities(); //Send an updated observable with the cities available
+    
+  }
  
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input,  OnChanges} from '@angular/core';
 import  { SavedCitiesService } from '../saved-cities.service';
 import { SavedCity } from '../savedCity';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -10,12 +10,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit, OnDestroy {
+export class NavigationComponent implements OnInit, OnDestroy, OnChanges {
 
   savedCities : SavedCity[];
   routeSubscription : Subscription;
   citiesSubscription : Subscription;
   @Input() opened: boolean = false;
+  notEmpty = false;
+  emptyList = 'none';
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +35,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.getCities();
   }
 
+  ngOnChanges() {
+    this.getCities();
+  }
+
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
@@ -41,18 +47,33 @@ export class NavigationComponent implements OnInit, OnDestroy {
   getCities() {
     this.savedCities = this.savedCitiesService.getSavedCities();
     this.citiesSubscription = this.savedCitiesService.getUpdates().subscribe(cities => {
-
+      
       this.savedCities = cities;
-      console.log("The subscription is working");
-
+      if (cities.length > 0){
+        this.notEmpty = true;
+      }else{
+        this.notEmpty = false;
+      }
     });
   }
 
   toggleFavourites() {
+    if(this.notEmpty){
     this.opened = !this.opened;
-    console.log(this.opened);
-  }
+    this.emptyList = 'none';
+    }else{
+      this.opened = false;
+      this.emptyList = 'block';
+      console.log("There are no favourite cities");
 
+    }
+  }
+  deleteCities() {
+    this.savedCitiesService.deleteCities();
+    this.getCities();
+    this.opened = false;
+    this.notEmpty = false;
+  }
 }
 
 /*

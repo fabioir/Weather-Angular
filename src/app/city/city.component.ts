@@ -17,7 +17,7 @@ import { Data } from './data'
   templateUrl: './city.component.html',
   styleUrls: ['./city.component.css']
 }) 
-export class CityComponent implements OnInit, OnChanges {
+export class CityComponent implements OnInit {
 
   cityShown: SavedCity;
   weatherNow : WeatherNow;
@@ -32,21 +32,15 @@ export class CityComponent implements OnInit, OnChanges {
     private weatherService: WeatherService,
     private savedCitiesService: SavedCitiesService
   ) {
-    //Trying to listen to a change in the path to refresh info
+    //listen to a change in the path to refresh info
     this.route.params.subscribe((value: PopStateEvent) => {
-      console.log('Change in URL');
       this.getCityWeather();
     }); 
    }
 
   ngOnInit() {
-    //this.getCityWeather();
   }
 
-  ngOnChanges(changes) {
-    console.log(changes);
-    //this.getCityWeather();
-  }
 
   getCityWeather() {
     
@@ -56,21 +50,17 @@ export class CityComponent implements OnInit, OnChanges {
 
     this.cityShown = new SavedCity(name,id);
 
-    this.weatherService.getWeather(this.cityShown.id).subscribe(rx => { //We have left using the code for the search
+    this.weatherService.getWeather(this.cityShown.id).subscribe(rx => {
       this.rx = rx
-      //Put the values in the object weatherNow
+      //Put the values received in the object weatherNow
       this.weatherNow = new WeatherNow();
       this.weatherNow.set(<WeatherNow>rx);
 
       //Display the values
       this.valuesDisplayed = this.weatherNow.displayValues();
+      //dataSource is used to represent the data in the mat table
       this.dataSource = new MatTableDataSource(this.valuesDisplayed);
     });
-  }
-
-  displayValues(wn : WeatherNow): string[]{
-    //ans : string[] = [];
-    return [];
   }
 
   saveCity() {
