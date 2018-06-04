@@ -76,6 +76,7 @@ export class CityComponent implements OnInit, OnChanges {
   saveCity() {
     this.savedCitiesService.save(this.cityShown);
   }
+  
 }
 /* 
 This component shows the information adquired from the microservice through the weather service. It gets the city code from the URL.

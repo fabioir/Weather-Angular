@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import  { SavedCitiesService } from '../saved-cities.service';
 import { SavedCity } from '../savedCity';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -15,7 +15,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   savedCities : SavedCity[];
   routeSubscription : Subscription;
   citiesSubscription : Subscription;
-
+  @Input() opened: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,7 +25,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
      //Trying to listen to a change in the path to refresh info
      this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
       console.log('Added to favourites');
-      // this.getCities();
+      this.getCities();
     }); 
    }
 
@@ -46,6 +46,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
       console.log("The subscription is working");
 
     });
+  }
+
+  toggleFavourites() {
+    this.opened = !this.opened;
+    console.log(this.opened);
   }
 
 }

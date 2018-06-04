@@ -34,7 +34,6 @@ export class SavedCitiesService {
       this.updated.next(this.cities); //Metemos cities en el Subject
       return this.cities;
     });
-    console.log("getSavedCities()");
     
     return this.cities;
   }
@@ -52,4 +51,5 @@ export class SavedCitiesService {
   }
 
   }
+ 
 }

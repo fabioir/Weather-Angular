@@ -5,8 +5,22 @@
       <span>Weather Angular</span>
       <span class="example-spacer"></span>
       <a routerLink="/initial" mat-button>Home</a>
-      <a *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
-        <span class="badge"> {{savedCity.name}} </span>
-      </a>
+      <a mat-button (click)="toggleFavourites()">Favourites</a>
+     
+      
     </mat-toolbar-row>
   </mat-toolbar>
+
+  <mat-sidenav-container class="example-container"  [ngStyle]="{'display': opened? block:none}">
+      <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+        <a *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
+          <div class="badge"> {{savedCity.name}} </div>
+        </a>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+          <h1></h1>
+          <br>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+    

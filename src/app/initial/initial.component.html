@@ -6,6 +6,8 @@
   <div>
     
       <input (keydown.enter) = "refresh()" [(ngModel)]="city" placeholder="Search city"/>
+
+      <h1 [ngStyle]="{'display':loading}">Searching...</h1>
     
   </div>
 
@@ -18,5 +20,7 @@
 <a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}" mat-button>
   <span class="badge">{{cityMatch.name}}</span>
 </a>
+
+<p [ngStyle]="{'display': wasFound}">The city searched was not found</p>
 
 </div>

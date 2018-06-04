@@ -19,6 +19,9 @@ export class InitialComponent implements OnInit {
   savedCities : SavedCity[];
   cityMatch : SavedCity;
   found = false;
+  loading = 'none';
+  wasFound = 'none';
+  
   
   @Input() city: string = '';
 
@@ -30,52 +33,31 @@ export class InitialComponent implements OnInit {
      this.getCities();
   }
 
-  /*getWeather(): void {
-
-    if(this.city.length == 0){
-
-      //If the city field has no value the search is not made
-
-      //console.log("City field is empty");
-      return;
-    }
-
-    console.log('Asking weather service to search with id: ' + this.cityId);
-    this.weatherService.getWeather(this.cityId).subscribe(rx => {
-      this.rx = <WeatherNow>rx;
-
-      
-      
-      //Put the values in the object weatherNow
-      
-      //console.log(this.weatherNow.displayValues());
-    });
-  }*/
 
   getCity() {
     //This function looks for a service response searching with a city name
 
       if(this.city.length == 0){
-
-       //If the city field has no value the search is not made
-
-       //console.log("City field is empty");
+       //If the city field has no value the search is not launched
        return;
       }
+      
+      this.loading = 'block';
+      this.wasFound = 'none';
 
       this.weatherService.getWeatherByCityName(this.city).subscribe(rx => {
-        /*rx.weather.forEach(w => {
-          console.log(w.id);
-        });*/
-        
+        //We subscribe for the search results
         this.rxCity = <SavedCity>rx;
-        this.cityMatch = new SavedCity(this.rxCity.name,this.rxCity.id);
+        this.cityMatch = new SavedCity(this.rxCity.name + ' (' + (this.rxCity.sys.country || '') + ')',this.rxCity.id);
         this.found = true;
+        this.loading = 'none';
         this.messages();
       },
       error => {
         this.found = false;
+        this.loading = 'none';
         this.messages();
+        this.wasFound = 'block';
       });
   
   }
@@ -102,6 +84,7 @@ export class InitialComponent implements OnInit {
   getCities() {
     this.savedCities = this.savedCitiesService.getSavedCities();
   }
+  
 }
 /*
 This component is meant to show an initial view of the application.
