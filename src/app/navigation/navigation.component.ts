@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input,  OnChanges} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input} from '@angular/core';
 import  { SavedCitiesService } from '../saved-cities.service';
 import { SavedCity } from '../savedCity';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit, OnDestroy, OnChanges {
+export class NavigationComponent implements OnInit, OnDestroy {
 
   savedCities : SavedCity[];
   routeSubscription : Subscription;
@@ -26,16 +26,11 @@ export class NavigationComponent implements OnInit, OnDestroy, OnChanges {
   ) {
      //Trying to listen to a change in the path to refresh info
      this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
-      console.log('Added to favourites');
       this.getCities();
-    }); 
+    });  
    }
 
   ngOnInit() {
-    this.getCities();
-  }
-
-  ngOnChanges() {
     this.getCities();
   }
 
@@ -51,6 +46,7 @@ export class NavigationComponent implements OnInit, OnDestroy, OnChanges {
       this.savedCities = cities;
       if (cities.length > 0){
         this.notEmpty = true;
+        this.emptyList = 'none';
       }else{
         this.notEmpty = false;
       }
@@ -64,8 +60,6 @@ export class NavigationComponent implements OnInit, OnDestroy, OnChanges {
     }else{
       this.opened = false;
       this.emptyList = 'block';
-      console.log("There are no favourite cities");
-
     }
   }
   deleteCities() {
