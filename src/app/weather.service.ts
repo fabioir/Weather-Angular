@@ -8,18 +8,18 @@ import { Observable, of } from 'rxjs'
 })
 export class WeatherService {
 
-  private weatherURL = 'http://api.openweathermap.org/data/2.5/weather?q=Vigo&APPID=888b7bb3ed5f95fb9894b5c33589e6a6';
+  private weatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=Vigo&APPID=888b7bb3ed5f95fb9894b5c33589e6a6';
 
 
 
   constructor( private http: HttpClient) { }
 
   getWeather(id: string): Observable<Object>{
-    this.weatherURL = `http://api.openweathermap.org/data/2.5/weather?id=${id}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
+    this.weatherURL = `https://api.openweathermap.org/data/2.5/weather?id=${id}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
     return this.http.get(this.weatherURL);
   }
   getWeatherByCityName(name: string): Observable<Object>{
-    this.weatherURL = `http://api.openweathermap.org/data/2.5/weather?q=${name}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
+    this.weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${name}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
     return this.http.get(this.weatherURL);
   }
 }
