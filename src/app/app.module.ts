@@ -12,13 +12,15 @@ import { NavigationComponent } from './navigation/navigation.component';
 
 import { MaterialModule } from './material/material.module';
 import 'hammerjs';
+import { GraphsComponent } from './graphs/graphs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InitialComponent,
     CityComponent,
-    NavigationComponent
+    NavigationComponent,
+    GraphsComponent
   ],
   imports: [
     BrowserModule,

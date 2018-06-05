@@ -5,11 +5,13 @@ import { InitialComponent } from './initial/initial.component';
 import { CityComponent } from './city/city.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import { GraphsComponent } from './graphs/graphs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/initial', pathMatch: 'full' },
   { path: 'initial', component: InitialComponent },
-  { path: 'city/:id/:name', component: CityComponent }
+  { path: 'city/:id/:name', component: CityComponent },
+  { path: 'graph', component: GraphsComponent}
 ];
 
 @NgModule({

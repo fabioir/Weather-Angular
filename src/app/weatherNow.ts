@@ -73,11 +73,16 @@ export class WeatherNow {
         this.clouds = {
             all: rx.clouds.all
         };
-
-        this.rain = rx.rain;
-
-        this.snow = rx.snow;
-
+        if(rx.rain == undefined){
+            //console.log("rain undefined");
+        }else{
+        this.rain = rx.rain["3h"];
+        }
+        if(rx.snow == undefined){
+            //console.log("snow undefined");
+        }else{
+        this.snow = rx.snow["3h"];
+        }
         this.dt = rx.dt;
         
         this.sys = {

@@ -6,11 +6,12 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { SavedCitiesService } from '../saved-cities.service';
+import { ForecastValuesService } from '../forecast-values.service';
 
 import {DataSource} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 
-import { Data } from './data'
+import { Data, Forecast, RespuestaForecast } from './data';
 
 @Component({
   selector: 'app-city',
@@ -25,12 +26,14 @@ export class CityComponent implements OnInit {
   valuesDisplayed : Array<Data>;
   dataSource;
   displayedColumns = ['parameter','value'];
+  forecast = new Array<Forecast>();
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private weatherService: WeatherService,
-    private savedCitiesService: SavedCitiesService
+    private savedCitiesService: SavedCitiesService,
+    private forecastValuesService: ForecastValuesService
   ) {
     //listen to a change in the path to refresh info
     this.route.params.subscribe((value: PopStateEvent) => {
@@ -60,6 +63,18 @@ export class CityComponent implements OnInit {
       this.valuesDisplayed = this.weatherNow.displayValues();
       //dataSource is used to represent the data in the mat table
       this.dataSource = new MatTableDataSource(this.valuesDisplayed);
+    });
+
+    this.weatherService.getForecast(this.cityShown.id).subscribe((rx: RespuestaForecast) => {
+      console.log(rx.list[1].main.grnd_level);
+      console.log(rx);
+      
+      Array.from(rx.list).forEach(element => {
+        this.forecast.push(new Forecast(element));
+      });
+
+      this.forecastValuesService.setValues(this.forecast);
+
     });
   }
 
