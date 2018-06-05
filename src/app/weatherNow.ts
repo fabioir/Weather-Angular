@@ -120,11 +120,11 @@ export class WeatherNow {
         this.checkAndSave('base', this.base,'');
         
         //main
-        this.checkAndSave('temperature', this.main.temp,'');
+        this.checkAndSave('temperature', this.main.temp - 273.15,' ℃');
         this.checkAndSave('pressure', this.main.pressure,'');
         this.checkAndSave('humidity', this.main.humidity,'');
-        this.checkAndSave('minimum temperature', this.main.temp_min,'');
-        this.checkAndSave('maximum temperature', this.main.temp_max,'');
+        this.checkAndSave('minimum temperature', this.main.temp_min - 273.15,' ℃');
+        this.checkAndSave('maximum temperature', this.main.temp_max - 273.15,' ℃');
         this.checkAndSave('pressure at sea level', this.main.sea_level,'');
         this.checkAndSave('pressure at ground level', this.main.grnd_level,'');
         
