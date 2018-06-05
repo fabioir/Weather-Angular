@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ForecastValuesService } from '../forecast-values.service';
 import { Forecast } from '../city/data';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-graphs',
@@ -11,6 +12,7 @@ export class GraphsComponent implements OnInit {
 
   forecastValues : Array<Forecast>;
   temperatures : string;
+  chart : Chart;
 
   constructor(forecastValuesService: ForecastValuesService) { 
 
@@ -29,6 +31,35 @@ export class GraphsComponent implements OnInit {
     this.temperatures = this.forecastValues.map(item => { 
       //console.log(item.main.temp);
       return item.main.temp;}).join(' , ');
+
+      this.chart = new Chart('canvas', {
+        type: 'line',
+      data: {
+        labels: ['1','2','3'],
+        datasets: [
+          { 
+            data: this.forecastValues.map(item => { 
+              //console.log(item.main.temp);
+              return item.main.temp;}),
+            borderColor: "#3cba9f",
+            fill: false
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true
+          }],
+          yAxes: [{
+            display: true
+          }],
+        }
+      }
+     });
   }
 
 }
