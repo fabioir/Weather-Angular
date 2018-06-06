@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ForecastValuesService } from '../forecast-values.service';
 import { Forecast } from '../city/data';
 import { Chart } from 'chart.js';
+import { TemperatureService } from './temperature/temperature.service';
+import { RainAndSnowService } from './rainAndSnow/rain-and-snow.service';
+import { CloudsAndWindService } from './cloudsAndWind/clouds-and-wind.service';
 
 @Component({
   selector: 'app-graphs',
@@ -19,8 +22,13 @@ export class GraphsComponent implements OnInit {
   dates: string[];
   chart : Chart;
   //forecastValuesService: ForecastValuesService;
-
-  constructor(forecastValuesService: ForecastValuesService) { 
+  
+  constructor(
+    private forecastValuesService: ForecastValuesService,
+    private temperatureService: TemperatureService,
+    private rainAndSnowService: RainAndSnowService,
+    private cloudsAndWindService: CloudsAndWindService
+  ) { 
 
     //this.forecastValuesService = forecastValuesService;
 
@@ -32,129 +40,31 @@ export class GraphsComponent implements OnInit {
   }
 
   ngOnInit() {
-   
     console.log(this.forecastValues);
     console.log("Init of graphs components");
   }
 
   temperature(){
-    this.temperatures = this.forecastValues.map(item => { 
-      //console.log(item.main.temp);
-      return item.main.temp - 273.15;});
+    console.log("TEMPERATURE!");
+    this.chart = undefined;
+    this.forecastValues = this.forecastValuesService.getValues();
 
-    this.temperaturesMax = this.forecastValues.map(item => { 
-      //console.log(item.main.temp);
-      return item.main.temp_max - 273.15;});
-
-    this.temperaturesMin = this.forecastValues.map(item => { 
-      //console.log(item.main.temp);
-      return item.main.temp_min - 273.15;});
-
-    this.dates = this.forecastValues.map(item => {
-      return item.dt_txt;
-    });
-
-      this.chart = new Chart('canvas', {
-        type: 'line',
-      data: {
-        labels: this.dates,
-        datasets: [
-          { 
-            label: 'temperature',
-            data: this.temperatures,
-            borderColor: "#3cba9f",
-            fill: false,
-            showLine: true
-          },
-          { 
-            label: 'Max temperature',
-            data: this.temperaturesMax,
-            borderColor: "#ff0000",
-            fill: false
-          },
-          { 
-            label: 'Min temperature',
-            data: this.temperaturesMin,
-            borderColor: "#0000FF",
-            fill: false
-          }
-        ]
-      },
-      options: {
-       
-        legend: {
-          display: true,
-          labels: {
-            
-          }
-        },
-        scales: {
-          xAxes: [{
-            display: true
-          }],
-          yAxes: [{
-            display: true
-          }],
-        }
-      }
-     });
+    this.chart = this.temperatureService.getTemperatureChart(this.forecastValues);
+    
   }
 
   rainAndSnow(){
-    this.rain = this.forecastValues.map(item => { 
-      //console.log(item.main.temp);
-      return item.rain;});
+    this.chart = undefined;
+    this.forecastValues = this.forecastValuesService.getValues();
 
-    this.snow = this.forecastValues.map(item => { 
-      //console.log(item.main.temp);
-      return item.snow;});
-
-    this.dates = this.forecastValues.map(item => {
-      return item.dt_txt;
-    });
-
-      this.chart = new Chart('canvas', {
-        type: 'bar',
-      data: {
-        labels: this.dates,
-        datasets: [
-          { 
-            label: 'Rain',
-            data: this.rain,
-            borderColor: "#0000ff",
-            fill: false,
-            showLine: true,
-            backgroundColor: "#0000ff"
-          },
-          { 
-            label: 'Snow',
-            data: this.snow,
-            borderColor: "#ffffff",
-            fill: false,
-            backgroundColor: "#aaaaaa"
-          }
-        ]
-      },
-      options: {
-       
-        legend: {
-          display: true,
-          labels: {
-            
-          }
-        },
-        scales: {
-          xAxes: [{
-            display: true
-          }],
-          yAxes: [{
-            display: true
-          }],
-        }
-      }
-     });
+    this.chart = this.rainAndSnowService.getRainAndSnowChart(this.forecastValues);
   }
 
-  cloudsAndWind(){}
+  cloudsAndWind(){
+    this.chart = undefined;
+    this.forecastValues = this.forecastValuesService.getValues();
+
+    this.chart = this.cloudsAndWindService.getCloudsAndWindChart(this.forecastValues);
+  }
     
 }
