@@ -24,7 +24,7 @@ export class CloudsAndWindService {
       return item.dt_txt;
     });
 
-      this.chart = new Chart('canvas', {
+      this.chart = new Chart('cloudsAndWind', {
         type: 'bar',
       data: {
         labels: this.dates,

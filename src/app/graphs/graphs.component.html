@@ -1,10 +1,16 @@
 
-<button (click)="temperature()" mat-button>Temperature</button>
+<button (click)="temperature()" [color="warn"]="!temperatureChart" mat-button>Temperature</button>
 
 <button (click)="rainAndSnow()" mat-button>Rain and Snow</button>
 
 <button (click)="cloudsAndWind()" mat-button>Clouds and Wind</button>
 
-<div [hidden]="!chart">
-  <canvas id="canvas">{{ chart }}</canvas>
+<div [hidden]="!temperatureChart">
+  <canvas id="temperature">{{ temperatureChart }}</canvas>
+</div>
+<div [hidden]="!rainAndSnowChart">
+  <canvas id="rainAndSnow">{{ rainAndSnowChart }}</canvas>
+</div>
+<div [hidden]="!cloudsAndWindChart">
+  <canvas id="cloudsAndWind">{{ cloudsAndWindChart }}</canvas>
 </div>

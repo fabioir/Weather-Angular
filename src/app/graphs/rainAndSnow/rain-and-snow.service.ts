@@ -26,7 +26,7 @@ export class RainAndSnowService {
       return item.dt_txt;
     });
 
-      this.chart = new Chart('canvas', {
+      this.chart = new Chart('rainAndSnow', {
         type: 'bar',
       data: {
         labels: this.dates,

@@ -33,7 +33,7 @@ export class TemperatureService {
       return item.dt_txt;
     });
 
-      this.chart = new Chart('canvas', {
+      this.chart = new Chart('temperature', {
         type: 'line',
       data: {
         labels: this.dates,
