@@ -20,7 +20,9 @@ export class GraphsComponent implements OnInit {
   rain: number[];
   snow: number[];
   dates: string[];
-  chart : Chart;
+  temperatureChart : Chart;
+  rainAndSnowChart : Chart;
+  cloudsAndWindChart : Chart;
   //forecastValuesService: ForecastValuesService;
   
   constructor(
@@ -45,26 +47,34 @@ export class GraphsComponent implements OnInit {
   }
 
   temperature(){
-    console.log("TEMPERATURE!");
-    this.chart = undefined;
+    if(this.temperatureChart === undefined){
     this.forecastValues = this.forecastValuesService.getValues();
 
-    this.chart = this.temperatureService.getTemperatureChart(this.forecastValues);
-    
+    this.temperatureChart = this.temperatureService.getTemperatureChart(this.forecastValues);
+    }else{
+      this.temperatureChart = undefined;
+    }
+  
   }
 
   rainAndSnow(){
-    this.chart = undefined;
+    if(this.rainAndSnowChart === undefined){
     this.forecastValues = this.forecastValuesService.getValues();
 
-    this.chart = this.rainAndSnowService.getRainAndSnowChart(this.forecastValues);
+    this.rainAndSnowChart = this.rainAndSnowService.getRainAndSnowChart(this.forecastValues);
+    }else{
+      this.rainAndSnowChart = undefined;
+    }
   }
 
   cloudsAndWind(){
-    this.chart = undefined;
+    if(this.cloudsAndWindChart === undefined){
     this.forecastValues = this.forecastValuesService.getValues();
 
-    this.chart = this.cloudsAndWindService.getCloudsAndWindChart(this.forecastValues);
+    this.cloudsAndWindChart = this.cloudsAndWindService.getCloudsAndWindChart(this.forecastValues);
+    }else{
+      this.cloudsAndWindChart = undefined;
+    }
   }
     
 }
