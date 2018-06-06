@@ -27,7 +27,7 @@ export class CityComponent implements OnInit {
   dataSource;
   displayedColumns = ['parameter','value'];
   forecast = new Array<Forecast>();
-  showForecat = false;
+  showForecast = false;
 
   constructor(
     private route: ActivatedRoute,
