@@ -24,7 +24,7 @@ export class WeatherService {
   }
 
   getForecast(id: string): Observable<Object>{
-    this.weatherURL = `https://api.openweathermap.org/data/2.5/forecast?id=3105976&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
+    this.weatherURL = `https://api.openweathermap.org/data/2.5/forecast?id=${id}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
     return this.http.get(this.weatherURL);
   }
 }

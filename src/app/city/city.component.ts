@@ -27,6 +27,7 @@ export class CityComponent implements OnInit {
   dataSource;
   displayedColumns = ['parameter','value'];
   forecast = new Array<Forecast>();
+  showForecat = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,6 +69,7 @@ export class CityComponent implements OnInit {
     this.weatherService.getForecast(this.cityShown.id).subscribe((rx: RespuestaForecast) => {
       console.log(rx.list[1].main.grnd_level);
       console.log(rx);
+      this.forecast = [];
       
       Array.from(rx.list).forEach(element => {
         this.forecast.push(new Forecast(element));

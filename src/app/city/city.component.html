@@ -1,10 +1,19 @@
-<p>
- This is the current weather data in {{cityShown.name}}:
-</p>
-<button (click)="saveCity()" mat-fab>Save city to favourites</button>
-<a routerLink="/graph" mat-button>
-  <div class="badge">Forecast</div>
+
+
+<a (click)="showForecast = !showForecast" mat-button>
+  <div class="badge">Toggle forecast:</div>
 </a>
+<span [hidden]="!showForecast">
+  <app-graphs></app-graphs>
+</span>
+<br>  
+<span>
+  <button (click)="saveCity()" display="inline" mat-fab>Save city to favourites</button>
+</span>
+<p>
+  This is the current weather data in {{cityShown.name}}:
+ </p>
+ 
 <div  align="center">
 <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="parameter">
@@ -22,3 +31,5 @@
 </table>
 </div>
 <br>
+
+
