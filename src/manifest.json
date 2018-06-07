@@ -1,0 +1,14 @@
+{
+    "name": "Weather-Angular",
+    "short_name": "WA",
+    "description": "Weather info from OpenWeather",  
+    "icons": [{
+      "src": "assets/favicon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }],
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0000b7"
+  }

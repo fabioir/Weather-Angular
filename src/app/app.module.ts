@@ -14,6 +14,9 @@ import { MaterialModule } from './material/material.module';
 import 'hammerjs';
 import { GraphsComponent } from './graphs/graphs.component';
 
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +30,8 @@ import { GraphsComponent } from './graphs/graphs.component';
     MaterialModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    environment.production ? ServiceWorkerModule.register('ngsw-worker.js') : []
   ],
   providers: [],
   bootstrap: [AppComponent]
