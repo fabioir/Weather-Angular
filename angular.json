@@ -22,7 +22,6 @@
               "src/favicon.ico",
               "src/assets",
               "src/_redirects",
-              "manifest.json",
               "src/manifest.json"
             ],
             "styles": [
@@ -83,7 +82,6 @@
               "src/favicon.ico",
               "src/assets",
               "src/_redirects",
-              "manifest.json",
               "src/manifest.json"
             ]
           }
