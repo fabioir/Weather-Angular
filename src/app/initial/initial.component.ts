@@ -79,13 +79,12 @@ export class InitialComponent implements OnInit {
 
 
   search(): void {
-   
+   if(this.city.length>0){
       this.foundCities = this.citiesList.filter(element => {
         
         return (element.name.includes(this.city));
       });
-      this.foundCities.forEach(e => 
-        console.log("found: " + e.name + " country: " + e.sys.country));
+    }
       this.getCity();
       
   }
