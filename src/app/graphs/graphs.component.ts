@@ -38,6 +38,19 @@ export class GraphsComponent implements OnInit {
 
     forecastValuesService.getUpdates().subscribe( values => {
       this.forecastValues = values;
+
+      if(this.temperatureChart){
+        this.temperatureChart = undefined;
+        this.temperature();
+      }
+      if(this.rainAndSnowChart){
+        this.rainAndSnowChart = undefined;
+        this.rainAndSnow();
+      }
+      if(this.cloudsAndWindChart){
+        this.cloudsAndWindChart = undefined;
+        this.cloudsAndWind();
+      }
     });
   }
 
