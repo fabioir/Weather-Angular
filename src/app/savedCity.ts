@@ -2,6 +2,7 @@ export class SavedCity{
     name: string;
     id: string;
     sys : {country : string};
+    country: string;
     coord : {
         lon : number,
         lat: number

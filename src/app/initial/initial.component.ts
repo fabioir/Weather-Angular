@@ -39,10 +39,9 @@ export class InitialComponent implements OnInit {
 
   getCitiesList(){
     this.citiesList = new Array<SavedCity>();
-    this.http.get(this.citiesListURL).subscribe(rx => {
-      rx = <Array<Object>> rx;
+    this.http.get<Array<SavedCity>>(this.citiesListURL).subscribe(rx => {
       
-      rx.forEach(element => {
+      Array.from(rx).forEach(element => {
        this.citiesList.push(new SavedCity(element.name, element.id, element.country, element.coord.lon, element.coord.lat));
       });
     }
