@@ -23,7 +23,7 @@
 
 <p [ngStyle]="{'display': wasFound}">The city searched was not found</p>
 
-<p *ngIf="foundCities">Sugerencias: </p>
+<p *ngIf="foundCities">Suggested results: </p>
 <a *ngFor="let found of foundCities" routerLink="/city/{{found.id}}/{{found.name}}" mat-button>
   <div class="badge"> {{found.name}} ({{found.sys.country}}) </div>
 </a>
