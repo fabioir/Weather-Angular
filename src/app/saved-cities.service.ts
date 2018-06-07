@@ -44,10 +44,10 @@ export class SavedCitiesService {
     ){
     this.cities.push(cityToSave);
     localStorage.setItem("favouriteCities",JSON.stringify(this.cities));
-    console.log("save()");
+    //console.log("save()");
     this.updated.next(this.cities); //Metemos cities en el Subject
   }else{
-    console.log('This city has already been saved');
+    //console.log('This city has already been saved');
   }
 
   }
