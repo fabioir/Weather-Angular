@@ -13,7 +13,7 @@
 
   <p [ngStyle]="{'display': emptyList}">There are no cities saved to favourites</p>
 
-  <div  [ngStyle]="{'display': opened? 'block':'none'}">
+  <div  [ngStyle]="{'visibility': opened? '':'hidden'}">
   <mat-sidenav-container class="example-container">
       <mat-sidenav #sidenav mode="side" [(opened)]="opened">
         <a *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
