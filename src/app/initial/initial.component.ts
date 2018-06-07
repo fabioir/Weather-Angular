@@ -7,6 +7,8 @@ import { SavedCity } from '../savedCity';
 
 import { SavedCitiesService } from '../saved-cities.service';
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-initial',
@@ -20,13 +22,33 @@ export class InitialComponent implements OnInit {
   found = false;
   loading = 'none';
   wasFound = 'none';
-  
+  citiesListURL = '../../assets/city.list.json';
+  citiesList : Array<SavedCity>;
+  foundCities : Array<SavedCity>;
   
   @Input() city: string = '';
 
-  constructor(private weatherService: WeatherService) { }
+  constructor(
+    private weatherService: WeatherService,
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
+    this.getCitiesList();
+  }
+
+  getCitiesList(){
+    this.citiesList = new Array<SavedCity>();
+    this.http.get(this.citiesListURL).subscribe(rx => {
+      rx = <Array<Object>> rx;
+      
+      rx.forEach(element => {
+       this.citiesList.push(new SavedCity(element.name, element.id, element.country, element.coord.lon, element.coord.lat));
+      });
+    }
+
+    );
+    
   }
 
 
@@ -44,7 +66,7 @@ export class InitialComponent implements OnInit {
       this.weatherService.getWeatherByCityName(this.city).subscribe(rx => {
         //We subscribe for the search results
         this.rxCity = <SavedCity>rx;
-        this.cityMatch = new SavedCity(this.rxCity.name + ' (' + (this.rxCity.sys.country || '') + ')',this.rxCity.id);
+        this.cityMatch = new SavedCity(this.rxCity.name, this.rxCity.id, this.rxCity.sys.country );
         this.found = true;
         this.loading = 'none';
       },
@@ -59,6 +81,12 @@ export class InitialComponent implements OnInit {
 
   search(): void {
    
+      this.foundCities = this.citiesList.filter(element => {
+        
+        return (element.name.includes(this.city));
+      });
+      this.foundCities.forEach(e => 
+        console.log("found: " + e.name + " country: " + e.sys.country));
       this.getCity();
       
   }
