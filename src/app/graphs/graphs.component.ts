@@ -42,8 +42,8 @@ export class GraphsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.forecastValues);
-    console.log("Init of graphs components");
+    //console.log(this.forecastValues);
+    //console.log("Init of graphs components");
   }
 
   temperature(){

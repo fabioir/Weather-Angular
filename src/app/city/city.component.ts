@@ -67,8 +67,8 @@ export class CityComponent implements OnInit {
     });
 
     this.weatherService.getForecast(this.cityShown.id).subscribe((rx: RespuestaForecast) => {
-      console.log(rx.list[1].main.grnd_level);
-      console.log(rx);
+      //console.log(rx.list[1].main.grnd_level);
+      //console.log(rx);
       this.forecast = [];
       
       Array.from(rx.list).forEach(element => {
