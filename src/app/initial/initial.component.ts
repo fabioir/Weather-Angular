@@ -34,7 +34,7 @@ export class InitialComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCitiesList();
+    //this.getCitiesList();
   }
 
   getCitiesList(){
@@ -79,7 +79,7 @@ export class InitialComponent implements OnInit {
 
 
   search(): void {
-   if(this.city.length>0){
+   if((this.city.length>0)&&(this.citiesList !== undefined)){
       this.foundCities = this.citiesList.filter(element => {
         
         return (element.name.includes(this.city));
