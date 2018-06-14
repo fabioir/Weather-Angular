@@ -20,9 +20,11 @@
 <a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}" mat-button>
   <span title="Fast Result. id: {{cityMatch.id}}" class="badge">{{cityMatch.name}} ({{cityMatch.sys.country}})</span>
 </a>
-<div>
+
+<div *ngIf=admin>
   <br>
   <button *ngIf=!citiesList (click)="getCitiesList()" mat-raised-button>Enable suggestions (may require a 4.2 MB download)</button>
+  <button (click)="uploadAll()" mat-raised-button>Fill in the local dataBase</button>
 </div>
 <p [ngStyle]="{'display': wasFound}">The city searched was not found</p>
 

@@ -20,5 +20,18 @@ export class SavedCity{
             lat: lat
         };
     }
+
+    insertBody(): string{
+        return `{
+            "data": {
+              "ID": ` + this.id + `,
+              "COUNTRY": "` + this.sys.country + `",
+              "LAT": ` + this.coord.lat + `,
+              "LON": ` + this.coord.lon + `,
+              "NAME": "` + this.name + `"	
+            }
+            
+           }`;
+    }
 }
 //This object is for displaying and linking to the searched cities. It is used too for storing favourite cities.

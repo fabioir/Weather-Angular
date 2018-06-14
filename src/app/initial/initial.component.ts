@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 
 import { WeatherService } from '../weather.service';
 
@@ -8,6 +8,8 @@ import { SavedCity } from '../savedCity';
 import { SavedCitiesService } from '../saved-cities.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { CitiesServerService } from '../cities-server.service';
 
 
 @Component({
@@ -25,12 +27,15 @@ export class InitialComponent implements OnInit {
   citiesListURL = '../../assets/city.list.json';
   citiesList : Array<SavedCity>;
   foundCities : Array<SavedCity>;
+  admin = false;
+  keyAdmin = "";
   
   @Input() city: string = '';
 
   constructor(
     private weatherService: WeatherService,
-    private http: HttpClient
+    private http: HttpClient,
+    private citiesServer: CitiesServerService
   ) { }
 
   ngOnInit() {
@@ -79,16 +84,47 @@ export class InitialComponent implements OnInit {
 
 
   search(): void {
-   if((this.city.length>0)&&(this.citiesList !== undefined)){
+    //Search in the cities.JSON is disabled
+    /*if((this.city.length>0)&&(this.citiesList !== undefined)){
       this.foundCities = this.citiesList.filter(element => {
         
         return (element.name.includes(this.city));
       });
-    }
+    }*/
       this.getCity();
+      if(this.city.length == 0){
+        //If the city field has no value the search is not launched
+        return;
+       }
+      //Search in the dataBase through the server in java
+      this.foundCities = this.citiesServer.searchByName(this.city);
       
   }
 
+  uploadAll(){
+    //This function should not be called because it makes the app crash. However, it has been able to make all the inserts correctly in the dataBase.
+    this.citiesServer.log();
+    console.log(
+    this.citiesServer.upload(<Array<SavedCity>> this.citiesList)
+    );
+
+    console.log("complete upload of citiesList to the dataBase");
+  }
+
+toggleAdmin(){
+  //Show/Hide admin options
+  this.admin = !this.admin;
+}
+@HostListener('window:keyup',['$event'])
+keyEvent(event: KeyboardEvent){
+  
+  this.keyAdmin = this.keyAdmin + event.key;
+  if(this.keyAdmin.substr(-5) === "admin"){
+    this.toggleAdmin();
+    this.keyAdmin = "";
+  }
+  
+}
   
 }
 /*
