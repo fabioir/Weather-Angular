@@ -8,7 +8,8 @@
       
       <span class="example-spacer"></span>
 
-      <a mat-button (click)="toggleSession()">Log in</a>
+      <a  *ngIf="!logged" mat-button (click)="toggleSession()">Log in</a>
+      <a  *ngIf="logged" mat-button (click)="toggleSession()">Log out</a>
      
     </mat-toolbar-row>
   </mat-toolbar>

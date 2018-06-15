@@ -26,6 +26,7 @@ export class SavedCitiesService {
   getSavedCities(): SavedCity[] {
     this.cities = [];
     if(JSON.parse(localStorage.getItem("favouriteCities")) === null){
+      this.updated.next(this.cities); //Metemos cities en el Subject
       return [];
     }
     JSON.parse(localStorage.getItem("favouriteCities")).forEach(element => {
@@ -55,7 +56,6 @@ export class SavedCitiesService {
   deleteCities(){
     localStorage.removeItem("favouriteCities");
     this.getSavedCities(); //Send an updated observable with the cities available
-    
   }
  
 }

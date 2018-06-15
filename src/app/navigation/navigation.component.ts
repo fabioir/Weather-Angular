@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LogginDialogComponent } from '../loggin-dialog/loggin-dialog.component';
+import { LogService } from '../log.service';
 
 @Component({
   selector: 'app-navigation',
@@ -17,15 +18,18 @@ export class NavigationComponent implements OnInit, OnDestroy {
   savedCities : SavedCity[];
   routeSubscription : Subscription;
   citiesSubscription : Subscription;
+  logSubscription : Subscription;
   @Input() opened: boolean = false;
   notEmpty = false;
   emptyList = 'none';
   dialogRef: MatDialogRef<LogginDialogComponent>;
+  logged = false;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private savedCitiesService: SavedCitiesService,
+    private logService: LogService,
     public dialog: MatDialog
   ) {
      //Trying to listen to a change in the path to refresh info
@@ -36,11 +40,22 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCities();
+    this.getLog();
   }
 
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
+    this.logSubscription.unsubscribe();
+  }
+
+  getLog() {
+    this.logSubscription = this.logService.getUpdates().subscribe(logged => {
+      this.logged = logged;
+      if((this.savedCities.length < 1) && this.opened){
+        this.toggleFavourites();
+      }
+    });
   }
 
   getCities() {
@@ -74,21 +89,31 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   toggleSession() {
+    if(this.logged){
+      console.log("log out");
+      
+      //must update cities list in db
+      //as there is no session cities have not been saved
+      this.logService.closeSession();
+      this.deleteCities();
+      return;
+    }
+    //this.logged = true;
     this.dialogRef = this.dialog.open(LogginDialogComponent/*, {
       height: '50%',
       width: '50%',
       autoFocus: true
     }*/);
 
-    /*this.dialogRef.afterClosed().subscribe(data => {
-      console.log("Dialog data when closed " + data)
-      this.logIn();
-    });*/
+    this.dialogRef.afterClosed().subscribe(data => {
+      console.log("Dialog data when closed " + data.logged)
+      this.logService.logIn(data.username,data.password)
+     
+    });
+
   }
 
-  logIn() {
-    console.log("Loggin in function");
-  }
+  
 }
 
 
