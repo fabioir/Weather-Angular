@@ -16,6 +16,11 @@ import { GraphsComponent } from './graphs/graphs.component';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { LogginDialogComponent } from './loggin-dialog/loggin-dialog.component';
+import { MatDialogModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms'
+
+
 
 @NgModule({
   declarations: [
@@ -23,7 +28,8 @@ import { environment } from '../environments/environment';
     InitialComponent,
     CityComponent,
     NavigationComponent,
-    GraphsComponent
+    GraphsComponent,
+    LogginDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +37,12 @@ import { environment } from '../environments/environment';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LogginDialogComponent]
 })
 export class AppModule { }

@@ -3,13 +3,16 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
       <span>Weather Angular</span>
-      <span class="example-spacer"></span>
       <a routerLink="/initial" mat-button>Home</a>
       <a mat-button (click)="toggleFavourites()">Favourites</a>
-     
       
+      <span class="example-spacer"></span>
+
+      <a mat-button (click)="toggleSession()">Log in</a>
+     
     </mat-toolbar-row>
   </mat-toolbar>
+  
 
   <p [ngStyle]="{'display': emptyList}">There are no cities saved to favourites</p>
 

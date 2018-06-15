@@ -1,0 +1,22 @@
+<div align="center">
+
+<h1 mat-dialog-title>Log In</h1>
+
+<mat-dialog-content>
+    <div [formGroup]="form">
+        <mat-form-field>
+           <input (keydown.enter)="submit()" matInput formControlName="username" placeholder="username">
+        </mat-form-field>
+        <mat-form-field>
+            <input (keydown.enter)="submit()" matInput type="password" formControlName="password" placeholder="password">
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <span class="example-spacer"></span>
+        <button mat-raised-button (click)="submit()">Log in</button>
+</mat-dialog-actions>
+
+</div>

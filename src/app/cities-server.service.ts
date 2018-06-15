@@ -59,7 +59,7 @@ export class CitiesServerService {
 
     this.http.post<ServerResponse>(this.commonUrl + "/search",this.complexSearch(name,"NAME"),httpOptions).subscribe(rx => {
       //We subscribe for the search results
-      
+      console.log(rx);
       rx.data.forEach(item => {
         ans.push(
           new SavedCity(item.NAME,item.ID.toString(),item.COUNTRY,item.LON,item.LAT)

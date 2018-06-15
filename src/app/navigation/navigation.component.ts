@@ -4,6 +4,8 @@ import { SavedCity } from '../savedCity';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { LogginDialogComponent } from '../loggin-dialog/loggin-dialog.component';
 
 @Component({
   selector: 'app-navigation',
@@ -18,11 +20,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
   @Input() opened: boolean = false;
   notEmpty = false;
   emptyList = 'none';
+  dialogRef: MatDialogRef<LogginDialogComponent>;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private savedCitiesService: SavedCitiesService
+    private savedCitiesService: SavedCitiesService,
+    public dialog: MatDialog
   ) {
      //Trying to listen to a change in the path to refresh info
      this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
@@ -68,7 +72,25 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.opened = false;
     this.notEmpty = false;
   }
+
+  toggleSession() {
+    this.dialogRef = this.dialog.open(LogginDialogComponent/*, {
+      height: '50%',
+      width: '50%',
+      autoFocus: true
+    }*/);
+
+    /*this.dialogRef.afterClosed().subscribe(data => {
+      console.log("Dialog data when closed " + data)
+      this.logIn();
+    });*/
+  }
+
+  logIn() {
+    console.log("Loggin in function");
+  }
 }
+
 
 /*
 This component picks the saved cities from the SavedCitiesService and displays the links to city/cod
