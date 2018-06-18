@@ -90,25 +90,19 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   toggleSession() {
     if(this.logged){
-      console.log("log out");
-      
-      //must update cities list in db
-      //as there is no session cities have not been saved
       this.logService.closeSession();
       this.deleteCities();
       return;
     }
-    //this.logged = true;
-    this.dialogRef = this.dialog.open(LogginDialogComponent/*, {
-      height: '50%',
-      width: '50%',
-      autoFocus: true
-    }*/);
+    this.dialogRef = this.dialog.open(LogginDialogComponent);
 
     this.dialogRef.afterClosed().subscribe(data => {
-      console.log("Dialog data when closed " + data.logged)
+      //when dialog is closed we try the session with the service's method
+      if(data !== undefined){
+      if(data.username !== undefined || data.password !== undefined){
       this.logService.logIn(data.username,data.password)
-     
+      }
+    }
     });
 
   }
