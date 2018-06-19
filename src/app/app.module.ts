@@ -18,7 +18,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LogginDialogComponent } from './loggin-dialog/loggin-dialog.component';
 import { MatDialogModule } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
+import { NewUserComponent } from './new-user/new-user.component';
+import { SettingsComponent } from './settings/settings.component';
+
 
 
 
@@ -29,7 +32,9 @@ import { ReactiveFormsModule } from '@angular/forms'
     CityComponent,
     NavigationComponent,
     GraphsComponent,
-    LogginDialogComponent
+    LogginDialogComponent,
+    NewUserComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

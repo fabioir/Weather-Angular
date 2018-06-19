@@ -7,6 +7,7 @@ import { ServerResponse, ServedCity } from './servedCity';
 import { UserServerRaw, UserServer, AuxServerData } from './userServer';
 import { WeatherService } from './weather.service';
 import { CitiesServerService } from './cities-server.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class LogService {
 
   cities : Array<SavedCity>;
   updated = new Subject();
+  exists : Subject<boolean>;
   currentUser : UserServer;
 
 
@@ -26,7 +28,8 @@ export class LogService {
   constructor(
     private savedCitiesService: SavedCitiesService,
     private http: HttpClient,
-    private citiesServerService : CitiesServerService
+    private citiesServerService : CitiesServerService,
+    private router : Router
   ) { }
 
   getUpdates(): Observable<boolean>{
@@ -45,8 +48,14 @@ export class LogService {
     };
     //save to db favourite cities
     this.currentUser.setFromList(this.savedCitiesService.getSavedCities());
+
+    localStorage.removeItem("session");
+    localStorage.removeItem("expires");
+    localStorage.removeItem("password");
     
-    this.http.put(this.commonUrl,this.updateBody(),httpOptions).subscribe(rx => console.log(rx));
+    this.http.put(this.commonUrl,this.updateBody(),httpOptions).subscribe(rx => {}, error=>{
+      console.log("There has been a problen closing session.");
+    });
 
     this.savedCitiesService.deleteCities();
       this.updated.next(false);
@@ -95,15 +104,28 @@ export class LogService {
       })
     };
     this.http.post<AuxServerData>(this.commonUrl + "/search",this.searchQuery(username),httpOptions).subscribe(res => {
+      if(res.data.length != 1){
+        console.log("This user does not exist");
+        return;
+      }
       this.currentUser = new UserServer(res);
 
       if(this.currentUser.password === password){
         this.savedCitiesService.deleteCities();
+
+        if(this.currentUser.citiesId[0] !== ""){
         this.citiesServerService.loadFavourites(this.currentUser.citiesId);
+        }
+        
+        localStorage.setItem("session",JSON.stringify(this.currentUser.username));
+        localStorage.setItem("expires",JSON.stringify(new Date().getTime() + 60000));
+        localStorage.setItem("password",JSON.stringify(this.currentUser.password));
         this.updated.next(true);
       }else{
         this.updated.next(false);
       }
+    }, error => {
+      console.log("Error trying to log in.");
     });
     
   }
@@ -115,6 +137,51 @@ export class LogService {
         "USERNAME": "` + username + `"
       },
       "columns":[ "USERNAME","PASSWORD","CITIES"]
+     }`;
+  }
+  
+  createUser(username: string, password: string){
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  this.contentType,
+        'Authorization': this.authorization
+      })
+    };
+    //first check if user exists
+    this.http.post<AuxServerData>(this.commonUrl + "/search",this.searchQuery(username),httpOptions).subscribe(
+      res => {
+        //user exists
+        if(res.data.length == 1){
+        this.currentUser = new UserServer(res);
+        console.log("this user exists");
+        if(this.currentUser.username == username){
+          return;
+        }
+      }else{
+        //User doesn't exist
+        console.log(`user doesn't exist so we create it`);
+        this.http.post(this.commonUrl,this.insertBody(username, password),httpOptions).subscribe(i => {
+          //console.log(i);
+          this.logIn(username,password)
+          this.router.navigate(['initial']); 
+        }, error =>{
+            console.log("Error inserting new user to database");
+            return;
+          });
+      }
+      }, error => {
+        console.log("Error searching user in database");
+        return;
+      });
+  }
+  insertBody(username: string, password: string){
+    return `
+    {
+      "data" : {
+        "USERNAME": "` + username + `",
+        "PASSWORD": "` + password + `",
+        "CITIES": ""	
+        }
      }`;
   }
 

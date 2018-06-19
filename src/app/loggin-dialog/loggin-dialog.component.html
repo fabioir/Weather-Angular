@@ -4,12 +4,16 @@
 
 <mat-dialog-content>
     <div [formGroup]="form">
+        <div>
         <mat-form-field>
            <input (keydown.enter)="submit()" matInput formControlName="username" placeholder="username">
         </mat-form-field>
+        </div>
+        <div>
         <mat-form-field>
             <input (keydown.enter)="submit()" matInput type="password" formControlName="password" placeholder="password">
         </mat-form-field>
+        </div>
     </div>
 </mat-dialog-content>
 
@@ -17,6 +21,8 @@
         <button mat-raised-button mat-dialog-close>Cancel</button>
         <span class="example-spacer"></span>
         <button mat-raised-button (click)="submit()">Log in</button>
+        <span class="example-spacer"></span>
+        <a (click)="newUser()" mat-button>Sign up</a>
 </mat-dialog-actions>
 
 </div>

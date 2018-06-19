@@ -1,0 +1,13 @@
+<p>
+  settings works!
+</p>
+  <div *ngIf=currentUser>
+  {{currentUser.username}}
+</div>
+
+
+<div *ngIf=currentUser>
+<p *ngFor="let city of currentUser.citiesList">
+{{city.name}}
+</p>
+</div>

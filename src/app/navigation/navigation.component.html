@@ -1,4 +1,4 @@
-
+<div (mousedown)="checkExpiration()">
 
 <mat-toolbar color="primary">
     <mat-toolbar-row>
@@ -8,9 +8,26 @@
       
       <span class="example-spacer"></span>
 
-      <a  *ngIf="!logged" mat-button (click)="toggleSession()">Log in</a>
-      <a  *ngIf="logged" mat-button (click)="toggleSession()">Log out</a>
-     
+      
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button> 
+      <mat-menu #appMenu="matMenu" x-position="before" y-position="below" >
+
+        <div>
+          <a  *ngIf="!logged" mat-button (click)="toggleSession()">Log in</a>
+        </div>
+        
+        <div>
+          <a  *ngIf="logged" mat-button routerLink="/settings" >{{profile}}</a>
+        </div>
+
+        <div>
+          <a  *ngIf="logged" mat-button (click)="toggleSession()">Log out</a>
+        </div>
+
+
+        </mat-menu>
     </mat-toolbar-row>
   </mat-toolbar>
   
@@ -29,6 +46,10 @@
       <mat-sidenav-content>
           <br>
           <br>
+          <br>
         </mat-sidenav-content>
     </mat-sidenav-container>
+    
   </div>
+
+</div>

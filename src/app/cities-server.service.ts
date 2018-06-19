@@ -61,7 +61,6 @@ export class CitiesServerService {
 
     this.http.post<ServerResponse>(this.commonUrl + "/search",this.complexSearch(name,"NAME"),httpOptions).subscribe(rx => {
       //We subscribe for the search results
-      console.log(rx.data.length);
       if(rx.data.length === undefined){
         console.log("Query without results");
         return ans;
@@ -144,6 +143,7 @@ export class CitiesServerService {
 
   loadFavourites(cities : Array<string>){
     //Queries every city by id in the user and stores it in localStorage as favourites
+    
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  this.contentType,

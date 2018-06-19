@@ -5,8 +5,12 @@ export class UserServer {
     password : string;
     favouriteCities : string;
     citiesId : Array<string>;
+    citiesList : Array<SavedCity>;
 
-    constructor(aux: AuxServerData){
+    constructor(aux?: AuxServerData){
+        if(aux === undefined){
+            return;
+        }
         this.username = aux.data[0].USERNAME;
         this.password = aux.data[0].PASSWORD;
         this.citiesId = aux.data[0].CITIES.split(',');

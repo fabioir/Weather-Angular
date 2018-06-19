@@ -19,11 +19,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
   routeSubscription : Subscription;
   citiesSubscription : Subscription;
   logSubscription : Subscription;
+  logSubscription2 : Subscription;
   @Input() opened: boolean = false;
   notEmpty = false;
   emptyList = 'none';
   dialogRef: MatDialogRef<LogginDialogComponent>;
   logged = false;
+  profile : string = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +37,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
      //Trying to listen to a change in the path to refresh info
      this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
       this.getCities();
+      this.checkExpiration();
     });  
    }
 
@@ -43,15 +46,40 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.getLog();
   }
 
+
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
     this.logSubscription.unsubscribe();
   }
 
+  checkExpiration() {
+    let time = JSON.parse(localStorage.getItem("expires"));
+    if(((new Date().getTime())>time)&&(time !== null)){
+      this.toggleSession();
+      localStorage.removeItem("session");
+      localStorage.removeItem("password");
+      localStorage.removeItem("expires");
+      localStorage.removeItem("favouriteCities");
+      window.alert("Session has expired");
+    }
+
+    if(((new Date().getTime())<time)&&(time !== null)&&!this.logged){
+      let username = JSON.parse(localStorage.getItem("session"));
+      let password = JSON.parse(localStorage.getItem("password"));
+      this.logService.logIn(username,password);
+      this.logSubscription2 = this.logService.getUpdates().subscribe(logged => {
+        if(logged){
+      localStorage.setItem("expires",time);
+        }
+    });
+    }
+  }
+
   getLog() {
     this.logSubscription = this.logService.getUpdates().subscribe(logged => {
       this.logged = logged;
+      this.profile = this.logService.currentUser.username;
       if((this.savedCities.length < 1) && this.opened){
         this.toggleFavourites();
       }
