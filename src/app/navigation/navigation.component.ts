@@ -58,6 +58,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   checkExpiration() {
     let time = JSON.parse(localStorage.getItem("expires"));
     if(((new Date().getTime())>time)&&(time !== null)){
+      console.log("Problem with expiration time: " + time);
       this.toggleSession();
       localStorage.removeItem("session");
       localStorage.removeItem("password");
@@ -68,6 +69,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
     if(((new Date().getTime())<time)&&(time !== null)&&!this.logged){
+      //Log when refreshing
       let username = JSON.parse(localStorage.getItem("session"));
       let password = JSON.parse(localStorage.getItem("password"));
       this.logService.logIn(username,password);

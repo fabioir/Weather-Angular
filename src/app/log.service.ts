@@ -9,6 +9,7 @@ import { WeatherService } from './weather.service';
 import { CitiesServerService } from './cities-server.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { isNumber } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -104,6 +105,9 @@ export class LogService {
     this.http.post<AuxServerData>(this.commonUrl + "/search",this.searchQuery(username),httpOptions).subscribe(res => {
       if(res.data.length != 1){
         console.log("This user does not exist");
+        this.snackBar.open( "User does not exist: " + username, "Ok", {
+          duration: 1500
+        });
         return;
       }
       this.currentUser = new UserServer(res);
@@ -116,7 +120,13 @@ export class LogService {
         }
         
         localStorage.setItem("session",JSON.stringify(this.currentUser.username));
-        localStorage.setItem("expires",JSON.stringify(new Date().getTime() + (this.currentUser.expirationTime)||60000));
+        console.log(this.currentUser.expirationTime);
+        if(isNumber(this.currentUser.expirationTime)){
+        localStorage.setItem("expires",JSON.stringify(new Date().getTime() + this.currentUser.expirationTime));
+        }else{
+          localStorage.setItem("expires",JSON.stringify(new Date().getTime() + 60000));
+          console.log("There has been a problem with expiration time: " + this.currentUser.expirationTime);
+        }
         
         localStorage.setItem("password",JSON.stringify(this.currentUser.password));
         this.updated.next(true);

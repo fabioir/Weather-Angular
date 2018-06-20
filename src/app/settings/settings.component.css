@@ -1,3 +1,13 @@
 .slider{
     width: 90%;
 }
+
+.example-container{
+    background-color: #b1b1b1;
+}
+
+.buttons{
+    background-color: blueviolet;
+    border-right: 10px solid white;
+    
+}
