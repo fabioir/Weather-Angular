@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-loggin-dialog',
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class LogginDialogComponent implements OnInit {
 
-  form : FormGroup;
+  form: FormGroup;
   description: string;
 
   constructor(
@@ -26,13 +26,19 @@ export class LogginDialogComponent implements OnInit {
     });
   }
 
-  submit(form){
-    if(!this.form.valid){return;}
+  submit(form) {
+    if (!this.form.valid) { return; }
     this.dialogRef.close(this.form.value);
   }
 
-  newUser(){
+  newUser() {
     this.dialogRef.close();
-    this.router.navigate(['user']); 
+    this.router.navigate(['user']);
   }
 }
+
+/* This log in dialog pops up when the sign in button in the navigation bar is clicked.
+
+It just launches a form, validates it and returns the data when closed.
+
+Also, contains a button that routes to the user creation functionality*/

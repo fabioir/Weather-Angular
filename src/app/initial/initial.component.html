@@ -1,36 +1,36 @@
 <div align="center" id="initialDiv">
-<div>
-
-  <h2>Look for a city: {{ city | uppercase }}</h2>
-  
   <div>
-    
-      <input (keydown.enter) = "search()" [(ngModel)]="city" placeholder="Search city"/>
+
+    <h2>Look for a city: {{ city | uppercase }}</h2>
+
+    <div>
+
+      <input (keydown.enter)="search()" [(ngModel)]="city" placeholder="Search city" />
 
       <h1 [ngStyle]="{'display':loading}">Searching...</h1>
-    
+
+    </div>
   </div>
 
-</div>
+
+  <button (click)="search()" mat-raised-button>Search with Weather-Angular!</button>
 
 
-<button (click)="search()" mat-raised-button>Search with Weather-Angular!</button>
+  <a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}" mat-button>
+    <span title="Fast Result. id: {{cityMatch.id}}" class="badge">{{cityMatch.name}} ({{cityMatch.sys.country}})</span>
+  </a>
 
+  <div *ngIf=admin>
+    <br>
+    <button *ngIf=!citiesList (click)="getCitiesList()" mat-raised-button>Enable suggestions (may require a 4.2 MB download)</button>
+    <button (click)="uploadAll()" mat-raised-button>Fill in the local dataBase</button>
+  </div>
+  <p [ngStyle]="{'display': wasFound}">The city searched was not found</p>
 
-<a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}" mat-button>
-  <span title="Fast Result. id: {{cityMatch.id}}" class="badge">{{cityMatch.name}} ({{cityMatch.sys.country}})</span>
-</a>
-
-<div *ngIf=admin>
-  <br>
-  <button *ngIf=!citiesList (click)="getCitiesList()" mat-raised-button>Enable suggestions (may require a 4.2 MB download)</button>
-  <button (click)="uploadAll()" mat-raised-button>Fill in the local dataBase</button>
-</div>
-<p [ngStyle]="{'display': wasFound}">The city searched was not found</p>
-
-<p *ngIf="foundCities">Suggested results: </p>
-<a title="Coords (lat,lon) = ( {{found.coord.lat}} , {{found.coord.lon}} )" *ngFor="let found of foundCities" routerLink="/city/{{found.id}}/{{found.name}}" mat-button>
-  <div class="badge"> {{found.name}} ({{found.sys.country}}) </div>
-</a>
+  <p *ngIf="foundCities">Suggested results: </p>
+  <a title="Coords (lat,lon) = ( {{found.coord.lat}} , {{found.coord.lon}} )" *ngFor="let found of foundCities" routerLink="/city/{{found.id}}/{{found.name}}"
+    mat-button>
+    <div class="badge"> {{found.name}} ({{found.sys.country}}) </div>
+  </a>
 
 </div>

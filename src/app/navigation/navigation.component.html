@@ -1,42 +1,49 @@
 <div (mousedown)="checkExpiration()">
 
-<mat-toolbar color="primary">
+  <!--Main navigation bar. Always visible-->
+  <mat-toolbar color="primary">
     <mat-toolbar-row>
       <span>Weather Angular</span>
       <a routerLink="/initial" mat-button>Home</a>
       <a mat-button (click)="toggleFavourites()">Favourites</a>
-      
+
       <span class="example-spacer"></span>
+
       <mat-icon *ngIf="logged">check_circle</mat-icon>
+
       <span class="example-spacer"></span>
-      
+
       <button mat-icon-button [matMenuTriggerFor]="appMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button> 
-      <mat-menu #appMenu="matMenu" x-position="before" y-position="below" >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #appMenu="matMenu" x-position="before" y-position="below">
 
         <div>
-          <a  *ngIf="!logged" mat-button (click)="toggleSession()">Log in</a>
-        </div>
-        
-        <div>
-          <a  *ngIf="logged" mat-button routerLink="/settings" >{{profile}}</a>
+          <a *ngIf="!logged" mat-button (click)="toggleSession()" color="primary">Log in</a>
         </div>
 
         <div>
-          <a  *ngIf="logged" mat-button (click)="toggleSession()">Log out</a>
+          <a *ngIf="logged" mat-button routerLink="/settings" color="primary">{{profile}}</a>
+        </div>
+
+        <div>
+          <a *ngIf="logged" mat-button (click)="toggleSession()" color="warn">Log out</a>
+        </div>
+
+        <div>
+          <a mat-button routerLink="/about" color="primary">About</a>
         </div>
 
 
-        </mat-menu>
+      </mat-menu>
     </mat-toolbar-row>
   </mat-toolbar>
-  
+
 
   <p [ngStyle]="{'display': emptyList}">There are no cities saved to favourites</p>
 
-  <div  [ngStyle]="{'visibility': opened? '':'hidden'}">
-  <mat-sidenav-container class="example-container">
+  <div [ngStyle]="{'visibility': opened? '':'hidden'}">
+    <mat-sidenav-container class="example-container">
       <mat-sidenav #sidenav mode="side" [(opened)]="opened">
         <a *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
           <div class="badge"> {{savedCity.name}} </div>
@@ -45,12 +52,12 @@
       </mat-sidenav>
 
       <mat-sidenav-content>
-          <br>
-          <br>
-          <br>
-        </mat-sidenav-content>
+        <br>
+        <br>
+        <br>
+      </mat-sidenav-content>
     </mat-sidenav-container>
-    
+
   </div>
 
 </div>

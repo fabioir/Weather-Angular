@@ -22,6 +22,7 @@ export class SavedCity{
     }
 
     insertBody(): string{
+        //Prepares a string to make an insert to the server
         return `{
             "data": {
               "ID": ` + this.id + `,

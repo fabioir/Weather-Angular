@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LogService } from '../log.service';
 import { UserServer } from '../userServer';
 import { SavedCitiesService } from '../saved-cities.service';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { PasswordValidation } from '../new-user/new-user.component';
@@ -14,72 +14,86 @@ import { PasswordValidation } from '../new-user/new-user.component';
 })
 export class SettingsComponent implements OnInit {
 
-  currentUser : UserServer;
-  logSubscription : Subscription;
+  currentUser: UserServer;
+  logSubscription: Subscription;
   opened = true;
-  formPassword : FormGroup;
+  formPassword: FormGroup;
   valueTime = 1;
   pwd = true;
   time = false;
 
 
   constructor(
-    private log : LogService,
-    private savedCitiesService : SavedCitiesService,
+    private log: LogService,
+    private savedCitiesService: SavedCitiesService,
     private router: Router,
-    private formBuilder : FormBuilder
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
-    if(this.log.currentUser === undefined){
-      this.router.navigate(['initial']); 
-    }else{
-    this.currentUser = this.log.currentUser;
-    this.currentUser.citiesList = this.savedCitiesService.getSavedCities();
-    }
-    this.getLog();
+
+    this.setCurrentUser();
+
+    this.isLogged();
 
     this.buildPsswdForm();
   }
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.logSubscription.unsubscribe();
   }
 
-  buildPsswdForm(){
+  setCurrentUser() {
+    if (this.log.currentUser === undefined) {
+      this.router.navigate(['initial']);
+    } else {
+      this.currentUser = this.log.currentUser;
+      this.currentUser.citiesList = this.savedCitiesService.getSavedCities();
+    }
+
+  }
+  buildPsswdForm() {
+    //Form to change password
     this.formPassword = this.formBuilder.group({
       password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
-      password2: ['',Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
-    },{
-      validator: PasswordValidation.MatchPassword
-    })
-  }
-  submitPassword(){
-    if(this.formPassword.valid){
-      this.changePassword(this.formPassword.value.password);
-    }
+      password2: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
+    }, {
+        validator: PasswordValidation.MatchPassword
+      })
   }
 
-  submitTime(){
-    this.log.updateSettings("EXPIRES", (this.valueTime * 60 * 1000).toString(),true);
-  }
-  getLog() {
+  isLogged() {
     //If session expires or is closed redirect to home
     this.logSubscription = this.log.getUpdates().subscribe(logged => {
-      if(!logged){
-        this.router.navigate(['initial']); 
+      if (!logged) {
+        this.router.navigate(['initial']);
       }
     });
   }
 
-  changePassword(passwd: string){
+
+  changePassword(passwd: string) {
     this.log.updateSettings("PASSWORD", passwd, true);
   }
+  submitPassword() {
+    if (this.formPassword.valid) {
+      this.changePassword(this.formPassword.value.password);
+      //Resets the form
+      this.buildPsswdForm();
+    }
+  }
 
-  passwd(){
+  submitTime() {
+    this.log.updateSettings("EXPIRES", (this.valueTime * 60 * 1000).toString(), true);
+  }
+
+
+
+  //Methods to show different contents
+  passwd() {
     this.pwd = true;
     this.time = false;
   }
-  exprtn(){
+  exprtn() {
     this.pwd = false;
     this.time = true;
   }

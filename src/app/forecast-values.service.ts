@@ -24,4 +24,6 @@ export class ForecastValuesService {
   }
   constructor() { }
 }
+
+//Simply stores and shares updates of the forecast values used in the current moment in the application
  

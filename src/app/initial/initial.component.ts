@@ -39,20 +39,20 @@ export class InitialComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.getCitiesList();
   }
 
   getCitiesList(){
+    //Requests to the assets folder the JSON with all the cities
     this.citiesList = new Array<SavedCity>();
     this.http.get<Array<SavedCity>>(this.citiesListURL).subscribe(rx => {
-      
+      //Stores every city in the cities List were searches will be accomplished
       Array.from(rx).forEach(element => {
        this.citiesList.push(new SavedCity(element.name, element.id, element.country, element.coord.lon, element.coord.lat));
       });
     }
 
     );
-    
+    //This method isn't compatible with a optimum performance of the application as it consumes too much memory and bandwidth
   }
 
 
@@ -84,19 +84,19 @@ export class InitialComponent implements OnInit {
 
 
   search(): void {
-    //Search in the cities.JSON is disabled
+    //Search in the cities.JSON is disabled. It produces a performance leakage
     /*if((this.city.length>0)&&(this.citiesList !== undefined)){
       this.foundCities = this.citiesList.filter(element => {
         
         return (element.name.includes(this.city));
       });
     }*/
-      this.getCity();
+      this.getCity(); //Asks the API
       if(this.city.length == 0){
         //If the city field has no value the search is not launched
         return;
        }
-      //Search in the dataBase through the server in java
+      //Search in the dataBase through the server Ontimize EE
       this.foundCities = this.citiesServer.searchByName(this.city);
       
   }
@@ -115,6 +115,8 @@ toggleAdmin(){
   //Show/Hide admin options
   this.admin = !this.admin;
 }
+
+//Listens to the keyboard and triggers a function to show admin options when "admin" is written
 @HostListener('window:keyup',['$event'])
 keyEvent(event: KeyboardEvent){
   
@@ -131,4 +133,10 @@ keyEvent(event: KeyboardEvent){
 This component is meant to show an initial view of the application.
 
 It has got a search utility with which new cities can be accessed
+
+Displays two answers from two different sources:
+
+  An answer obtained searching by city name in the API
+
+  An answer obtained searching in the Ontimize EE database through the server OR searching in a local list of cities downloaded from assets
 */

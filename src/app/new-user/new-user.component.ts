@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserServer } from '../userServer';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { LogService } from '../log.service';
 
@@ -11,9 +11,9 @@ import { LogService } from '../log.service';
 })
 export class NewUserComponent implements OnInit {
 
-  
-  password2 : string;
-  form : FormGroup;
+
+  password2: string;
+  form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,19 +22,25 @@ export class NewUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.launchForm();
+
+  }
+
+  launchForm() {
     this.form = this.formBuilder.group({
       username: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(20), Validators.required])],
       password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
-      password2: ['',Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
-    },{
-      validator: PasswordValidation.MatchPassword
-    })
+      password2: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
+    }, {
+        validator: PasswordValidation.MatchPassword
+      });
   }
 
-  submit(){
-    if(this.form.valid){
+  submit() {
+    if (this.form.valid) {
+
       this.logService.createUser(this.form.value.username, this.form.value.password);
-      
+
     } else {
       console.log("Not valid");
     }
@@ -42,16 +48,17 @@ export class NewUserComponent implements OnInit {
 }
 
 export class PasswordValidation {
-
-  static MatchPassword(AC: AbstractControl){
+  //Validates that the password has been repeated correctly
+  static MatchPassword(AC: AbstractControl) {
     let p1 = AC.get('password');
     let p2 = AC.get('password2');
-    //console.log(p1.value + " " + p2.value);
-    if(p1.value != p2.value) {
-      AC.get('password2').setErrors( {MatchPassword: true} )
-  } else {
+    if (p1.value != p2.value) {
+      AC.get('password2').setErrors({ MatchPassword: true })
+    } else {
       return null
-  }
+    }
 
   }
 }
+
+/* This component simply launches a form to ask the log service to create a new user with the info adquired in the form */

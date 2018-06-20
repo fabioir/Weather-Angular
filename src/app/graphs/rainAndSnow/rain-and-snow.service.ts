@@ -14,24 +14,26 @@ export class RainAndSnowService {
 
   constructor() { }
 
-  getRainAndSnowChart(forecast: Array<Forecast>): Chart{
+  getRainAndSnowChart(forecast: Array<Forecast>): Chart {
 
-    this.rain = forecast.map(item => { 
-      return item.rain;});
+    this.rain = forecast.map(item => {
+      return item.rain;
+    });
 
-    this.snow = forecast.map(item => { 
-      return item.snow;});
+    this.snow = forecast.map(item => {
+      return item.snow;
+    });
 
     this.dates = forecast.map(item => {
       return item.dt_txt;
     });
 
-      this.chart = new Chart('rainAndSnow', {
-        type: 'bar',
+    this.chart = new Chart('rainAndSnow', {
+      type: 'bar',
       data: {
         labels: this.dates,
         datasets: [
-          { 
+          {
             label: 'Rain',
             data: this.rain,
             borderColor: "#0000ff",
@@ -39,7 +41,7 @@ export class RainAndSnowService {
             showLine: true,
             backgroundColor: "#0000ff"
           },
-          { 
+          {
             label: 'Snow',
             data: this.snow,
             borderColor: "#ffffff",
@@ -49,11 +51,11 @@ export class RainAndSnowService {
         ]
       },
       options: {
-       
+
         legend: {
           display: true,
           labels: {
-            
+
           }
         },
         scales: {
@@ -65,8 +67,10 @@ export class RainAndSnowService {
           }],
         }
       }
-     });
-     
+    });
+
     return this.chart;
   }
 }
+
+/* This service gets the forecast vakues formated and returns a chart*/

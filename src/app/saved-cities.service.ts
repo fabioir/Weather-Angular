@@ -11,9 +11,6 @@ export class SavedCitiesService {
 
   cities : SavedCity[];
   city : SavedCity;
-  /*private updated = new Observable((observer) =>{
-    observer.next(this.getSavedCities());
-  });*/
   updated = new Subject();
 
 
@@ -25,18 +22,18 @@ export class SavedCitiesService {
 
   getSavedCities(): SavedCity[] {
     this.cities = [];
-    if(JSON.parse(localStorage.getItem("favouriteCities")) === null){
-      this.updated.next(this.cities); //Metemos cities en el Subject
+    if(JSON.parse(localStorage.getItem("favouriteCities")) === null){ //if there are no cities in the local storage
+      this.updated.next(this.cities); //return cities = [] from the Observable
       return [];
     }
-    JSON.parse(localStorage.getItem("favouriteCities")).forEach(element => {
+    JSON.parse(localStorage.getItem("favouriteCities")).forEach(element => { //Get back from LS
       this.city = new SavedCity(element.name, element.id);
       this.cities.push(this.city);
-      this.updated.next(this.cities); //Metemos cities en el Subject
+      this.updated.next(this.cities); //Return Array<SavedCity> from the Observable
       return this.cities;
     });
     
-    return this.cities;
+   return this.cities; //Never reaches this instruction? Yes, surpridingly it does, and everything crashed when I commented it
   }
 
   save(cityToSave : SavedCity){
@@ -45,7 +42,6 @@ export class SavedCitiesService {
     ){
     this.cities.push(cityToSave);
     localStorage.setItem("favouriteCities",JSON.stringify(this.cities));
-    //console.log("save()");
     this.updated.next(this.cities); //Metemos cities en el Subject
   }else{
     //console.log('This city has already been saved');
@@ -59,3 +55,7 @@ export class SavedCitiesService {
   }
  
 }
+ /* 
+ This service manages the list of cities saved in the local storage.
+ Returns an Observable with changes in the cities list an can modify or delete the list
+  */

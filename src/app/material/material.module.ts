@@ -53,7 +53,7 @@ import {
     MatSlideToggleModule
   ],
   exports: [
-  MatButtonModule,
+    MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
@@ -79,3 +79,5 @@ import {
   declarations: []
 })
 export class MaterialModule { }
+
+/* Here components from material are imported and exported in order to not engrose the app.module (just imports MaterialModule )too much and get only the necessary elements */

@@ -23,7 +23,7 @@ export class WeatherNow {
     name: string;
     cod: number;
 
-    //Variables para el displayValues()
+    //Variables para el displayValues() : 
 
     result = new Array<Data>();
     aux : Data; 
@@ -74,12 +74,10 @@ export class WeatherNow {
             all: rx.clouds.all
         };
         if(rx.rain == undefined){
-            //console.log("rain undefined");
         }else{
         this.rain = rx.rain["3h"];
         }
         if(rx.snow == undefined){
-            //console.log("snow undefined");
         }else{
         this.snow = rx.snow["3h"];
         }
@@ -169,13 +167,15 @@ export class WeatherNow {
         
         
         return this.result;
+        //result is an Array<Data>
+        //Data is an object with a parameter and a value
     }
 
     checkAndSave(text: string, variable: any, additional: string = ''){
         
         if(!( variable === undefined || variable === null)){
             
-            this.aux = {
+            this.aux = { //aux is a Data object
                 parameter: text,
                 value: variable + additional
             };
@@ -186,4 +186,6 @@ export class WeatherNow {
     }
 }
 
-//This Object stores the information received from the API and prepares it to being displayed.
+/* This Object stores the information about a city's current weather received from the API and prepares it to being displayed in a mat table
+
+*/

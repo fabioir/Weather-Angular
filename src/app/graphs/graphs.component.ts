@@ -13,41 +13,39 @@ import { CloudsAndWindService } from './cloudsAndWind/clouds-and-wind.service';
 })
 export class GraphsComponent implements OnInit {
 
-  forecastValues : Array<Forecast>;
-  temperatures : number[];
-  temperaturesMax : number[];
-  temperaturesMin : number[];
+  forecastValues: Array<Forecast>;
+  temperatures: number[];
+  temperaturesMax: number[];
+  temperaturesMin: number[];
   rain: number[];
   snow: number[];
   dates: string[];
-  temperatureChart : Chart;
-  rainAndSnowChart : Chart;
-  cloudsAndWindChart : Chart;
-  //forecastValuesService: ForecastValuesService;
-  
+  temperatureChart: Chart;
+  rainAndSnowChart: Chart;
+  cloudsAndWindChart: Chart;
+
   constructor(
     private forecastValuesService: ForecastValuesService,
     private temperatureService: TemperatureService,
     private rainAndSnowService: RainAndSnowService,
     private cloudsAndWindService: CloudsAndWindService
-  ) { 
-
-    //this.forecastValuesService = forecastValuesService;
+  ) {
 
     this.forecastValues = forecastValuesService.getValues();
 
-    forecastValuesService.getUpdates().subscribe( values => {
+    forecastValuesService.getUpdates().subscribe(values => {
       this.forecastValues = values;
+      //If the city changes, charts do so
 
-      if(this.temperatureChart){
+      if (this.temperatureChart) {
         this.temperatureChart = undefined;
         this.temperature();
       }
-      if(this.rainAndSnowChart){
+      if (this.rainAndSnowChart) {
         this.rainAndSnowChart = undefined;
         this.rainAndSnow();
       }
-      if(this.cloudsAndWindChart){
+      if (this.cloudsAndWindChart) {
         this.cloudsAndWindChart = undefined;
         this.cloudsAndWind();
       }
@@ -55,39 +53,39 @@ export class GraphsComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log(this.forecastValues);
-    //console.log("Init of graphs components");
   }
 
-  temperature(){
-    if(this.temperatureChart === undefined){
-    this.forecastValues = this.forecastValuesService.getValues();
+  temperature() {
+    if (this.temperatureChart === undefined) {
+      this.forecastValues = this.forecastValuesService.getValues();
 
-    this.temperatureChart = this.temperatureService.getTemperatureChart(this.forecastValues);
-    }else{
+      this.temperatureChart = this.temperatureService.getTemperatureChart(this.forecastValues);
+    } else {
+      //Makes the chart dissapear
       this.temperatureChart = undefined;
     }
-  
+
   }
 
-  rainAndSnow(){
-    if(this.rainAndSnowChart === undefined){
-    this.forecastValues = this.forecastValuesService.getValues();
+  rainAndSnow() {
+    if (this.rainAndSnowChart === undefined) {
+      this.forecastValues = this.forecastValuesService.getValues();
 
-    this.rainAndSnowChart = this.rainAndSnowService.getRainAndSnowChart(this.forecastValues);
-    }else{
+      this.rainAndSnowChart = this.rainAndSnowService.getRainAndSnowChart(this.forecastValues);
+    } else {
       this.rainAndSnowChart = undefined;
     }
   }
 
-  cloudsAndWind(){
-    if(this.cloudsAndWindChart === undefined){
-    this.forecastValues = this.forecastValuesService.getValues();
+  cloudsAndWind() {
+    if (this.cloudsAndWindChart === undefined) {
+      this.forecastValues = this.forecastValuesService.getValues();
 
-    this.cloudsAndWindChart = this.cloudsAndWindService.getCloudsAndWindChart(this.forecastValues);
-    }else{
+      this.cloudsAndWindChart = this.cloudsAndWindService.getCloudsAndWindChart(this.forecastValues);
+    } else {
       this.cloudsAndWindChart = undefined;
     }
   }
-    
+
 }
+/* This component shows and deletes the charts and obtains them from the services */

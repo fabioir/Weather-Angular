@@ -20,8 +20,7 @@ export class LogService {
   cities : Array<SavedCity>;
   updated = new Subject();
   exists : Subject<boolean>;
-  currentUser : UserServer;
-  //snackBar : MatSnackBar;
+  currentUser : UserServer; //Holds the info of the current logged user
 
   commonUrl = "http://localhost:8080/citiesservice-server/services/rest/log/log";
   contentType = 'application/json';
@@ -36,8 +35,10 @@ export class LogService {
   ) { }
 
   getUpdates(): Observable<boolean>{
+    //Observable indicating if someone is logged in
     return <Observable<boolean>> this.updated.asObservable();
   }
+
   closeSession(){
     if(this.currentUser === undefined){
       this.updated.next(false);
@@ -46,54 +47,18 @@ export class LogService {
     
     //save to db favourite cities
     this.currentUser.setFromList(this.savedCitiesService.getSavedCities());
-
+    // Here I should save the cities that don`t exist yet in the server
     localStorage.removeItem("session");
     localStorage.removeItem("expires");
     localStorage.removeItem("password");
     
     this.updateSettings("CITIES",this.currentUser.favouriteCities);
-    /*this.http.put(this.commonUrl,this.updateCitiesBody(),httpOptions).subscribe(rx => {}, error=>{
-      console.log("There has been a problen closing session.");
-    });*/
+    
 
     this.savedCitiesService.deleteCities();
       this.updated.next(false);
   }
 
-  /*updateCitiesBody(): string {
-    return `{
-      "filter": {
-        "USERNAME": "` + this.currentUser.username + `"
-      },
-      "data": {
-        "CITIES": "` + this.currentUser.favouriteCities + `"	
-      }
-     }`;
-  }*/
-   /*
-   //Try to build a recursive function to make a unique query to the server
-   while(leaves.length > 1){
-    console.log(leaves.length);
-    leaves = this.branch(leaves);
-    console.log(leaves.length);
-    }
-    console.log(leaves.toString());
-    this.updated.next(false);
-  }
-
-  branch(leaves : Array<string>): Array<string>{
-    let aux = new Array<string>();
-    let i = 0;
-    if(leaves.length % 2 !== 0){
-      //Make sure number of leaves is not odd
-      leaves.push(leaves[0]);
-    }
-    for(i=0;i<=leaves.length-1;i=i+2){
-      aux.push(`{"lop" : ` + leaves[i] + `,"op" : "OR", "rop" : ` + leaves[i+1] + ` }`);
-      console.log(`{"lop" : ` + leaves[i] + `,"op" : "OR", "rop" : ` + leaves[i+1] + ` }`);
-    }
-    return aux;
-  }*/
 
   logIn(username: string, password: string){
     let httpOptions = {
@@ -104,7 +69,7 @@ export class LogService {
     };
     this.http.post<AuxServerData>(this.commonUrl + "/search",this.searchQuery(username),httpOptions).subscribe(res => {
       if(res.data.length != 1){
-        console.log("This user does not exist");
+        console.log("This user does not exist");//Or exists more than once (Impossible, USER is primary key)
         this.snackBar.open( "User does not exist: " + username, "Ok", {
           duration: 1500
         });
@@ -120,20 +85,22 @@ export class LogService {
         }
         
         localStorage.setItem("session",JSON.stringify(this.currentUser.username));
-        console.log(this.currentUser.expirationTime);
         if(isNumber(this.currentUser.expirationTime)){
         localStorage.setItem("expires",JSON.stringify(new Date().getTime() + this.currentUser.expirationTime));
         }else{
+          //Default expiration time: 1 minute
           localStorage.setItem("expires",JSON.stringify(new Date().getTime() + 60000));
           console.log("There has been a problem with expiration time: " + this.currentUser.expirationTime);
         }
         
         localStorage.setItem("password",JSON.stringify(this.currentUser.password));
+        //Should it be a token?
         this.updated.next(true);
         this.snackBar.open( "Logged as " + this.currentUser.username, "Ok", {
           duration: 1500
         });
       }else{
+        this.currentUser = undefined;
         this.updated.next(false);
         this.snackBar.open( "Wrong password", "Ok", {
           duration: 1500
@@ -267,3 +234,4 @@ export class LogService {
   
 
 }
+/* This service interacts with the Ontimize Server, with the service of users*/

@@ -1,9 +1,9 @@
 <div *ngIf=currentUser>
-    <h2>{{currentUser.username}} settings:</h2>
-  </div>
+  <h2>{{currentUser.username}} settings:</h2>
+</div>
 
 
-
+<!-- Sidenav that shows each setting susceptible of being adjusted/changed -->
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="buttons">
     <div>
@@ -47,39 +47,17 @@
 
 
     <!-- Slider for setting expiration time -->
-    
+
     <div align="center" *ngIf="time">
       <br>
-        <p>Minutes before a session expires:</p>
-    <mat-slider
-      class="slider"
-      thumbLabel
-      [displayWith]="formatLabel"
-      tickInterval="1"
-      min="1"
-      max="60"
-      [(ngModel)]="valueTime"
-      ></mat-slider>
+      <p>Minutes before a session expires:</p>
+      <mat-slider class="slider" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="60" [(ngModel)]="valueTime"></mat-slider>
 
       <div>
-          <button (click)="submitTime()" mat-raised-button>Go!</button>
+        <button (click)="submitTime()" mat-raised-button>Go!</button>
       </div>
       <br>
     </div>
-
-
-
-    
-    
-<!--
-
-    <div *ngIf=currentUser>
-      <p *ngFor="let city of currentUser.citiesList">
-        {{city.name}}
-      </p>
-    </div>
--->
-
 
   </mat-sidenav-content>
 </mat-sidenav-container>

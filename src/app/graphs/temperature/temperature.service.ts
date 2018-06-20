@@ -15,43 +15,47 @@ export class TemperatureService {
 
   constructor() { }
 
-  getTemperatureChart(forecast: Array<Forecast>): Chart{
-    
-    this.temperatures = forecast.map(item => { 
-      //console.log(item.main.temp);
-      return item.main.temp - 273.15;});
+  getTemperatureChart(forecast: Array<Forecast>): Chart {
 
-    this.temperaturesMax = forecast.map(item => { 
+    this.temperatures = forecast.map(item => {
       //console.log(item.main.temp);
-      return item.main.temp_max - 273.15;});
+      return item.main.temp - 273.15;
+    });
 
-    this.temperaturesMin = forecast.map(item => { 
+
+    this.temperaturesMax = forecast.map(item => {
       //console.log(item.main.temp);
-      return item.main.temp_min - 273.15;});
+      return item.main.temp_max - 273.15;
+    });
+
+    this.temperaturesMin = forecast.map(item => {
+      //console.log(item.main.temp);
+      return item.main.temp_min - 273.15;
+    });
 
     this.dates = forecast.map(item => {
       return item.dt_txt;
     });
 
-      this.chart = new Chart('temperature', {
-        type: 'line',
+    this.chart = new Chart('temperature', {
+      type: 'line',
       data: {
         labels: this.dates,
         datasets: [
-          { 
+          {
             label: 'temperature',
             data: this.temperatures,
             borderColor: "#3cba9f",
             fill: false,
             showLine: true
           },
-          { 
+          {
             label: 'Max temperature',
             data: this.temperaturesMax,
             borderColor: "#ff0000",
             fill: false
           },
-          { 
+          {
             label: 'Min temperature',
             data: this.temperaturesMin,
             borderColor: "#0000FF",
@@ -60,11 +64,11 @@ export class TemperatureService {
         ]
       },
       options: {
-       
+
         legend: {
           display: true,
           labels: {
-            
+
           }
         },
         scales: {
@@ -76,10 +80,11 @@ export class TemperatureService {
           }],
         }
       }
-     }); 
+    });
 
-     return this.chart;
+    return this.chart;
   }
 
 }
- 
+
+/* This service gets the forecast vakues formated and returns a chart*/

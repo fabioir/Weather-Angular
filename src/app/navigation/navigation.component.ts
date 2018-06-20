@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input} from '@angular/core';
 import  { SavedCitiesService } from '../saved-cities.service';
 import { SavedCity } from '../savedCity';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -49,16 +49,19 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
+    //Unsubscribe from Observables to avoid inefficiency
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
     this.logSubscription.unsubscribe();
+    //End the interval
     clearInterval(this.intervalCheck);
   }
 
   checkExpiration() {
+    //Checks if the session has expired and logs out if it has
     let time = JSON.parse(localStorage.getItem("expires"));
     if(((new Date().getTime())>time)&&(time !== null)){
-      console.log("Problem with expiration time: " + time);
+      console.log("Problem with expiration time: " + time); //Sometimes doesn't work properly
       this.toggleSession();
       localStorage.removeItem("session");
       localStorage.removeItem("password");
@@ -69,10 +72,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
     if(((new Date().getTime())<time)&&(time !== null)&&!this.logged){
-      //Log when refreshing
+      //Log in when refreshing if time has not expired and session was not closed
       let username = JSON.parse(localStorage.getItem("session"));
       let password = JSON.parse(localStorage.getItem("password"));
       this.logService.logIn(username,password);
+      //Sets the previous expiration time to avoid restarting the count
       this.logSubscription2 = this.logService.getUpdates().subscribe(logged => {
         if(logged){
       localStorage.setItem("expires",time);
@@ -89,7 +93,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   getLog() {
     this.logSubscription = this.logService.getUpdates().subscribe(logged => {
       this.logged = logged;
-      this.profile = this.logService.currentUser.username;
+      this.profile = this.logService.currentUser.username; //For showing settings
       if((this.savedCities.length < 1) && this.opened){
         this.toggleFavourites();
       }
@@ -97,6 +101,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   getCities() {
+    //Asks the savedCities service to load the cities in the localhost
     this.savedCities = this.savedCitiesService.getSavedCities();
     this.citiesSubscription = this.savedCitiesService.getUpdates().subscribe(cities => {
       
@@ -119,6 +124,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.emptyList = 'block';
     }
   }
+
   deleteCities() {
     this.savedCitiesService.deleteCities();
     this.getCities();
@@ -127,18 +133,20 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   toggleSession() {
+
     if(this.logged){
       this.logService.closeSession();
       this.deleteCities();
       return;
     }
+    //Opens a dialog ref with a form to log in
     this.dialogRef = this.dialog.open(LogginDialogComponent);
 
     this.dialogRef.afterClosed().subscribe(data => {
       //when dialog is closed we try the session with the service's method
       if(data !== undefined){
       if(data.username !== undefined || data.password !== undefined){
-      this.logService.logIn(data.username,data.password)
+      this.logService.logIn(data.username,data.password); //Call the log service
       }
     }
     });
@@ -150,6 +158,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
 /*
-This component picks the saved cities from the SavedCitiesService and displays the links to city/cod
+This component picks the saved cities from the SavedCitiesService and displays the links to city/cod in a sidenav that can be hidden
 
+Also, presents a link to the inicial view and a menu with the options to log in, settings and about.
+
+Logged in indicator (Check icon).
 */ 

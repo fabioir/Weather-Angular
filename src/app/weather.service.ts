@@ -12,19 +12,20 @@ export class WeatherService {
 
 
 
-  constructor( private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getWeather(id: string): Observable<Object>{
+  getWeather(id: string): Observable<Object> {
     this.weatherURL = `https://api.openweathermap.org/data/2.5/weather?id=${id}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
     return this.http.get(this.weatherURL);
   }
-  getWeatherByCityName(name: string): Observable<Object>{
+  getWeatherByCityName(name: string): Observable<Object> {
     this.weatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${name}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
     return this.http.get(this.weatherURL);
   }
 
-  getForecast(id: string): Observable<Object>{
+  getForecast(id: string): Observable<Object> {
     this.weatherURL = `https://api.openweathermap.org/data/2.5/forecast?id=${id}&APPID=888b7bb3ed5f95fb9894b5c33589e6a6`;
     return this.http.get(this.weatherURL);
   }
 }
+/* Service that makes requests to the API "OpenWeather" and return its responses*/

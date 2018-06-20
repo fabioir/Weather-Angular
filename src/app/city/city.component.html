@@ -1,36 +1,31 @@
-
-
 <a (click)="showForecast = !showForecast" mat-button>
   <div class="badge">Toggle forecast:</div>
 </a>
 <span [hidden]="!showForecast">
   <app-graphs></app-graphs>
 </span>
-<br>  
+<br>
 <span>
   <button (click)="saveCity()" display="inline" mat-fab>Save city to favourites</button>
 </span>
 <p>
   This is the current weather data in {{cityShown.name}}:
- </p>
- 
-<div  align="center">
-<table mat-table [dataSource]="dataSource" id="tableWA">
-        <ng-container matColumnDef="parameter">
-                <mat-header-cell *matHeaderCellDef> Parameter </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.parameter}} </mat-cell>
-              </ng-container>
-          
-              <ng-container matColumnDef="value">
-                <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.value}}  </mat-cell>
-              </ng-container>
-              
-              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</table>
+</p>
+
+<div align="center">
+  <table mat-table [dataSource]="dataSource" id="tableWA">
+    <ng-container matColumnDef="parameter">
+      <mat-header-cell *matHeaderCellDef> Parameter </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.parameter}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.value}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
 </div>
 <br>
-
-
- 

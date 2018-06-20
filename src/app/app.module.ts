@@ -11,7 +11,6 @@ import { CityComponent } from './city/city.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 import { MaterialModule } from './material/material.module';
-import 'hammerjs';
 import { GraphsComponent } from './graphs/graphs.component';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -21,9 +20,10 @@ import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewUserComponent } from './new-user/new-user.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AboutComponent } from './about/about.component';
 
 
-@NgModule({
+@NgModule({ //Tells how to compile and launch the application
   declarations: [
     AppComponent,
     InitialComponent,
@@ -33,6 +33,7 @@ import { SettingsComponent } from './settings/settings.component';
     LogginDialogComponent,
     NewUserComponent,
     SettingsComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +47,8 @@ import { SettingsComponent } from './settings/settings.component';
     MatSnackBarModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent], //root component that Angular inserts into the index.html host web page
   entryComponents: [LogginDialogComponent]
 })
 export class AppModule { }
+

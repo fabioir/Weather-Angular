@@ -12,25 +12,27 @@ export class CloudsAndWindService {
   clouds: number[];
   dates: string[];
 
-  getCloudsAndWindChart(forecast: Array<Forecast>): Chart{
-    
-    this.clouds = forecast.map(item => { 
-      return item.clouds.all;});
+  getCloudsAndWindChart(forecast: Array<Forecast>): Chart {
 
-    this.wind = forecast.map(item => { 
-      return item.wind.speed;});
+    this.clouds = forecast.map(item => {
+      return item.clouds.all;
+    });
+
+    this.wind = forecast.map(item => {
+      return item.wind.speed;
+    });
 
     this.dates = forecast.map(item => {
       return item.dt_txt;
     });
 
-      this.chart = new Chart('cloudsAndWind', {
-        type: 'bar',
+    this.chart = new Chart('cloudsAndWind', {
+      type: 'bar',
       data: {
         labels: this.dates,
         datasets: [
-         
-          { 
+
+          {
             label: 'Wind speed',
             data: this.wind,
             borderColor: "#BADA55",
@@ -38,7 +40,7 @@ export class CloudsAndWindService {
             backgroundColor: "#aaaaaa",
             type: 'line',
             yAxisID: 'Wind'
-          }, { 
+          }, {
             label: 'Clouds percentage',
             data: this.clouds,
             borderColor: "#cccccc",
@@ -50,11 +52,11 @@ export class CloudsAndWindService {
         ]
       },
       options: {
-       
+
         legend: {
           display: true,
           labels: {
-            
+
           }
         },
         scales: {
@@ -67,21 +69,22 @@ export class CloudsAndWindService {
             ticks: {
               min: 0,
               max: Math.max(...this.wind)
-          }
-          },{
+            }
+          }, {
             id: 'Clouds',
             display: true,
             ticks: {
               min: 0,
               max: 100
-          }
+            }
           }],
         }
       }
-     }); 
-    
+    });
+
     return this.chart;
   }
 
   constructor() { }
 }
+/* This service gets the forecast vakues formated and returns a chart*/
