@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input} from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import  { SavedCitiesService } from '../saved-cities.service';
 import { SavedCity } from '../savedCity';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -26,6 +26,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   dialogRef: MatDialogRef<LogginDialogComponent>;
   logged = false;
   profile : string = "";
+  intervalCheck;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,13 +38,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
      //Trying to listen to a change in the path to refresh info
      this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
       this.getCities();
-      this.checkExpiration();
     });  
    }
 
   ngOnInit() {
     this.getCities();
     this.getLog();
+    this.intervalCheck  = setInterval(() => {    if(this.logged){this.checkExpiration()}; this.getCities();  },5000); //Periodically executes these functions
   }
 
 
@@ -51,6 +52,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
     this.logSubscription.unsubscribe();
+    clearInterval(this.intervalCheck);
   }
 
   checkExpiration() {
@@ -64,6 +66,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       window.alert("Session has expired");
     }
 
+
     if(((new Date().getTime())<time)&&(time !== null)&&!this.logged){
       let username = JSON.parse(localStorage.getItem("session"));
       let password = JSON.parse(localStorage.getItem("password"));
@@ -74,7 +77,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
         }
     });
     }
+    
   }
+
+  
+  
+
 
   getLog() {
     this.logSubscription = this.logService.getUpdates().subscribe(logged => {

@@ -17,7 +17,7 @@ import { CitiesServerService } from '../cities-server.service';
   templateUrl: './initial.component.html',
   styleUrls: ['./initial.component.css']
 })
-export class InitialComponent implements OnInit {
+export class InitialComponent implements OnInit { 
 
   rxCity : SavedCity;
   cityMatch : SavedCity;

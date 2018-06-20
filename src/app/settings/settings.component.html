@@ -1,13 +1,85 @@
-<p>
-  settings works!
-</p>
-  <div *ngIf=currentUser>
-  {{currentUser.username}}
-</div>
-
-
 <div *ngIf=currentUser>
-<p *ngFor="let city of currentUser.citiesList">
-{{city.name}}
-</p>
-</div>
+    <h2>{{currentUser.username}} settings:</h2>
+  </div>
+
+
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <div>
+      <p>
+        <button mat-button (click)="passwd()">Change password</button>
+      </p>
+    </div>
+    <div>
+      <p>
+        <button mat-button (click)="exprtn()">Set expiration time</button>
+      </p>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+
+    <!-- Form for password change-->
+    <div align="center" *ngIf="pwd">
+      <div class="password-change-form">
+        <div [formGroup]="formPassword">
+          <br>
+          <div>
+            <mat-form-field>
+              <input (keydown.enter)="submitPassword()" matInput type="password" formControlName="password" placeholder="password" id="password">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input (keydown.enter)="submitPassword()" matInput type="password" formControlName="password2" placeholder="repeat password"
+                id="password2">
+            </mat-form-field>
+          </div>
+          <div>
+            <button (click)="submitPassword()" mat-raised-button>Go!</button>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Slider for setting expiration time -->
+    
+    <div align="center" *ngIf="time">
+      <br>
+        <p>Minutes before a session expires:</p>
+    <mat-slider
+      class="slider"
+      thumbLabel
+      [displayWith]="formatLabel"
+      tickInterval="1"
+      min="1"
+      max="60"
+      [(ngModel)]="valueTime"
+      ></mat-slider>
+
+      <div>
+          <button (click)="submitTime()" mat-raised-button>Go!</button>
+      </div>
+      <br>
+    </div>
+
+
+
+    
+    
+<!--
+
+    <div *ngIf=currentUser>
+      <p *ngFor="let city of currentUser.citiesList">
+        {{city.name}}
+      </p>
+    </div>
+-->
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

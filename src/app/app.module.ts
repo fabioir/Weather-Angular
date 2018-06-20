@@ -17,12 +17,10 @@ import { GraphsComponent } from './graphs/graphs.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LogginDialogComponent } from './loggin-dialog/loggin-dialog.component';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewUserComponent } from './new-user/new-user.component';
 import { SettingsComponent } from './settings/settings.component';
-
-
 
 
 @NgModule({
@@ -44,7 +42,8 @@ import { SettingsComponent } from './settings/settings.component';
     AppRoutingModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

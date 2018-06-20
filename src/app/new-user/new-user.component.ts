@@ -41,7 +41,7 @@ export class NewUserComponent implements OnInit {
   }
 }
 
-class PasswordValidation {
+export class PasswordValidation {
 
   static MatchPassword(AC: AbstractControl){
     let p1 = AC.get('password');

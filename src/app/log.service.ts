@@ -8,6 +8,7 @@ import { UserServerRaw, UserServer, AuxServerData } from './userServer';
 import { WeatherService } from './weather.service';
 import { CitiesServerService } from './cities-server.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class LogService {
   updated = new Subject();
   exists : Subject<boolean>;
   currentUser : UserServer;
-
+  //snackBar : MatSnackBar;
 
   commonUrl = "http://localhost:8080/citiesservice-server/services/rest/log/log";
   contentType = 'application/json';
@@ -29,7 +30,8 @@ export class LogService {
     private savedCitiesService: SavedCitiesService,
     private http: HttpClient,
     private citiesServerService : CitiesServerService,
-    private router : Router
+    private router : Router,
+    private snackBar : MatSnackBar
   ) { }
 
   getUpdates(): Observable<boolean>{
@@ -40,12 +42,7 @@ export class LogService {
       this.updated.next(false);
       return;
     }
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  this.contentType,
-        'Authorization': this.authorization
-      })
-    };
+    
     //save to db favourite cities
     this.currentUser.setFromList(this.savedCitiesService.getSavedCities());
 
@@ -53,15 +50,16 @@ export class LogService {
     localStorage.removeItem("expires");
     localStorage.removeItem("password");
     
-    this.http.put(this.commonUrl,this.updateBody(),httpOptions).subscribe(rx => {}, error=>{
+    this.updateSettings("CITIES",this.currentUser.favouriteCities);
+    /*this.http.put(this.commonUrl,this.updateCitiesBody(),httpOptions).subscribe(rx => {}, error=>{
       console.log("There has been a problen closing session.");
-    });
+    });*/
 
     this.savedCitiesService.deleteCities();
       this.updated.next(false);
   }
 
-  updateBody(): string {
+  /*updateCitiesBody(): string {
     return `{
       "filter": {
         "USERNAME": "` + this.currentUser.username + `"
@@ -70,7 +68,7 @@ export class LogService {
         "CITIES": "` + this.currentUser.favouriteCities + `"	
       }
      }`;
-  }
+  }*/
    /*
    //Try to build a recursive function to make a unique query to the server
    while(leaves.length > 1){
@@ -118,11 +116,18 @@ export class LogService {
         }
         
         localStorage.setItem("session",JSON.stringify(this.currentUser.username));
-        localStorage.setItem("expires",JSON.stringify(new Date().getTime() + 60000));
+        localStorage.setItem("expires",JSON.stringify(new Date().getTime() + (this.currentUser.expirationTime)||60000));
+        
         localStorage.setItem("password",JSON.stringify(this.currentUser.password));
         this.updated.next(true);
+        this.snackBar.open( "Logged as " + this.currentUser.username, "Ok", {
+          duration: 1500
+        });
       }else{
         this.updated.next(false);
+        this.snackBar.open( "Wrong password", "Ok", {
+          duration: 1500
+        });
       }
     }, error => {
       console.log("Error trying to log in.");
@@ -136,7 +141,7 @@ export class LogService {
       "filter": {
         "USERNAME": "` + username + `"
       },
-      "columns":[ "USERNAME","PASSWORD","CITIES"]
+      "columns":[ "USERNAME","PASSWORD","CITIES","EXPIRES"]
      }`;
   }
   
@@ -155,6 +160,10 @@ export class LogService {
         this.currentUser = new UserServer(res);
         console.log("this user exists");
         if(this.currentUser.username == username){
+          this.snackBar.open("This username is not available", "Ok", {
+            duration: 1500
+          });
+          this.currentUser = undefined;
           return;
         }
       }else{
@@ -162,6 +171,9 @@ export class LogService {
         console.log(`user doesn't exist so we create it`);
         this.http.post(this.commonUrl,this.insertBody(username, password),httpOptions).subscribe(i => {
           //console.log(i);
+          this.snackBar.open( "User created: " + username, "Ok", {
+            duration: 1500
+          });
           this.logIn(username,password)
           this.router.navigate(['initial']); 
         }, error =>{
@@ -180,10 +192,68 @@ export class LogService {
       "data" : {
         "USERNAME": "` + username + `",
         "PASSWORD": "` + password + `",
-        "CITIES": ""	
+        "CITIES": "",
+        "EXPIRES": 60000
         }
      }`;
   }
 
+  updateSettings(paramName: string, value: string, settings?){
+
+    const params = ["USERNAME", "PASSWORD", "CITIES", "EXPIRES"];
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  this.contentType,
+        'Authorization': this.authorization
+      })
+    };
+
+    if(params.includes(paramName)){
+      if(paramName !== "EXPIRES"){
+        value = `"` + value + `"`;
+      }
+      this.http.put(this.commonUrl,this.updateBody(this.currentUser.username, paramName, value),httpOptions).subscribe(rx => {
+        if(settings){
+          let text = paramName;
+          switch(paramName){
+            case "PASSWORD":
+            text = "Password successfully"
+            break;
+
+            case "EXPIRES":
+            text = "Expiration time successfully"
+            break;
+
+            default:
+            break;
+          }
+        this.snackBar.open( text + " changed", "Ok", {
+          duration: 1500
+        });
+        }
+      }, error=>{
+        console.log("There has been a problen updating settings. \nbody: " + this.updateBody(this.currentUser.username, paramName, value));
+
+      });
+
+    }else{
+      console.log(paramName + " is not included");
+    }
+
+  }
+
+  updateBody(username: string, param: string, data: string): string{
+
+   return`{
+      "filter": {
+        "USERNAME": "` + username + `"
+      },
+      "data": {
+        "` + param + `": ` + data + `	
+      }
+     }`;
+  }
+  
 
 }
