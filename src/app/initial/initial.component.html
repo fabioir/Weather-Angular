@@ -5,8 +5,9 @@
 
     <div>
 
-      <input (keydown.enter)="search()" [(ngModel)]="city" placeholder="Search city" />
-
+      <mat-form-field>
+        <input (keydown.enter)="search()" [(ngModel)]="city" placeholder="Search city" matInput/>
+      </mat-form-field>
       <h1 [ngStyle]="{'display':loading}">Searching...</h1>
 
     </div>
