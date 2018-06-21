@@ -48,7 +48,8 @@
         <a *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
           <div class="badge"> {{savedCity.name}} </div>
         </a>
-        <a mat-button (click)="deleteCities()" color="warn">Delete all</a>
+        <a mat-button *ngIf="!youSureButton" (click)="youSure()" color="warn">Delete all</a>
+
       </mat-sidenav>
 
       <mat-sidenav-content>
@@ -57,7 +58,15 @@
         <br>
       </mat-sidenav-content>
     </mat-sidenav-container>
-
+    <div class="delete-option">
+      <span align="center">
+        <p align="center" *ngIf="youSureButton">This is going to delete all yor favourite cities when you log out. Are you sure? </p>
+        <div align="center">
+          <a mat-button *ngIf="youSureButton" (click)="deleteCities()" color="warn">Yes</a>
+          <a mat-button *ngIf="youSureButton" (click)="notSure()">No</a>
+        </div>
+      </span>
+    </div>
   </div>
 
 </div>

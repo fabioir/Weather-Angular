@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LogginDialogComponent } from '../loggin-dialog/loggin-dialog.component';
 import { LogService } from '../log.service';
-
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-navigation',
@@ -28,13 +28,15 @@ export class NavigationComponent implements OnInit, OnDestroy {
   logged = false;
   profile: string = "";
   intervalCheck;
+  youSureButton = false;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private savedCitiesService: SavedCitiesService,
     private logService: LogService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar : MatSnackBar
   ) {
     //Trying to listen to a change in the path to refresh info
     this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
@@ -93,6 +95,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   toggleFavourites() {
+    if(this.youSureButton){
+      this.youSureButton = false;
+    }
     if (this.notEmpty) {
       this.opened = !this.opened;
       this.emptyList = 'none';
@@ -103,10 +108,19 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   deleteCities() {
+    this.youSureButton = false;
     this.savedCitiesService.deleteCities();
     this.getCities();
     this.opened = false;
     this.notEmpty = false;
+    this.snackBar.open("Favourite cities have been deleted", "Ok");
+  }
+
+  youSure(){
+    this.youSureButton = true; //Activates the button to deleteCities()
+  }
+  notSure(){
+    this.youSureButton = false;
   }
 
   toggleSession() {
