@@ -9,6 +9,16 @@
 
       <span class="example-spacer"></span>
 
+      <div>
+        <a *ngIf="logged" mat-button routerLink="/settings">{{profile}}</a>
+      </div>
+
+      <div>
+        <a *ngIf="!logged" mat-button (click)="toggleSession()">Log in</a>
+      </div>
+
+      <span class="example-spacer"></span>
+
       <mat-icon *ngIf="logged">check_circle</mat-icon>
 
       <span class="example-spacer"></span>
@@ -23,7 +33,7 @@
         </div>
 
         <div>
-          <a *ngIf="logged" mat-button routerLink="/settings" color="primary">{{profile}}</a>
+          <a *ngIf="logged" mat-button routerLink="/settings" color="primary">Settings</a>
         </div>
 
         <div>
