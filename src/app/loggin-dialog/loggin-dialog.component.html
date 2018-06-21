@@ -1,28 +1,34 @@
 <div align="center">
 
-<h1 mat-dialog-title>Log In</h1>
+    <h1 mat-dialog-title>Log In</h1>
 
-<mat-dialog-content>
-    <div [formGroup]="form">
-        <div>
-        <mat-form-field>
-           <input (keydown.enter)="submit()" matInput formControlName="username" placeholder="username">
-        </mat-form-field>
-        </div>
-        <div>
-        <mat-form-field>
-            <input (keydown.enter)="submit()" matInput type="password" formControlName="password" placeholder="password">
-        </mat-form-field>
-        </div>
-    </div>
-</mat-dialog-content>
+    <mat-dialog-content>
+        <div [formGroup]="form">
+            <div>
+                <mat-form-field>
+                    <input formControlName="username" (keydown.enter)="submit()" matInput formControlName="username" placeholder="username" class="form-control"
+                        id="username" name="username">
+                </mat-form-field>
+                <div *ngIf="minLengthError" class="alert alert-danger">Username is too short</div>
+                <div *ngIf="maxLengthError" class="alert alert-danger">Username is too long</div>
+                <div *ngIf="usernameRequiredError" class="alert alert-danger">Ussername is required</div>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input (keydown.enter)="submit()" matInput type="password" formControlName="password" placeholder="password">
+                </mat-form-field>
+                <div *ngIf="passwordRequiredError" class="alert alert-danger">Password is required</div>
+            </div>
 
-<mat-dialog-actions>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
         <button mat-raised-button mat-dialog-close>Cancel</button>
         <span class="example-spacer"></span>
         <button mat-raised-button (click)="submit()">Log in</button>
         <span class="example-spacer"></span>
         <a (click)="newUser()" mat-button>Sign up</a>
-</mat-dialog-actions>
+    </mat-dialog-actions>
 
 </div>

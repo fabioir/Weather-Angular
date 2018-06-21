@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SavedCitiesService } from './saved-cities.service';
 import { SavedCity } from './savedCity';
 import { Observable, Subject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { ServerResponse, ServedCity } from './servedCity';
 import { UserServerRaw, UserServer, AuxServerData } from './userServer';
 import { WeatherService } from './weather.service';
@@ -47,7 +47,10 @@ export class LogService {
     
     //save to db favourite cities
     this.currentUser.setFromList(this.savedCitiesService.getSavedCities());
-    // Here I should save the cities that don`t exist yet in the server
+    //save the cities that don`t exist yet in the server
+    this.currentUser.citiesList = this.savedCitiesService.getSavedCities();
+    this.citiesServerService.upload(this.currentUser.citiesList);
+    
     localStorage.removeItem("session");
     localStorage.removeItem("expires");
     localStorage.removeItem("password");
@@ -231,7 +234,37 @@ export class LogService {
       }
      }`;
   }
-  
+
+  deleteUser(user: UserServer){
+
+   let deleteBody =  this.deleteBody(user.username);
+   let httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  this.contentType,
+      'Authorization': this.authorization
+    })
+  };
+    this.closeSession();
+
+    this.http.request(new HttpRequest("DELETE",this.commonUrl,deleteBody,{headers: new HttpHeaders({
+      'Content-Type':  this.contentType,
+      'Authorization': this.authorization
+    }) })).subscribe(rx => {
+      console.log("Deleted");
+
+      this.router.navigate(['/initial']);
+      });
+
+
+  }
+  deleteBody(username: string): string{
+
+    return`{
+       "filter": {
+         "USERNAME": "` + username + `"
+       }
+      }`;
+   }
 
 }
 /* This service interacts with the Ontimize Server, with the service of users*/

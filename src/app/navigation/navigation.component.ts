@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, Input} from '@angular/core';
-import  { SavedCitiesService } from '../saved-cities.service';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { SavedCitiesService } from '../saved-cities.service';
 import { SavedCity } from '../savedCity';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Location } from '@angular/common';
@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { LogginDialogComponent } from '../loggin-dialog/loggin-dialog.component';
 import { LogService } from '../log.service';
 
+
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -15,17 +16,17 @@ import { LogService } from '../log.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
 
-  savedCities : SavedCity[];
-  routeSubscription : Subscription;
-  citiesSubscription : Subscription;
-  logSubscription : Subscription;
-  logSubscription2 : Subscription;
+  savedCities: SavedCity[];
+  routeSubscription: Subscription;
+  citiesSubscription: Subscription;
+  logSubscription: Subscription;
+  logSubscription2: Subscription;
   @Input() opened: boolean = false;
   notEmpty = false;
   emptyList = 'none';
   dialogRef: MatDialogRef<LogginDialogComponent>;
   logged = false;
-  profile : string = "";
+  profile: string = "";
   intervalCheck;
 
   constructor(
@@ -35,16 +36,16 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private logService: LogService,
     public dialog: MatDialog
   ) {
-     //Trying to listen to a change in the path to refresh info
-     this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
+    //Trying to listen to a change in the path to refresh info
+    this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
       this.getCities();
-    });  
-   }
+      this.relog();
+    });
+  }
 
   ngOnInit() {
     this.getCities();
     this.getLog();
-    this.intervalCheck  = setInterval(() => {    if(this.logged){this.checkExpiration()}; this.getCities();  },5000); //Periodically executes these functions
   }
 
 
@@ -53,48 +54,24 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
     this.logSubscription.unsubscribe();
-    //End the interval
-    clearInterval(this.intervalCheck);
   }
 
-  checkExpiration() {
-    //Checks if the session has expired and logs out if it has
-    let time = JSON.parse(localStorage.getItem("expires"));
-    if(((new Date().getTime())>time)&&(time !== null)){
-      console.log("Problem with expiration time: " + time); //Sometimes doesn't work properly
-      this.toggleSession();
-      localStorage.removeItem("session");
-      localStorage.removeItem("password");
-      localStorage.removeItem("expires");
-      localStorage.removeItem("favouriteCities");
-      window.alert("Session has expired");
+  relog() {
+    let username = JSON.parse(localStorage.getItem("session"));
+    let password = JSON.parse(localStorage.getItem("password"));
+    if ((username !== null) && (password != null)) {
+      this.logService.logIn(username, password);
     }
-
-
-    if(((new Date().getTime())<time)&&(time !== null)&&!this.logged){
-      //Log in when refreshing if time has not expired and session was not closed
-      let username = JSON.parse(localStorage.getItem("session"));
-      let password = JSON.parse(localStorage.getItem("password"));
-      this.logService.logIn(username,password);
-      //Sets the previous expiration time to avoid restarting the count
-      this.logSubscription2 = this.logService.getUpdates().subscribe(logged => {
-        if(logged){
-      localStorage.setItem("expires",time);
-        }
-    });
-    }
-    
   }
 
-  
-  
+
 
 
   getLog() {
     this.logSubscription = this.logService.getUpdates().subscribe(logged => {
       this.logged = logged;
       this.profile = this.logService.currentUser.username; //For showing settings
-      if((this.savedCities.length < 1) && this.opened){
+      if ((this.savedCities.length < 1) && this.opened) {
         this.toggleFavourites();
       }
     });
@@ -104,22 +81,22 @@ export class NavigationComponent implements OnInit, OnDestroy {
     //Asks the savedCities service to load the cities in the localhost
     this.savedCities = this.savedCitiesService.getSavedCities();
     this.citiesSubscription = this.savedCitiesService.getUpdates().subscribe(cities => {
-      
+
       this.savedCities = cities;
-      if (cities.length > 0){
+      if (cities.length > 0) {
         this.notEmpty = true;
         this.emptyList = 'none';
-      }else{
+      } else {
         this.notEmpty = false;
       }
     });
   }
 
   toggleFavourites() {
-    if(this.notEmpty){
-    this.opened = !this.opened;
-    this.emptyList = 'none';
-    }else{
+    if (this.notEmpty) {
+      this.opened = !this.opened;
+      this.emptyList = 'none';
+    } else {
       this.opened = false;
       this.emptyList = 'block';
     }
@@ -134,7 +111,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   toggleSession() {
 
-    if(this.logged){
+    if (this.logged) {
       this.logService.closeSession();
       this.deleteCities();
       return;
@@ -144,16 +121,16 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
     this.dialogRef.afterClosed().subscribe(data => {
       //when dialog is closed we try the session with the service's method
-      if(data !== undefined){
-      if(data.username !== undefined || data.password !== undefined){
-      this.logService.logIn(data.username,data.password); //Call the log service
+      if (data !== undefined) {
+        if (data.username !== undefined || data.password !== undefined) {
+          this.logService.logIn(data.username, data.password); //Call the log service
+        }
       }
-    }
     });
 
   }
 
-  
+
 }
 
 
@@ -163,4 +140,4 @@ This component picks the saved cities from the SavedCitiesService and displays t
 Also, presents a link to the inicial view and a menu with the options to log in, settings and about.
 
 Logged in indicator (Check icon).
-*/ 
+*/

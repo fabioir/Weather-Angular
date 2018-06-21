@@ -24,7 +24,6 @@ export class CitiesServerService {
   ) { }
 
   upload(citiesList: Array<SavedCity>): Boolean {
-
     //Used to fill in the database
     if (citiesList === undefined) {
       return false;
@@ -40,8 +39,11 @@ export class CitiesServerService {
     citiesList.forEach(city => {
       this.http.post(this.commonUrl, city.insertBody(), httpOptions).subscribe(rx => {
         //We subscribe for the insert results
+        console.log("Upload request results");
+        console.log(rx);
       },
         error => {
+          console.log("Tried to upload an existing city: " + city.name);
           ok = false;
         });
     });

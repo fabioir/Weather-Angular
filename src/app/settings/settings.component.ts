@@ -18,9 +18,12 @@ export class SettingsComponent implements OnInit {
   logSubscription: Subscription;
   opened = true;
   formPassword: FormGroup;
+  formDelete: FormGroup;
   valueTime = 1;
   pwd = true;
   time = false;
+  deleteAccount = false;
+  deleteAccount1 = false;
 
 
   constructor(
@@ -37,6 +40,8 @@ export class SettingsComponent implements OnInit {
     this.isLogged();
 
     this.buildPsswdForm();
+
+    this.buildDeleteForm();
   }
   ngOnDestroy() {
     this.logSubscription.unsubscribe();
@@ -59,6 +64,13 @@ export class SettingsComponent implements OnInit {
     }, {
         validator: PasswordValidation.MatchPassword
       })
+  }
+
+  buildDeleteForm() {
+    //Form to delete account
+    this.formDelete = this.formBuilder.group({
+      password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
+    });
   }
 
   isLogged() {
@@ -86,15 +98,40 @@ export class SettingsComponent implements OnInit {
     this.log.updateSettings("EXPIRES", (this.valueTime * 60 * 1000).toString(), true);
   }
 
+  submitDelete() {
+    if (this.formDelete.valid) {
+      if (this.formDelete.value.password === this.currentUser.password) {
+        this.log.deleteUser(this.currentUser);
+        console.log("Deleting user");
+      }
+    }
+  }
+
 
 
   //Methods to show different contents
   passwd() {
     this.pwd = true;
     this.time = false;
+    this.deleteAccount = false;
+    this.deleteAccount1 = false;
   }
   exprtn() {
     this.pwd = false;
     this.time = true;
+    this.deleteAccount = false;
+    this.deleteAccount1 = false;
+  }
+  delAccnt() {
+    this.pwd = false;
+    this.time = false;
+    this.deleteAccount = false;
+    this.deleteAccount1 = true;
+  }
+  showDelete() {
+    this.pwd = false;
+    this.time = false;
+    this.deleteAccount = true;
+    this.deleteAccount1 = false;
   }
 }

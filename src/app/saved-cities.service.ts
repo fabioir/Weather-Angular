@@ -27,7 +27,7 @@ export class SavedCitiesService {
       return [];
     }
     JSON.parse(localStorage.getItem("favouriteCities")).forEach(element => { //Get back from LS
-      this.city = new SavedCity(element.name, element.id);
+      this.city = new SavedCity(element.name, element.id, element.country, element.coord.lon, element.coord.lat);
       this.cities.push(this.city);
       this.updated.next(this.cities); //Return Array<SavedCity> from the Observable
       return this.cities;

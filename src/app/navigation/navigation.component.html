@@ -1,4 +1,4 @@
-<div (mousedown)="checkExpiration()">
+<div>
 
   <!--Main navigation bar. Always visible-->
   <mat-toolbar color="primary">
@@ -40,7 +40,7 @@
   </mat-toolbar>
 
 
-  <p [ngStyle]="{'display': emptyList}">There are no cities saved to favourites</p>
+  <!--<p [ngStyle]="{'display': emptyList}">There are no cities saved to favourites</p>-->
 
   <div [ngStyle]="{'visibility': opened? '':'hidden'}">
     <mat-sidenav-container class="example-container">

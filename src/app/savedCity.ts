@@ -35,4 +35,4 @@ export class SavedCity{
            }`;
     }
 }
-//This object is for displaying and linking to the searched cities. It is used too for storing favourite cities.
+//This object is for displaying and linking to the searched cities. It is used too for storing favourite cities. 

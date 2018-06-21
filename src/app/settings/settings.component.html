@@ -16,6 +16,11 @@
         <button mat-button (click)="exprtn()">Set expiration time</button>
       </p>
     </div>
+    <div>
+      <p>
+        <button mat-button color="warn" (click)="delAccnt()">Delete account</button>
+      </p>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -28,12 +33,13 @@
           <br>
           <div>
             <mat-form-field>
-              <input (keydown.enter)="submitPassword()" matInput type="password" formControlName="password" placeholder="password" id="password">
+              <input (keydown.enter)="submitPassword()" matInput type="password" formControlName="password" placeholder="new password"
+                id="password">
             </mat-form-field>
           </div>
           <div>
             <mat-form-field>
-              <input (keydown.enter)="submitPassword()" matInput type="password" formControlName="password2" placeholder="repeat password"
+              <input (keydown.enter)="submitPassword()" matInput type="password" formControlName="password2" placeholder="repeat new password"
                 id="password2">
             </mat-form-field>
           </div>
@@ -52,11 +58,52 @@
       <br>
       <p>Minutes before a session expires:</p>
       <mat-slider class="slider" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="60" [(ngModel)]="valueTime"></mat-slider>
-
+      <br>
       <div>
         <button (click)="submitTime()" mat-raised-button>Go!</button>
       </div>
       <br>
+      <br>
+    </div>
+
+    <!-- Button and form to delete the account -->
+    <div align="center" *ngIf="deleteAccount1">
+      <br>
+      <br>
+      <div>
+        <p>¿Are you sure you want to permanently delete your account?</p>
+      </div>
+      <br>
+      <div>
+        <span>
+          <button color="warn" (click)="showDelete()" mat-raised-button>Yes, let's delete my account</button>
+        </span>
+        <span>
+          <a routerLink="/initial" mat-raised-button>No, I shouldn't do this</a>
+        </span>
+      </div>
+      <br>
+      <br>
+    </div>
+    <div align="center" *ngIf="deleteAccount">
+      <div class="password-change-form">
+        <div [formGroup]="formDelete">
+          <br>
+          <div>
+            <mat-form-field>
+              <input (keydown.enter)="submitDelete()" matInput type="password" formControlName="password" placeholder="Confirm your password"
+                id="delPasswd">
+            </mat-form-field>
+          </div>
+          <br>
+          <br>
+          <div>
+            <button (click)="submitDelete()" color="warn" mat-raised-button>Delete</button>
+          </div>
+          <br>
+          <br>
+        </div>
+      </div>
     </div>
 
   </mat-sidenav-content>

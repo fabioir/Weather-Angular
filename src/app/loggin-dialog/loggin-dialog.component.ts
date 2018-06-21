@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { Router } from "@angular/router";
 
@@ -12,6 +12,12 @@ export class LogginDialogComponent implements OnInit {
 
   form: FormGroup;
   description: string;
+  username: string;
+  password: string;
+  minLengthError = false;
+  maxLengthError = false;
+  passwordRequiredError = false;
+  usernameRequiredError = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -20,15 +26,38 @@ export class LogginDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      username: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(20), Validators.required])],
-      password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
+    this.form = new FormGroup({
+      username: new FormControl(this.username, [Validators.minLength(5), Validators.maxLength(20), Validators.required]),
+      password: new FormControl(this.password, [Validators.required])
     });
+    
   }
-
+  
   submit(form) {
+    this.checkErrors();
     if (!this.form.valid) { return; }
     this.dialogRef.close(this.form.value);
+  }
+
+  checkErrors(){
+    this.minLengthError = this.maxLengthError = this.passwordRequiredError = this.usernameRequiredError = false;
+    if(this.form.get('username').errors !== null){
+      if(this.form.get('username').errors.minlength !== undefined){
+        this.minLengthError = true;
+      }
+      if(this.form.get('username').errors.maxLength !== undefined){
+        this.maxLengthError = true;
+      }
+      if(this.form.get('username').errors.required !== undefined){
+        this.usernameRequiredError = true;
+      }
+    }
+
+    if(this.form.get('password').errors !== null){
+      if(this.form.get('password').errors.required !== undefined){
+        this.passwordRequiredError = true;
+      }
+    }
   }
 
   newUser() {

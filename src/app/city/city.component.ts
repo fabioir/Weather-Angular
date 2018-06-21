@@ -59,7 +59,7 @@ export class CityComponent implements OnInit {
       //Put the values received in the object weatherNow
       this.weatherNow = new WeatherNow();
       this.weatherNow.set(<WeatherNow>rx);
-
+    
       //Display the values
       this.valuesDisplayed = this.weatherNow.displayValues();
       //dataSource is used to represent the data in the mat table
@@ -80,6 +80,8 @@ export class CityComponent implements OnInit {
   }
 
   saveCity() {
+    this.cityShown.country = this.weatherNow.sys.country;
+    this.cityShown.coord = this.weatherNow.coord;
     this.savedCitiesService.save(this.cityShown);
   }
 
