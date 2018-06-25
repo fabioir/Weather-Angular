@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Forecast } from './city/data';
-import { Observable, Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs';
+import { SavedCity } from './savedCity';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class ForecastValuesService {
 
   forecastValues = Array<Forecast>();
   updated = new Subject();
+  city: SavedCity;
 
   getUpdates(): Observable<Array<Forecast>>{
     return <Observable<Array<Forecast>>> this.updated.asObservable();
@@ -22,6 +24,15 @@ export class ForecastValuesService {
   getValues(): Array<Forecast> {
     return this.forecastValues;
   }
+
+  setCity(city: SavedCity){
+    this.city = city;
+  }
+
+  getCity(): SavedCity{
+    return this.city;
+  }
+  
   constructor() { }
 }
 

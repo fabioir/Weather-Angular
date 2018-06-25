@@ -16,7 +16,7 @@ export class TemperatureService {
   constructor() { }
 
   getTemperatureChart(forecast: Array<Forecast>): Chart {
-
+    
     this.temperatures = forecast.map(item => {
       //console.log(item.main.temp);
       return item.main.temp - 273.15;

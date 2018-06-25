@@ -21,6 +21,8 @@ import { ReactiveFormsModule} from '@angular/forms';
 import { NewUserComponent } from './new-user/new-user.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AboutComponent } from './about/about.component';
+import { InterceptorComponent } from './interceptor/interceptor.component';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 
 
@@ -35,6 +37,7 @@ import { AboutComponent } from './about/about.component';
     NewUserComponent,
     SettingsComponent,
     AboutComponent,
+    InterceptorComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,11 @@ import { AboutComponent } from './about/about.component';
     ReactiveFormsModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptorComponent,
+    multi: true,
+  }],
   bootstrap: [AppComponent], //root component that Angular inserts into the index.html host web page
   entryComponents: [LogginDialogComponent]
 })

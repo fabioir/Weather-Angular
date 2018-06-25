@@ -146,14 +146,14 @@ export class CitiesServerService {
   loadFavourites(cities: Array<string>) {
     //Queries every city by id in the user and stores it in localStorage as favourites
 
-    let httpOptions = {
+    /*let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': this.contentType,
         'Authorization': this.authorization
       })
-    };
+    };*/
     cities.forEach(city => {
-      this.http.post<ServerResponse>(this.commonUrl + "/search", this.complexSearchId(parseInt(city), "ID"), httpOptions).subscribe(rx =>
+      this.http.post<ServerResponse>(this.commonUrl + "/search", this.complexSearchId(parseInt(city), "ID")).subscribe(rx =>
         this.savedCitiesService.save(new SavedCity(rx.data[0].NAME, rx.data[0].ID.toString(), rx.data[0].COUNTRY, rx.data[0].LON, rx.data[0].LAT))
       );
     });

@@ -11,6 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { CitiesServerService } from '../cities-server.service';
 
+import { LogService } from '../log.service';
 
 @Component({
   selector: 'app-initial',
@@ -35,9 +36,13 @@ export class InitialComponent implements OnInit {
   constructor(
     private weatherService: WeatherService,
     private http: HttpClient,
-    private citiesServer: CitiesServerService
+    private citiesServer: CitiesServerService,
+    private log : LogService
   ) { }
 
+  good(){
+    this.log.goodLogIn("fabio13","fabio");
+  }
   ngOnInit() {
   }
 

@@ -3,3 +3,18 @@
     background: rgb(219, 219, 219);
     
 }
+
+.app-fab--absolute {
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
+    border-radius: 50%;
+    background-color: #f81994;
+  }
+  
+  @media(min-width: 1024px) {
+     .app-fab--absolute {
+      bottom: 1.5rem;
+      right: 1.5rem;
+    }
+  }

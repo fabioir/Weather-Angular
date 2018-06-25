@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'graph', component: GraphsComponent },
   { path: 'user', component: NewUserComponent },
   { path: 'settings', component: SettingsComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'about', component: AboutComponent },
+  { path: 'graphs/:id/:name', component: GraphsComponent }
 ];
 
 @NgModule({

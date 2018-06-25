@@ -27,7 +27,7 @@ export class LogginDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      username: new FormControl(this.username, [Validators.minLength(5), Validators.maxLength(20), Validators.required]),
+      username: new FormControl(this.username, [Validators.minLength(4), Validators.maxLength(20), Validators.required]),
       password: new FormControl(this.password, [Validators.required])
     });
     

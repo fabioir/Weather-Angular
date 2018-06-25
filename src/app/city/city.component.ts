@@ -13,6 +13,8 @@ import { MatTableDataSource } from '@angular/material';
 
 import { Data, Forecast, RespuestaForecast } from './data';
 
+import {MDCRipple} from '@material/ripple';
+
 @Component({
   selector: 'app-city',
   templateUrl: './city.component.html',
@@ -75,6 +77,7 @@ export class CityComponent implements OnInit {
       });
       //Updates the service with the current city forecasted values
       this.forecastValuesService.setValues(this.forecast);
+      this.forecastValuesService.setCity(this.cityShown);
 
     });
   }

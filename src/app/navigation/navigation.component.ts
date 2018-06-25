@@ -48,6 +48,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getCities();
     this.getLog();
+    
   }
 
 

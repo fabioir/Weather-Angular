@@ -1,13 +1,19 @@
-<a (click)="showForecast = !showForecast" mat-button>
-  <div class="badge">Toggle forecast:</div>
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+
+<a routerLink="/graphs/{{this.cityShown.id}}/{{this.cityShown.name}}" mat-raised-button>
+  <div class="badge" mat-raised-button >Show forecast</div>
 </a>
-<span [hidden]="!showForecast">
-  <app-graphs></app-graphs>
-</span>
 <br>
-<span>
-  <button (click)="saveCity()" display="inline" mat-fab>Save city to favourites</button>
-</span>
+<br>
+
+<button mat-button (click)="saveCity()" class="mdc-fab app-fab--absolute" aria-label="Favorite">
+  <span class="mdc-fab__icon material-icons">favorite</span>
+</button>
+
+
 <p>
   This is the current weather data in {{cityShown.name}}:
 </p>
