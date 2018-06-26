@@ -165,63 +165,11 @@ export class LogService {
     });
   }
 
-  /*logIn(username: string, password: string){
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  this.contentType,
-        'Authorization': this.authorization
-      })
-    };
-    this.http.post<AuxServerData>(this.commonUrl + "/search",this.searchQuery(username),httpOptions).subscribe(res => {
-      if(res.data.length != 1){
-        console.log("This user does not exist");//Or exists more than once (Impossible, USER is primary key)
-        this.snackBar.open( "User does not exist: " + username, "Ok", {
-          duration: 1500
-        });
-        return;
-      }
-      this.currentUser = new UserServer(res);
+  
 
-      if(this.currentUser.password === password){
-        this.savedCitiesService.deleteCities();
 
-        if(this.currentUser.citiesId[0] !== ""){
-        this.citiesServerService.loadFavourites(this.currentUser.citiesId);
-        }
-        
-        localStorage.setItem("session",JSON.stringify(this.currentUser.username));
-        if(isNumber(this.currentUser.expirationTime)){
-        
-        
-        
-        this.updated.next(true);
-        this.snackBar.open( "Logged as " + this.currentUser.username, "Ok", {
-          duration: 1500
-        });
-      }else{
-        this.currentUser = undefined;
-        this.updated.next(false);
-        this.snackBar.open( "Wrong password", "Ok", {
-          duration: 1500
-        });
-      }
-    }, error => {
-      console.log("Error trying to log in.");
-    });
-    
-  }*/
-
-  searchQuery(username: string): string {
-
-    return `{
-      "filter": {
-        "USERNAME": "` + username + `"
-      },
-      "columns":[ "USERNAME","PASSWORD","CITIES","EXPIRES"]
-     }`;
-  }
   createUser(username: string, password: string){
-    //Default Token for demo demouser
+    //Default Token for demo demouser. Don`t delete the demouser in the db because it would be complicated to create any other user afterwards
     localStorage.setItem("Token","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGlvbi10aW1lIjoxNTI4Nzk5MTY4MzgxLCJ1c2VybmFtZSI6ImRlbW8ifQ.vwEZijOag2iCSN0UPRTS8jqre1NGzHCrg6fVkDH2-mw")
     this.http.post(`${this.goodCommonUrl}/users/user`,`
     {
@@ -251,115 +199,11 @@ export class LogService {
       }
     });
   }
-  /*createUser(username: string, password: string){
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  this.contentType,
-        'Authorization': this.authorization
-      })
-    };
-    //first check if user exists
-    this.http.post<AuxServerData>(this.commonUrl + "/search",this.searchQuery(username),httpOptions).subscribe(
-      res => {
-        //user exists
-        if(res.data.length == 1){
-        this.currentUser = new UserServer(res);
-        console.log("this user exists");
-        if(this.currentUser.username == username){
-          this.snackBar.open("This username is not available", "Ok", {
-            duration: 1500
-          });
-          this.currentUser = undefined;
-          return;
-        }
-      }else{
-        //User doesn't exist
-        console.log(`user doesn't exist so we create it`);
-        this.http.post(this.commonUrl,this.insertBody(username, password),httpOptions).subscribe(i => {
-          //console.log(i);
-          this.snackBar.open( "User created: " + username, "Ok", {
-            duration: 1500
-          });
-          this.logIn(username,password)
-          this.router.navigate(['initial']); 
-        }, error =>{
-            console.log("Error inserting new user to database");
-            return;
-          });
-      }
-      }, error => {
-        console.log("Error searching user in database");
-        return;
-      });
-  }*/
-  insertBody(username: string, password: string) {
-    return `
-    {
-      "data" : {
-        "USERNAME": "` + username + `",
-        "PASSWORD": "` + password + `",
-        "CITIES": "",
-        "EXPIRES": 60000
-        }
-     }`;
-  }
+ 
+  
+  
 
-  updateSettings(paramName: string, value: string, settings?) {
-
-    const params = ["USERNAME", "PASSWORD", "CITIES", "EXPIRES"];
-
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': this.contentType,
-        'Authorization': this.authorization
-      })
-    };
-
-    if (params.includes(paramName)) {
-      if (paramName !== "EXPIRES") {
-        value = `"` + value + `"`;
-      }
-      this.http.put(this.commonUrl, this.updateBody(this.currentUser.username, paramName, value), httpOptions).subscribe(rx => {
-        if (settings) {
-          let text = paramName;
-          switch (paramName) {
-            case "PASSWORD":
-              text = "Password successfully"
-              break;
-
-            case "EXPIRES":
-              text = "Expiration time successfully"
-              break;
-
-            default:
-              break;
-          }
-          this.snackBar.open(text + " changed", "Ok", {
-            duration: 1500
-          });
-        }
-      }, error => {
-        console.log("There has been a problen updating settings. \nbody: " + this.updateBody(this.currentUser.username, paramName, value));
-
-      });
-
-    } else {
-      console.log(paramName + " is not included");
-    }
-
-  }
-
-  updateBody(username: string, param: string, data: string): string {
-
-    return `{
-      "filter": {
-        "USERNAME": "` + username + `"
-      },
-      "data": {
-        "` + param + `": ` + data + `	
-      }
-     }`;
-  }
+  
 
   deleteUser(user: UserServer) {
     let deleteBody = this.deleteBody(user.username);
