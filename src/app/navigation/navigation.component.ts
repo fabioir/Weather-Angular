@@ -62,8 +62,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   relog() {
     let token = localStorage.getItem("Token");
-    this.profile = localStorage.getItem("session").replace(/['"]+/g,'');
+    this.profile = localStorage.getItem("session");
     if ((token !== null) && (this.profile != null)) {
+      this.profile = this.profile.replace(/['"]+/g,'');
       this.logService.logRefresh();
     }
   }

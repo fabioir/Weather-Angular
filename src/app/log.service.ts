@@ -390,5 +390,14 @@ export class LogService {
       }`;
   }
 
+  updatePassword(password: string){
+    this.http.post(`${this.goodCommonUrl}/users/updatePassword`,`{ "PASSWORD" : "${password}"}`).subscribe(res => {
+      this.snackBar.open( `Password changed`, "Ok", {
+        duration: 2500
+      });
+    }, err => {
+      console.log("Something went wrong when changing the password");
+    });
+  }
 }
 /* This service interacts with the Ontimize Server, with the service of users*/

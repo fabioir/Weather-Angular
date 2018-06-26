@@ -83,7 +83,7 @@ export class SettingsComponent implements OnInit {
 
 
   changePassword(passwd: string) {
-    this.log.updateSettings("PASSWORD", passwd, true);
+    this.log.updatePassword(passwd);
   }
   submitPassword() {
     if (this.formPassword.valid) {
