@@ -1,0 +1,13 @@
+a {
+	text-decoration: none;
+	padding-bottom: 1px;
+	border-bottom: 1px solid #8d8df3;
+}
+
+.about-text {
+    width : 80%;
+    align-content: center;
+    position: relative;
+    margin-left: 10%;
+    margin-right: 10%;
+}
