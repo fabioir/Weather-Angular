@@ -73,7 +73,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
   getLog() {
     this.logSubscription = this.logService.getUpdates().subscribe(logged => {
       this.logged = logged;
+      if(this.logService.currentUser === undefined){
+        this.profile = "USER";
+      }else{
       this.profile = this.logService.currentUser.username; //For showing settings
+      }
       if ((this.savedCities.length < 1) && this.opened) {
         this.toggleFavourites();
       }

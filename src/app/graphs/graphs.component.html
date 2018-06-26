@@ -1,12 +1,12 @@
 <h1 align="center">{{city}}</h1>
 
+<div align="center">
+  <button (click)="temperature()" mat-button>Temperature</button>
 
-<button (click)="temperature()" mat-button>Temperature</button>
+  <button (click)="rainAndSnow()" mat-button>Rain and Snow</button>
 
-<button (click)="rainAndSnow()" mat-button>Rain and Snow</button>
-
-<button (click)="cloudsAndWind()" mat-button>Clouds and Wind</button>
-
+  <button (click)="cloudsAndWind()" mat-button>Clouds and Wind</button>
+</div>
 <div [hidden]="!temperatureChart">
   <canvas id="temperature">{{ temperatureChart }}</canvas>
 </div>

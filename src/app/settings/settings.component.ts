@@ -100,10 +100,12 @@ export class SettingsComponent implements OnInit {
 
   submitDelete() {
     if (this.formDelete.valid) {
-      if (this.formDelete.value.password === this.currentUser.password) {
-        this.log.deleteUser(this.currentUser);
-        console.log("Deleting user");
-      }
+      let username = this.currentUser.username;
+      this.log.logIn(username, this.formDelete.value.password);
+      this.log.deleteUser(this.currentUser);
+      
+      console.log("Deleting user");
+
     }
   }
 

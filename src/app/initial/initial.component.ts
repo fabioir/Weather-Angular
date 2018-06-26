@@ -41,7 +41,7 @@ export class InitialComponent implements OnInit {
   ) { }
 
   good(){
-    this.log.goodLogIn("fabio13","fabio");
+    this.log.logIn("fabio13","fabio");
   }
   ngOnInit() {
   }

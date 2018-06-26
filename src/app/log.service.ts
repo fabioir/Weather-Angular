@@ -341,34 +341,30 @@ export class LogService {
   }
 
   deleteUser(user: UserServer) {
-
     let deleteBody = this.deleteBody(user.username);
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': this.contentType,
-        'Authorization': this.authorization
-      })
-    };
+    let bearer = localStorage.getItem("Token");
     this.closeSession();
 
-    this.http.request(new HttpRequest("DELETE", this.commonUrl, deleteBody, {
+    this.http.request(new HttpRequest("DELETE", `${this.goodCommonUrl}/users/user`, deleteBody, {
       headers: new HttpHeaders({
-        'Content-Type': this.contentType,
-        'Authorization': this.authorization
+        'Content-Type': "application/json",
+        'Authorization': bearer
       })
     })).subscribe(rx => {
       console.log("Deleted");
-
+      this.snackBar.open( `The user has been deleted`, "Ok", {
+        duration: 2500
+      });
       this.router.navigate(['/initial']);
     });
 
 
   }
   deleteBody(username: string): string {
-
+  //The service is always going to delete the current logged in user, no matter what the body contains
     return `{
        "filter": {
-         "USERNAME": "` + username + `"
+         "USER_": "` + username + `"
        }
       }`;
   }
