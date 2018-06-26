@@ -83,12 +83,6 @@ export class LogService {
     //base64 coded
     let auth = "Basic " + btoa(`${username}:${password}`);
 
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': auth,
-      }),
-      observe: 'body'
-    };
 
     this.http.post(this.goodCommonUrl + "/users/login", "", {
       headers: new HttpHeaders({
@@ -100,7 +94,7 @@ export class LogService {
       localStorage.setItem("Token", "Bearer " + res.headers.get('X-Auth-Token'));
 
       //Get the favourite cities
-      const citiesString = this.http.post<CitiesResponse>(`${this.goodCommonUrl}/fav/query`, "").subscribe(response => {
+      this.http.post<CitiesResponse>(`${this.goodCommonUrl}/fav/query`, "").subscribe(response => {
         //console.log(response.data[0].CITIES);
         //console.log(response);
         citiesList = response.data[0].CITIES;
@@ -143,6 +137,33 @@ export class LogService {
   }
 
 
+  logRefresh(){
+    let citiesList = "";
+    this.http.post<CitiesResponse>(`${this.goodCommonUrl}/fav/query`, "").subscribe(response => {
+      //console.log(response.data[0].CITIES);
+      //console.log(response);
+      citiesList = response.data[0].CITIES;
+      //Fill in the cities server service
+      if (citiesList !== "") {
+        this.citiesServerService.loadFavourites(citiesList.split(','));
+      }
+
+      let username = localStorage.getItem("session");
+      this.currentUser = new UserServer();
+
+      this.currentUser.username = username;
+      this.currentUser.password = localStorage.getItem("Token");;
+      this.currentUser.favouriteCities = citiesList;
+      this.currentUser.citiesId = citiesList.split(',');
+      this.currentUser.citiesList = this.savedCitiesService.getSavedCities();
+
+      this.updated.next(true);
+      //console.log(this.currentUser.display())
+      this.snackBar.open("Logged as " + this.currentUser.username, "Ok", {
+        duration: 1500
+      });
+    });
+  }
 
   /*logIn(username: string, password: string){
     let httpOptions = {

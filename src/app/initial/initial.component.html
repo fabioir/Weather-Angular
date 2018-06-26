@@ -15,7 +15,6 @@
 
 
   <button (click)="search()" mat-raised-button>Search with Weather-Angular!</button>
-  <button  (click)="good()" mat-raised-button>Log</button>
 
   <a *ngIf="cityMatch" routerLink="/city/{{cityMatch.id}}/{{cityMatch.name}}" mat-button>
     <span title="Fast Result. id: {{cityMatch.id}}" class="badge">{{cityMatch.name}} ({{cityMatch.sys.country}})</span>

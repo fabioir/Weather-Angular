@@ -40,9 +40,6 @@ export class InitialComponent implements OnInit {
     private log : LogService
   ) { }
 
-  good(){
-    this.log.logIn("fabio13","fabio");
-  }
   ngOnInit() {
   }
 

@@ -46,6 +46,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.relog();
     this.getCities();
     this.getLog();
     
@@ -60,10 +61,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   relog() {
-    let username = JSON.parse(localStorage.getItem("session"));
-    let password = JSON.parse(localStorage.getItem("password"));
-    if ((username !== null) && (password != null)) {
-      this.logService.logIn(username, password);
+    let token = localStorage.getItem("Token");
+    this.profile = localStorage.getItem("session").replace(/['"]+/g,'');
+    if ((token !== null) && (this.profile != null)) {
+      this.logService.logRefresh();
     }
   }
 
@@ -76,7 +77,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       if(this.logService.currentUser === undefined){
         this.profile = "USER";
       }else{
-      this.profile = this.logService.currentUser.username; //For showing settings
+      this.profile = this.logService.currentUser.username.replace(/['"]+/g,''); //For showing settings
       }
       if ((this.savedCities.length < 1) && this.opened) {
         this.toggleFavourites();
