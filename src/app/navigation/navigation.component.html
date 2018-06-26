@@ -17,11 +17,10 @@
         <a *ngIf="!logged" mat-button (click)="toggleSession()">Log in</a>
       </div>
 
-      <span class="example-spacer"></span>
+      
 
       <mat-icon *ngIf="logged">check_circle</mat-icon>
 
-      <span class="example-spacer"></span>
 
       <button mat-icon-button [matMenuTriggerFor]="appMenu">
         <mat-icon>more_vert</mat-icon>
