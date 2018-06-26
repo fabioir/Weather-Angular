@@ -21,7 +21,6 @@ export class SettingsComponent implements OnInit {
   formDelete: FormGroup;
   valueTime = 1;
   pwd = true;
-  time = false;
   deleteAccount = false;
   deleteAccount1 = false;
 
@@ -94,9 +93,6 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  submitTime() {
-    this.log.updateSettings("EXPIRES", (this.valueTime * 60 * 1000).toString(), true);
-  }
 
   submitDelete() {
     if (this.formDelete.valid) {
@@ -114,25 +110,17 @@ export class SettingsComponent implements OnInit {
   //Methods to show different contents
   passwd() {
     this.pwd = true;
-    this.time = false;
     this.deleteAccount = false;
     this.deleteAccount1 = false;
   }
-  exprtn() {
-    this.pwd = false;
-    this.time = true;
-    this.deleteAccount = false;
-    this.deleteAccount1 = false;
-  }
+  
   delAccnt() {
     this.pwd = false;
-    this.time = false;
     this.deleteAccount = false;
     this.deleteAccount1 = true;
   }
   showDelete() {
     this.pwd = false;
-    this.time = false;
     this.deleteAccount = true;
     this.deleteAccount1 = false;
   }

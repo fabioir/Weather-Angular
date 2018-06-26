@@ -13,11 +13,6 @@
     </div>
     <div>
       <p>
-        <button mat-button (click)="exprtn()">Set expiration time</button>
-      </p>
-    </div>
-    <div>
-      <p>
         <button mat-button color="warn" (click)="delAccnt()">Delete account</button>
       </p>
     </div>
@@ -51,20 +46,6 @@
       </div>
     </div>
 
-
-    <!-- Slider for setting expiration time -->
-
-    <div align="center" *ngIf="time">
-      <br>
-      <p>Minutes before a session expires:</p>
-      <mat-slider class="slider" thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="60" [(ngModel)]="valueTime"></mat-slider>
-      <br>
-      <div>
-        <button (click)="submitTime()" mat-raised-button>Go!</button>
-      </div>
-      <br>
-      <br>
-    </div>
 
     <!-- Button and form to delete the account -->
     <div align="center" *ngIf="deleteAccount1">

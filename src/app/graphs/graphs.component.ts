@@ -58,10 +58,10 @@ export class GraphsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.city = this.route.snapshot.paramMap.get('name');
-    
-    this.temperature();
+
+
     const id = this.route.snapshot.paramMap.get('id');
     this.weatherService.getForecast(id).subscribe((rx: RespuestaForecast) => {
 
@@ -73,8 +73,8 @@ export class GraphsComponent implements OnInit {
       //Updates the service with the current city forecasted values
       this.forecastValuesService.setValues(this.forecastValues);
 
+      this.temperature();
     });
-   
   }
 
   temperature() {
@@ -84,7 +84,7 @@ export class GraphsComponent implements OnInit {
       this.rainAndSnowChart = undefined;
 
       this.forecastValues = this.forecastValuesService.getValues();
-      
+
       this.temperatureChart = this.temperatureService.getTemperatureChart(this.forecastValues);
     } else {
       //Makes the chart dissapear
