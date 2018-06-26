@@ -26,6 +26,9 @@ export class GraphsComponent implements OnInit {
   rainAndSnowChart: Chart;
   cloudsAndWindChart: Chart;
   city;
+  temperatureColor = "";
+  rainColor = "";
+  cloudColor = "";
 
   constructor(
     private forecastValuesService: ForecastValuesService,
@@ -78,8 +81,11 @@ export class GraphsComponent implements OnInit {
   }
 
   temperature() {
+    
     if (this.temperatureChart === undefined) {
-
+      this.temperatureColor = "primary";
+      this.cloudColor = "";
+      this.rainColor = "";
       this.cloudsAndWindChart = undefined;
       this.rainAndSnowChart = undefined;
 
@@ -89,13 +95,16 @@ export class GraphsComponent implements OnInit {
     } else {
       //Makes the chart dissapear
       this.temperatureChart = undefined;
+      this.temperatureColor = "";
     }
 
   }
 
   rainAndSnow() {
     if (this.rainAndSnowChart === undefined) {
-
+      this.rainColor = "primary";
+      this.temperatureColor = "";
+      this.cloudColor = "";
       this.temperatureChart = undefined;
       this.cloudsAndWindChart = undefined;
 
@@ -104,12 +113,15 @@ export class GraphsComponent implements OnInit {
       this.rainAndSnowChart = this.rainAndSnowService.getRainAndSnowChart(this.forecastValues);
     } else {
       this.rainAndSnowChart = undefined;
+      this.rainColor = "";
     }
   }
 
   cloudsAndWind() {
     if (this.cloudsAndWindChart === undefined) {
-
+      this.cloudColor = "primary";
+      this.temperatureColor = "";
+      this.rainColor = "";
       this.temperatureChart = undefined;
       this.rainAndSnowChart = undefined;
 
@@ -118,6 +130,7 @@ export class GraphsComponent implements OnInit {
       this.cloudsAndWindChart = this.cloudsAndWindService.getCloudsAndWindChart(this.forecastValues);
     } else {
       this.cloudsAndWindChart = undefined;
+      this.cloudColor = "";
     }
   }
 

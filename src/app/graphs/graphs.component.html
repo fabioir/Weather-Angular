@@ -1,18 +1,28 @@
 <h1 align="center">{{city}}</h1>
 
 <div align="center">
-  <button (click)="temperature()" mat-button>Temperature</button>
 
-  <button (click)="rainAndSnow()" mat-button>Rain and Snow</button>
+  <div class="bttons-div">
+  <span>
+    <button color={{temperatureColor}} id="temperature-button" (click)="temperature()" mat-raised-button>Temperature</button>
+  </span>
+  <span class="example-spacer"></span>
+  <span>
+    <button color={{rainColor}} (click)="rainAndSnow()" mat-raised-button>Rain and Snow</button>
+  </span>
+  <span class="example-spacer"></span>
+  <span>
+    <button color={{cloudColor}} (click)="cloudsAndWind()" mat-raised-button>Clouds and Wind</button>
+  </span>
+</div>
 
-  <button (click)="cloudsAndWind()" mat-button>Clouds and Wind</button>
-</div>
-<div [hidden]="!temperatureChart">
-  <canvas id="temperature">{{ temperatureChart }}</canvas>
-</div>
-<div [hidden]="!rainAndSnowChart">
-  <canvas id="rainAndSnow">{{ rainAndSnowChart }}</canvas>
-</div>
-<div [hidden]="!cloudsAndWindChart">
-  <canvas id="cloudsAndWind">{{ cloudsAndWindChart }}</canvas>
+  <div [hidden]="!temperatureChart">
+    <canvas id="temperature">{{ temperatureChart }}</canvas>
+  </div>
+  <div [hidden]="!rainAndSnowChart">
+    <canvas id="rainAndSnow">{{ rainAndSnowChart }}</canvas>
+  </div>
+  <div [hidden]="!cloudsAndWindChart">
+    <canvas id="cloudsAndWind">{{ cloudsAndWindChart }}</canvas>
+  </div>
 </div>

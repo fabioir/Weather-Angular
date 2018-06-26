@@ -55,7 +55,7 @@
   <div [ngStyle]="{'visibility': opened? '':'hidden'}">
     <mat-sidenav-container class="example-container">
       <mat-sidenav #sidenav mode="side" [(opened)]="opened">
-        <a *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
+        <a  color="primary" *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
           <div class="badge"> {{savedCity.name}} </div>
         </a>
         <a mat-button *ngIf="!youSureButton" (click)="youSure()" color="warn">Delete all</a>
