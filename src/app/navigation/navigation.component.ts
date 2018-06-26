@@ -9,6 +9,9 @@ import { LogginDialogComponent } from '../loggin-dialog/loggin-dialog.component'
 import { LogService } from '../log.service';
 import { MatSnackBar } from '@angular/material';
 
+import { Router, Event, NavigationStart, RoutesRecognized,
+  RouteConfigLoadStart, RouteConfigLoadEnd, 
+ NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -32,6 +35,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private savedCitiesService: SavedCitiesService,
     private logService: LogService,
@@ -39,17 +43,24 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private snackBar : MatSnackBar
   ) {
     //Trying to listen to a change in the path to refresh info
-    this.routeSubscription = this.route.params.subscribe((value: PopStateEvent) => {
-      this.getCities();
+    router.events.subscribe(value => {
+      if(!(this.router.url.includes(`/initial`))){
+        const body = document.getElementsByTagName("body");
+        body[0].classList.remove("initial-view");
+      }
+      /*this.getCities();
       this.relog();
+      console.log(this.route.snapshot);
+      console.log(this.router.url);
+      console.log("route change");*/
     });
   }
 
+  
   ngOnInit() {
     this.relog();
     this.getCities();
     this.getLog();
-    
   }
 
 
@@ -65,6 +76,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.profile = localStorage.getItem("session");
     if ((token !== null) && (this.profile != null)) {
       this.profile = this.profile.replace(/['"]+/g,'');
+      localStorage.setItem("session", this.profile);
       this.logService.logRefresh();
     }
   }

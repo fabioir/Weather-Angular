@@ -1,9 +1,13 @@
 #tableWA {
     width: 100%;
-    background: rgb(219, 219, 219);
+    background: rgba(219, 219, 219, 0.473);
     
 }
 
+body{
+  background-size: inherit;
+  background-repeat: repeat-y;
+}
 .app-fab--absolute {
     position: fixed;
     bottom: 3rem;
