@@ -22,3 +22,13 @@ body{
       right: 1.5rem;
     }
   }
+
+  .forecast-button{
+    align-content: center;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
+
+  p {
+    margin-left: 5%;
+  }

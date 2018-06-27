@@ -2,9 +2,11 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-
-<a  color="primary" routerLink="/graphs/{{this.cityShown.id}}/{{this.cityShown.name}}" mat-raised-button>
-  <div class="badge" mat-raised-button >Show forecast</div>
+<p>
+  This is the current weather data in {{cityShown.name}}:
+</p>
+<a class="forecast-button" color="primary" routerLink="/graphs/{{this.cityShown.id}}/{{this.cityShown.name}}" mat-raised-button>
+  <div class="badge" mat-raised-button>Show forecast</div>
 </a>
 <br>
 <br>
@@ -14,9 +16,7 @@
 </button>
 
 
-<p>
-  This is the current weather data in {{cityShown.name}}:
-</p>
+
 
 <div align="center">
   <table mat-table [dataSource]="dataSource" id="tableWA">

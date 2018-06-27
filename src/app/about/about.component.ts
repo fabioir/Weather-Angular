@@ -10,6 +10,8 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    const body = document.getElementsByTagName("body");
+    body[0].classList.add("initial-view");
   }
 
 }

@@ -51,13 +51,13 @@
 
   <!--<p [ngStyle]="{'display': emptyList}">There are no cities saved to favourites</p>-->
 
-  <div [ngStyle]="{'visibility': opened? '':'hidden'}">
-    <mat-sidenav-container class="example-container">
-      <mat-sidenav #sidenav mode="side" [(opened)]="opened">
-        <a  color="primary" *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
+  <div [ngStyle]="{'visibility': opened? '':'hidden'}"  >
+    <mat-sidenav-container  class="example-container sidenav">
+      <mat-sidenav class="sidenav" #sidenav mode="side" [(opened)]="opened">
+        <a  class="sidenav-visible"  *ngFor="let savedCity of savedCities" routerLink="/city/{{savedCity.id}}/{{savedCity.name}}" mat-button>
           <div class="badge"> {{savedCity.name}} </div>
         </a>
-        <a mat-button *ngIf="!youSureButton" (click)="youSure()" color="warn">Delete all</a>
+        <a class="sidenav-visible" mat-button *ngIf="!youSureButton" (click)="youSure()" color="warn">Delete all</a>
 
       </mat-sidenav>
 
@@ -67,7 +67,7 @@
         <br>
       </mat-sidenav-content>
     </mat-sidenav-container>
-    <div class="delete-option">
+    <div class="delete-option sidenav-visible">
       <span align="center">
         <p align="center" *ngIf="youSureButton">This is going to delete all yor favourite cities when you log out. Are you sure? </p>
         <div align="center">
