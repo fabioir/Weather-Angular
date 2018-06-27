@@ -33,7 +33,7 @@ export class LogginDialogComponent implements OnInit {
     
   }
   
-  submit(form) {
+  submit() {
     this.checkErrors();
     if (!this.form.valid) { return; }
     this.dialogRef.close(this.form.value);
