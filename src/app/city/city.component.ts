@@ -46,7 +46,7 @@ export class CityComponent implements OnInit {
 
   ngOnInit() {
   }
-
+ 
 
   getCityWeather() {
 
