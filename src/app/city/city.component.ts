@@ -1,21 +1,19 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SavedCity } from '../savedCity';
 import { WeatherService } from '../weather.service';
 import { WeatherNow } from '../weatherNow';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { SavedCitiesService } from '../saved-cities.service';
 import { ForecastValuesService } from '../forecast-values.service';
 
-import { DataSource } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material';
 
 import { Data, Forecast, RespuestaForecast } from './data';
 
 import { MatSnackBar } from '@angular/material'
 
-import {MDCRipple} from '@material/ripple';
 
 @Component({
   selector: 'app-city',
@@ -35,7 +33,6 @@ export class CityComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
     private weatherService: WeatherService,
     private savedCitiesService: SavedCitiesService,
     private forecastValuesService: ForecastValuesService,
@@ -47,11 +44,11 @@ export class CityComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
  
 
   getCityWeather() {
+    /**Gets id from URL and asks weather service for the current weather and forecast storing it in Objects and preparing table data. Updates forecast service Data */
 
     //Get the parameters from the URL
     const id = this.route.snapshot.paramMap.get('id');
@@ -86,6 +83,7 @@ export class CityComponent implements OnInit {
   }
 
   saveCity() {
+    /**Completes the cityShown info before storing it to localhost (Favourites) */
     this.cityShown.country = this.weatherNow.sys.country;
     this.cityShown.coord = this.weatherNow.coord;
     this.savedCitiesService.save(this.cityShown);
@@ -102,5 +100,5 @@ From this component it is possible to save a new city to the local storage.
 
 Asks for a WeatherNow object with the city weather info to
 
-Includes in its template the GraphsComponent, which can be hidden or shown with the different forecast graphs.
+Includes in its template a button that routes to the GraphsComponent, which shows several forecast graphs.
 */

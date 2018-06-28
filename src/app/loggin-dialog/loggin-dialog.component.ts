@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDialogRef } from "@angular/material";
 import { Router } from "@angular/router";
 
 @Component({
@@ -20,7 +20,6 @@ export class LogginDialogComponent implements OnInit {
   usernameRequiredError = false;
 
   constructor(
-    private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<LogginDialogComponent>,
     private router: Router
   ) { }
@@ -34,12 +33,14 @@ export class LogginDialogComponent implements OnInit {
   }
   
   submit() {
+    /**If the validation is Ok returns the data and closes the dialog component */
     this.checkErrors();
     if (!this.form.valid) { return; }
     this.dialogRef.close(this.form.value);
   }
 
   checkErrors(){
+    /**Shows or hides input help messages */
     this.minLengthError = this.maxLengthError = this.passwordRequiredError = this.usernameRequiredError = false;
     if(this.form.get('username').errors !== null){
       if(this.form.get('username').errors.minlength !== undefined){
@@ -61,12 +62,13 @@ export class LogginDialogComponent implements OnInit {
   }
 
   newUser() {
+    /**Closes the dialog component and navigates to the user component */
     this.dialogRef.close();
     this.router.navigate(['user']);
   }
 }
 
-/* This log in dialog pops up when the sign in button in the navigation bar is clicked.
+/** This log-in dialog pops up when the sign-in button in the navigation bar is clicked.
 
 It just launches a form, validates it and returns the data when closed.
 

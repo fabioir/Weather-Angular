@@ -80,4 +80,4 @@ import {
 })
 export class MaterialModule { }
 
-/* Here components from material are imported and exported in order to not engrose the app.module (just imports MaterialModule )too much and get only the necessary elements */
+/** Here components from material are imported and exported in order to not engrose the app.module (just imports MaterialModule )too much and get only the necessary elements */

@@ -15,16 +15,19 @@ export class RainAndSnowService {
   constructor() { }
 
   getRainAndSnowChart(forecast: Array<Forecast>): Chart {
-
+    /**Returns a chart with Rain and Snow data */
     this.rain = forecast.map(item => {
+      //extracts a Array with numbers indicating the rain forecast l/m^2
       return item.rain;
     });
 
     this.snow = forecast.map(item => {
+      //extracts a Array with numbers indicating the snow forecast l/m^2
       return item.snow;
     });
 
     this.dates = forecast.map(item => {
+      //extracts a Array with strings indicating dates
       return item.dt_txt;
     });
 
@@ -34,7 +37,7 @@ export class RainAndSnowService {
         labels: this.dates,
         datasets: [
           {
-            label: 'Rain',
+            label: 'Rain l/m^2',
             data: this.rain,
             borderColor: "#0000ff",
             fill: false,
@@ -42,7 +45,7 @@ export class RainAndSnowService {
             backgroundColor: "#0000ff"
           },
           {
-            label: 'Snow',
+            label: 'Snow l/m^2',
             data: this.snow,
             borderColor: "#ffffff",
             fill: false,
@@ -53,10 +56,7 @@ export class RainAndSnowService {
       options: {
 
         legend: {
-          display: true,
-          labels: {
-
-          }
+          display: true
         },
         scales: {
           xAxes: [{
@@ -73,4 +73,4 @@ export class RainAndSnowService {
   }
 }
 
-/* This service gets the forecast vakues formated and returns a chart*/
+/* This service gets the forecast values formated and returns a rain and snow chart*/

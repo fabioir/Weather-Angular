@@ -17,10 +17,12 @@ export class SavedCitiesService {
   constructor() { }
 
   getUpdates(): Observable<SavedCity[]>{
+    /**Returns an Observable that emits new values of the Saved cities List */
     return <Observable<SavedCity[]>> this.updated.asObservable();
   }
 
   getSavedCities(): SavedCity[] {
+    /**Gets the cities list from the localStorage and launches an Observable through updated*/
     this.cities = [];
     if(JSON.parse(localStorage.getItem("favouriteCities")) === null){ //if there are no cities in the local storage
       this.updated.next(this.cities); //return cities = [] from the Observable
@@ -37,6 +39,7 @@ export class SavedCitiesService {
   }
 
   save(cityToSave : SavedCity){
+    /**Includes a non existing city in the list and updates the localStorage cities list */
     if(
       this.cities.find(city => city.id === cityToSave.id) == undefined
     ){
@@ -50,6 +53,7 @@ export class SavedCitiesService {
   }
 
   deleteCities(){
+    /**Removes cities list data from local Storage and updates the component's city list emmiting a Observable with the list empty */
     localStorage.removeItem("favouriteCities");
     this.getSavedCities(); //Send an updated observable with the cities available
   }

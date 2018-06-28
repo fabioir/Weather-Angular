@@ -34,19 +34,20 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private savedCitiesService: SavedCitiesService,
     private logService: LogService,
     public dialog: MatDialog,
-    private snackBar : MatSnackBar
+    private snackBar: MatSnackBar
   ) {
-    //Trying to listen to a change in the path to refresh info
-    router.events.subscribe(value => {
-      if(!(this.router.url.includes(`/initial`))){
+    //listening to changes in the url to remove background image
+    router.events.subscribe(() => {
+      if (!(this.router.url.includes(`/initial`))) {
         const body = document.getElementsByTagName("body");
         body[0].classList.remove("initial-view");
       }
     });
   }
 
-  
+
   ngOnInit() {
+    /**Initial tasks */
     this.relog();
     this.getCities();
     this.getLog();
@@ -54,17 +55,18 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    //Unsubscribe from Observables to avoid inefficiency
+    /**Unsubscribe from Observables to avoid inefficiency*/
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
     this.logSubscription.unsubscribe();
   }
 
   relog() {
+    /**If there is a available token tries to restore session */
     let token = localStorage.getItem("Token");
     this.profile = localStorage.getItem("session");
     if ((token !== null) && (this.profile != null)) {
-      this.profile = this.profile.replace(/['"]+/g,'');
+      this.profile = this.profile.replace(/['"]+/g, '');
       localStorage.setItem("session", this.profile);
       this.logService.logRefresh();
     }
@@ -74,12 +76,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
   getLog() {
+    /**Subscribes to changes in the current user from the log service observable */
     this.logSubscription = this.logService.getUpdates().subscribe(logged => {
       this.logged = logged;
-      if(this.logService.currentUser === undefined){
+      if (this.logService.currentUser === undefined) {
         this.profile = "USER";
-      }else{
-      this.profile = this.logService.currentUser.username.replace(/['"]+/g,''); //For showing settings
+      } else {
+        this.profile = this.logService.currentUser.username.replace(/['"]+/g, ''); //For showing settings
       }
       if ((this.savedCities.length < 1) && this.opened) {
         this.toggleFavourites();
@@ -88,7 +91,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   getCities() {
-    //Asks the savedCities service to load the cities in the localhost
+    /**Asks the savedCities service to load the cities in the localhost and updates the saved cities list*/
     this.savedCities = this.savedCitiesService.getSavedCities();
     this.citiesSubscription = this.savedCitiesService.getUpdates().subscribe(cities => {
 
@@ -103,41 +106,48 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   toggleFavourites() {
-    if(this.youSureButton){
+    /**Shows (if available) or hides the favourites sidenav */
+    if (this.youSureButton) {
+      //Hides confirming deleted button
       this.youSureButton = false;
     }
     if (this.notEmpty) {
       this.opened = !this.opened;
       this.emptyList = 'none';
     } else {
+      //Not shown without cities
       this.opened = false;
       this.emptyList = 'block';
     }
   }
 
   deleteCities() {
+    /**Asks cities service to delete de list and updates its own */
     this.youSureButton = false;
     this.savedCitiesService.deleteCities();
     this.getCities();
     this.opened = false;
     this.notEmpty = false;
-    this.snackBar.open("Favourite cities have been deleted", "Ok", { duration: 3000 }); 
+    this.snackBar.open("Favourite cities have been deleted", "Ok", { duration: 3000 });
   }
 
-  youSure(){
+  youSure() {
+    /**Shows the confirmation option to delete the cities list */
     this.youSureButton = true; //Activates the button to deleteCities()
   }
-  notSure(){
+  notSure() {
+    /**Cancels deletion of cities list */
     this.youSureButton = false;
   }
 
   toggleSession() {
-
+    /**Closes session if logged in, shows dialog component to log in if there isn't a current running session*/
     if (this.logged) {
       this.logService.closeSession();
       this.deleteCities();
       return;
     }
+
     //Opens a dialog ref with a form to log in
     this.dialogRef = this.dialog.open(LogginDialogComponent);
 
@@ -154,12 +164,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
 }
-
-
-/*
-This component picks the saved cities from the SavedCitiesService and displays the links to city/cod in a sidenav that can be hidden
+/**This component picks the saved cities from the SavedCitiesService and displays the links to city/cod in a sidenav that can be hidden
 
 Also, presents a link to the inicial view and a menu with the options to log in, settings and about.
 
-Logged in indicator (Check icon).
-*/
+Logged in indicator (Check icon).*/

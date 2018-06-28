@@ -13,16 +13,19 @@ export class CloudsAndWindService {
   dates: string[];
 
   getCloudsAndWindChart(forecast: Array<Forecast>): Chart {
-
+    /**Returns a chart with Clouds and Wind data */
     this.clouds = forecast.map(item => {
+      //extracts a Array with numbers indicating the clouds percentage
       return item.clouds.all;
     });
 
     this.wind = forecast.map(item => {
+      //extracts a Array with numbers indicating wind speed km/h
       return item.wind.speed;
     });
 
     this.dates = forecast.map(item => {
+      //extracts a Array with strings indicating dates
       return item.dt_txt;
     });
 
@@ -33,15 +36,15 @@ export class CloudsAndWindService {
         datasets: [
 
           {
-            label: 'Wind speed',
+            label: 'Wind speed km/h',
             data: this.wind,
             borderColor: "#BADA55",
             fill: false,
             backgroundColor: "#aaaaaa",
-            type: 'line',
+            type: 'line', //The wind is not presented in bars
             yAxisID: 'Wind'
           }, {
-            label: 'Clouds percentage',
+            label: 'Clouds percentage %',
             data: this.clouds,
             borderColor: "#cccccc",
             fill: false,
@@ -54,10 +57,7 @@ export class CloudsAndWindService {
       options: {
 
         legend: {
-          display: true,
-          labels: {
-
-          }
+          display: true
         },
         scales: {
           xAxes: [{
@@ -87,4 +87,4 @@ export class CloudsAndWindService {
 
   constructor() { }
 }
-/* This service gets the forecast vakues formated and returns a chart*/
+/** This service gets the forecast values formated and returns a clouds and wind chart*/

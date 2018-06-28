@@ -2,12 +2,9 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 
 import { WeatherService } from '../weather.service';
 
-import { WeatherNow } from '../weatherNow';
 import { SavedCity } from '../savedCity';
 
-import { SavedCitiesService } from '../saved-cities.service';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { CitiesServerService } from '../cities-server.service';
 
@@ -38,16 +35,17 @@ export class InitialComponent implements OnInit {
     private http: HttpClient,
     private citiesServer: CitiesServerService
   ) {
-    
+
   }
 
   ngOnInit() {
+    /**The code includes a class in the body that produces from styles.css the display of a wallpaper */
     const body = document.getElementsByTagName("body");
     body[0].classList.add("initial-view");
   }
 
   getCitiesList() {
-    //Requests to the assets folder the JSON with all the cities
+    /**Requests to the assets folder the JSON with all the cities. Heavy download*/
     this.citiesList = new Array<SavedCity>();
     this.http.get<Array<SavedCity>>(this.citiesListURL).subscribe(rx => {
       //Stores every city in the cities List were searches will be accomplished
@@ -62,8 +60,7 @@ export class InitialComponent implements OnInit {
 
 
   getCity() {
-    //This function looks for a service response searching with a city name
-
+    /**This function looks for a service response searching with a city name*/
     if (this.city.length == 0) {
       //If the city field has no value the search is not launched
       return;
@@ -89,25 +86,30 @@ export class InitialComponent implements OnInit {
 
 
   search(): void {
-    //Search in the cities.JSON is disabled. It produces a performance leakage
-    /*if((this.city.length>0)&&(this.citiesList !== undefined)){
-      this.foundCities = this.citiesList.filter(element => {
-        
-        return (element.name.includes(this.city));
-      });
-    }*/
-    this.getCity(); //Asks the API
+    /**If there exist a local list it is used to search, but if not available asks the API for results through getCity and the API for suggestions */
     if (this.city.length == 0) {
       //If the city field has no value the search is not launched
       return;
     }
+
+    this.getCity(); //Asks the API
+
+    //Search in the cities.JSON is enabled. It produces a performance leakage
+    if ((this.city.length > 0) && (this.citiesList !== undefined)) {
+      this.foundCities = this.citiesList.filter(element => {
+
+        return (element.name.includes(this.city));
+      });
+    }
+
+
     //Search in the dataBase through the server Ontimize EE
     this.foundCities = this.citiesServer.searchByName(this.city);
 
   }
 
   uploadAll() {
-    //This function should not be called because it makes the app crash. However, it has been able to make all the inserts correctly in the dataBase.
+    /**This function should not be called because it makes the app crash. However, it has been able to make all the inserts correctly in the dataBase.*/
     this.citiesServer.log();
     console.log(
       this.citiesServer.upload(<Array<SavedCity>>this.citiesList)
@@ -117,7 +119,7 @@ export class InitialComponent implements OnInit {
   }
 
   toggleAdmin() {
-    //Show/Hide admin options
+    /**Show/Hide admin options*/
     this.admin = !this.admin;
   }
 
@@ -144,4 +146,6 @@ Displays two answers from two different sources:
   An answer obtained searching by city name in the API
 
   An answer obtained searching in the Ontimize EE database through the server OR searching in a local list of cities downloaded from assets
+
+Also display not recomended actions that may be necessary to perform when administrating the app
 */

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ForecastValuesService } from '../forecast-values.service';
 import { Forecast, RespuestaForecast } from '../city/data';
-import { Chart } from 'chart.js';
 import { TemperatureService } from './temperature/temperature.service';
 import { RainAndSnowService } from './rainAndSnow/rain-and-snow.service';
 import { CloudsAndWindService } from './cloudsAndWind/clouds-and-wind.service';
@@ -38,24 +37,21 @@ export class GraphsComponent implements OnInit {
     private weatherService: WeatherService,
     private route: ActivatedRoute
   ) {
-
+    //Updates values from the service
     this.forecastValues = forecastValuesService.getValues();
-
+    //Updates the chart every time values change
     forecastValuesService.getUpdates().subscribe(values => {
       this.forecastValues = values;
       //If the city changes, charts do so
-
+      //Clean charts
       if (this.temperatureChart) {
         this.temperatureChart = undefined;
-        //this.temperature();
       }
       if (this.rainAndSnowChart) {
         this.rainAndSnowChart = undefined;
-        //this.rainAndSnow();
       }
       if (this.cloudsAndWindChart) {
         this.cloudsAndWindChart = undefined;
-        //this.cloudsAndWind();
       }
     });
   }
@@ -63,9 +59,8 @@ export class GraphsComponent implements OnInit {
   ngOnInit() {
 
     this.city = this.route.snapshot.paramMap.get('name');
-
-
     const id = this.route.snapshot.paramMap.get('id');
+
     this.weatherService.getForecast(id).subscribe((rx: RespuestaForecast) => {
 
       this.forecastValues = [];
@@ -81,7 +76,7 @@ export class GraphsComponent implements OnInit {
   }
 
   temperature() {
-    
+    /**Changes button color to displayed and erases the other charts to show temperatures chart or erases temperatures chart */
     if (this.temperatureChart === undefined) {
       this.temperatureColor = "primary";
       this.cloudColor = "";
@@ -101,6 +96,7 @@ export class GraphsComponent implements OnInit {
   }
 
   rainAndSnow() {
+    /**Changes button color to displayed and erases the other charts to show raind and snow chart or erases raind and snow chart */
     if (this.rainAndSnowChart === undefined) {
       this.rainColor = "primary";
       this.temperatureColor = "";
@@ -112,12 +108,14 @@ export class GraphsComponent implements OnInit {
 
       this.rainAndSnowChart = this.rainAndSnowService.getRainAndSnowChart(this.forecastValues);
     } else {
+      //Makes the chart dissapear
       this.rainAndSnowChart = undefined;
       this.rainColor = "";
     }
   }
 
   cloudsAndWind() {
+    /**Changes button color to displayed and erases the other charts to show clouds and wind chart or erases clouds and wind chart */
     if (this.cloudsAndWindChart === undefined) {
       this.cloudColor = "primary";
       this.temperatureColor = "";
@@ -129,10 +127,11 @@ export class GraphsComponent implements OnInit {
 
       this.cloudsAndWindChart = this.cloudsAndWindService.getCloudsAndWindChart(this.forecastValues);
     } else {
+      //Makes the chart dissapear
       this.cloudsAndWindChart = undefined;
       this.cloudColor = "";
     }
   }
 
 }
-/* This component shows and deletes the charts and obtains them from the services */
+/* This component shows and deletes the charts and obtains them from the corresponding services */

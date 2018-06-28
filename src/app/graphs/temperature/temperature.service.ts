@@ -16,24 +16,25 @@ export class TemperatureService {
   constructor() { }
 
   getTemperatureChart(forecast: Array<Forecast>): Chart {
-    
+
     this.temperatures = forecast.map(item => {
-      //console.log(item.main.temp);
+      //extracts a Array with numbers indicating the expected temperatures ºC
       return item.main.temp - 273.15;
     });
 
 
     this.temperaturesMax = forecast.map(item => {
-      //console.log(item.main.temp);
+      //extracts a Array with numbers indicating the maximum temperatures ºC
       return item.main.temp_max - 273.15;
     });
 
     this.temperaturesMin = forecast.map(item => {
-      //console.log(item.main.temp);
+      //extracts a Array with numbers indicating the minimum temperatures ºC
       return item.main.temp_min - 273.15;
     });
 
     this.dates = forecast.map(item => {
+      //extracts a Array with strings indicating dates
       return item.dt_txt;
     });
 
@@ -43,20 +44,20 @@ export class TemperatureService {
         labels: this.dates,
         datasets: [
           {
-            label: 'temperature',
+            label: 'temperature ºC',
             data: this.temperatures,
             borderColor: "#3cba9f",
             fill: false,
             showLine: true
           },
           {
-            label: 'Max temperature',
+            label: 'Max temperature ºC',
             data: this.temperaturesMax,
             borderColor: "#ff0000",
             fill: false
           },
           {
-            label: 'Min temperature',
+            label: 'Min temperature ºC',
             data: this.temperaturesMin,
             borderColor: "#0000FF",
             fill: false
@@ -87,4 +88,4 @@ export class TemperatureService {
 
 }
 
-/* This service gets the forecast vakues formated and returns a chart*/
+/* This service gets the forecast values formated and returns a temperature chart*/

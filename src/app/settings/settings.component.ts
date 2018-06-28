@@ -33,13 +33,9 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.setCurrentUser();
-
     this.isLogged();
-
     this.buildPsswdForm();
-
     this.buildDeleteForm();
   }
   ngOnDestroy() {
@@ -47,6 +43,7 @@ export class SettingsComponent implements OnInit {
   }
 
   setCurrentUser() {
+    /**Gets the info about the current user and navigates to home if there isn'n any user */
     if (this.log.currentUser === undefined) {
       this.router.navigate(['initial']);
     } else {
@@ -56,7 +53,7 @@ export class SettingsComponent implements OnInit {
 
   }
   buildPsswdForm() {
-    //Form to change password
+    /**Builds the form to change password with its validators */
     this.formPassword = this.formBuilder.group({
       password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
       password2: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
@@ -66,14 +63,14 @@ export class SettingsComponent implements OnInit {
   }
 
   buildDeleteForm() {
-    //Form to delete account
+    /**Builds the Form to delete account (asks for the password)*/
     this.formDelete = this.formBuilder.group({
       password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
     });
   }
 
   isLogged() {
-    //If session expires or is closed redirect to home
+    /**If session is closed redirect to home*/
     this.logSubscription = this.log.getUpdates().subscribe(logged => {
       if (!logged) {
         this.router.navigate(['initial']);
@@ -81,11 +78,13 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-
   changePassword(passwd: string) {
+    /**Asks log service to update the password */
     this.log.updatePassword(passwd);
   }
+
   submitPassword() {
+    /**If the password change form is valid executes changePassword() */
     if (this.formPassword.valid) {
       this.changePassword(this.formPassword.value.password);
       //Resets the form
@@ -93,10 +92,12 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-
+//Bug, deletes even if password is wrong
   submitDelete() {
+    /**If the delete account form is valid  */
     if (this.formDelete.valid) {
       let username = this.currentUser.username;
+      this.log.closeSession();
       this.log.logIn(username, this.formDelete.value.password);
       this.log.deleteUser(this.currentUser);
       
@@ -105,9 +106,7 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-
-
-  //Methods to show different contents
+//Methods to show different contents
   passwd() {
     this.pwd = true;
     this.deleteAccount = false;
@@ -125,3 +124,4 @@ export class SettingsComponent implements OnInit {
     this.deleteAccount1 = false;
   }
 }
+/**This component shows the settings that can be changed for the current user and asks the log service to perform such changes */
