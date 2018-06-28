@@ -1,6 +1,4 @@
-<head>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+
 
 <p>
   This is the current weather data in {{cityShown.name}}:
@@ -11,7 +9,7 @@
 <br>
 <br>
 
-<button mat-button (click)="saveCity()" class="mdc-fab app-fab--absolute" aria-label="Favorite">
+<button (click)="saveCity()" class="fab-button" mat-fab>
   <span class="mdc-fab__icon material-icons">favorite</span>
 </button>
 

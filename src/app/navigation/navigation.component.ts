@@ -132,7 +132,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.getCities();
     this.opened = false;
     this.notEmpty = false;
-    this.snackBar.open("Favourite cities have been deleted", "Ok");
+    this.snackBar.open("Favourite cities have been deleted", "Ok", { duration: 3000 }); 
   }
 
   youSure(){

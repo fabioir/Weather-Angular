@@ -13,6 +13,8 @@ import { MatTableDataSource } from '@angular/material';
 
 import { Data, Forecast, RespuestaForecast } from './data';
 
+import { MatSnackBar } from '@angular/material'
+
 import {MDCRipple} from '@material/ripple';
 
 @Component({
@@ -36,7 +38,8 @@ export class CityComponent implements OnInit {
     private location: Location,
     private weatherService: WeatherService,
     private savedCitiesService: SavedCitiesService,
-    private forecastValuesService: ForecastValuesService
+    private forecastValuesService: ForecastValuesService,
+    private snackBar : MatSnackBar
   ) {
     //listen to a change in the path to refresh info
     this.route.params.subscribe((value: PopStateEvent) => {
@@ -86,7 +89,10 @@ export class CityComponent implements OnInit {
     this.cityShown.country = this.weatherNow.sys.country;
     this.cityShown.coord = this.weatherNow.coord;
     this.savedCitiesService.save(this.cityShown);
+
+    this.snackBar.open(`${this.cityShown.name} saved to favourites`, `Ok`, { duration: 3000 });
   }
+
 
 }
 /* 
