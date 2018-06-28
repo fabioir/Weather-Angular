@@ -1,17 +1,13 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { SavedCitiesService } from '../saved-cities.service';
 import { SavedCity } from '../savedCity';
-import { ActivatedRoute, Route } from '@angular/router';
-import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LogginDialogComponent } from '../loggin-dialog/loggin-dialog.component';
 import { LogService } from '../log.service';
 import { MatSnackBar } from '@angular/material';
 
-import { Router, Event, NavigationStart, RoutesRecognized,
-  RouteConfigLoadStart, RouteConfigLoadEnd, 
- NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -34,9 +30,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   youSureButton = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private location: Location,
     private savedCitiesService: SavedCitiesService,
     private logService: LogService,
     public dialog: MatDialog,
@@ -48,11 +42,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
         const body = document.getElementsByTagName("body");
         body[0].classList.remove("initial-view");
       }
-      /*this.getCities();
-      this.relog();
-      console.log(this.route.snapshot);
-      console.log(this.router.url);
-      console.log("route change");*/
     });
   }
 
