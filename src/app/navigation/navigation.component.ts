@@ -13,6 +13,11 @@ import { Router } from '@angular/router';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
+/**This component picks the saved cities from the SavedCitiesService and displays the links to city/cod in a sidenav that can be hidden
+
+Also, presents a link to the inicial view and a menu with the options to log in, settings and about.
+
+Logged in indicator (Check icon).*/
 export class NavigationComponent implements OnInit, OnDestroy {
 
   savedCities: SavedCity[];
@@ -46,23 +51,23 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
 
+  /**Initial tasks */
   ngOnInit() {
-    /**Initial tasks */
     this.relog();
     this.getCities();
     this.getLog();
   }
 
 
+  /**Unsubscribe from Observables to avoid inefficiency*/
   ngOnDestroy() {
-    /**Unsubscribe from Observables to avoid inefficiency*/
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
     this.logSubscription.unsubscribe();
   }
 
+  /**If there is a available token tries to restore session */
   relog() {
-    /**If there is a available token tries to restore session */
     let token = localStorage.getItem("Token");
     this.profile = localStorage.getItem("session");
     if ((token !== null) && (this.profile != null)) {
@@ -72,11 +77,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
-
+  /**Subscribes to changes in the current user from the log service observable */
   getLog() {
-    /**Subscribes to changes in the current user from the log service observable */
     this.logSubscription = this.logService.getUpdates().subscribe(logged => {
       this.logged = logged;
       if (this.logService.currentUser === undefined) {
@@ -90,8 +92,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**Asks the savedCities service to load the cities in the localhost and updates the saved cities list*/
   getCities() {
-    /**Asks the savedCities service to load the cities in the localhost and updates the saved cities list*/
     this.savedCities = this.savedCitiesService.getSavedCities();
     this.citiesSubscription = this.savedCitiesService.getUpdates().subscribe(cities => {
 
@@ -105,8 +107,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**Shows (if available) or hides the favourites sidenav */
   toggleFavourites() {
-    /**Shows (if available) or hides the favourites sidenav */
     if (this.youSureButton) {
       //Hides confirming deleted button
       this.youSureButton = false;
@@ -121,8 +123,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**Asks cities service to delete de list and updates its own */
   deleteCities() {
-    /**Asks cities service to delete de list and updates its own */
     this.youSureButton = false;
     this.savedCitiesService.deleteCities();
     this.getCities();
@@ -131,17 +133,18 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.snackBar.open("Favourite cities have been deleted", "Ok", { duration: 3000 });
   }
 
+  /**Shows the confirmation option to delete the cities list */
   youSure() {
-    /**Shows the confirmation option to delete the cities list */
     this.youSureButton = true; //Activates the button to deleteCities()
   }
+
+  /**Cancels deletion of cities list */
   notSure() {
-    /**Cancels deletion of cities list */
     this.youSureButton = false;
   }
 
+  /**Closes session if logged in, shows dialog component to log in if there isn't a current running session*/
   toggleSession() {
-    /**Closes session if logged in, shows dialog component to log in if there isn't a current running session*/
     if (this.logged) {
       this.logService.closeSession();
       this.deleteCities();
@@ -164,8 +167,3 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
 }
-/**This component picks the saved cities from the SavedCitiesService and displays the links to city/cod in a sidenav that can be hidden
-
-Also, presents a link to the inicial view and a menu with the options to log in, settings and about.
-
-Logged in indicator (Check icon).*/

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css']
 })
-
+/**This component shows somw general information about the app */
 export class AboutComponent implements OnInit {
 
   constructor() { }
@@ -16,5 +16,3 @@ export class AboutComponent implements OnInit {
   }
 
 }
-
-/**This component shows somw general information about the app */

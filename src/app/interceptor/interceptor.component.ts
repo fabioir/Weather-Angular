@@ -8,6 +8,7 @@ import { LogService } from '../log.service'
   templateUrl: './interceptor.component.html',
   styleUrls: ['./interceptor.component.css']
 })
+/**This component intercepts every outgoing http requests and filters them to perform changes. The most important, adding the current token. */
 export class InterceptorComponent implements HttpInterceptor {
 
   constructor(private auth: LogService) { }
@@ -34,4 +35,3 @@ export class InterceptorComponent implements HttpInterceptor {
   }
 
 }
-/**This component intercepts every outgoing http requests and filters them to perform changes. The most important, adding the current token. */

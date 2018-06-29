@@ -1,9 +1,11 @@
 import { Weather } from './weather';
 import { Data } from './city/data'
 
+
+/** This class stores the information about a city's current weather received from the API and prepares it to being displayed in a mat table*/
 export class WeatherNow {
 
-    coord: {lon: number, lat: number};
+    coord: { lon: number, lat: number };
     weather: Array<Weather>;
 
     /* id: number;
@@ -12,13 +14,13 @@ export class WeatherNow {
     icon: string;*/
 
     base: string;
-    main: {temp: number, pressure: number, humidity: number, temp_min: number, temp_max: number, sea_level: number, grnd_level: number};
-    wind: {speed: number, deg: number};
-    clouds: {all: number};
+    main: { temp: number, pressure: number, humidity: number, temp_min: number, temp_max: number, sea_level: number, grnd_level: number };
+    wind: { speed: number, deg: number };
+    clouds: { all: number };
     rain: number;
     snow: number;
     dt: number;
-    sys: {type: number, id: number, message: number, country: string, sunrise: number, sunset: number };
+    sys: { type: number, id: number, message: number, country: string, sunrise: number, sunset: number };
     id: number;
     name: string;
     cod: number;
@@ -26,21 +28,22 @@ export class WeatherNow {
     //Variables para el displayValues() : 
 
     result = new Array<Data>();
-    aux : Data; 
+    aux: Data;
 
     constructor() {
         this.weather = new Array<Weather>();
-     }
+    }
 
-    set(rx? : WeatherNow){
-        
+    /** Created to set from a server response the class attributes */
+    set(rx?: WeatherNow) {
+
         this.coord = {
             lon: rx.coord.lon,
             lat: rx.coord.lat
         };
-        
+
         rx.weather.forEach((w: Weather) => {
-            
+
             let wthr = new Weather();
             wthr = {
                 id: w.id,
@@ -51,9 +54,9 @@ export class WeatherNow {
 
             this.weather.push(wthr);
         });
-        
+
         this.base = rx.base;
-        
+
         this.main = {
             temp: rx.main.temp,
             pressure: rx.main.pressure,
@@ -63,26 +66,26 @@ export class WeatherNow {
             sea_level: rx.main.sea_level,
             grnd_level: rx.main.grnd_level
         };
-        
+
         this.wind = {
             speed: rx.wind.speed,
             deg: rx.wind.deg
         };
-        
+
 
         this.clouds = {
             all: rx.clouds.all
         };
-        if(rx.rain == undefined){
-        }else{
-        this.rain = rx.rain["3h"];
+        if (rx.rain == undefined) {
+        } else {
+            this.rain = rx.rain["3h"];
         }
-        if(rx.snow == undefined){
-        }else{
-        this.snow = rx.snow["3h"];
+        if (rx.snow == undefined) {
+        } else {
+            this.snow = rx.snow["3h"];
         }
         this.dt = rx.dt;
-        
+
         this.sys = {
             type: rx.sys.type,
             id: rx.sys.id,
@@ -91,7 +94,7 @@ export class WeatherNow {
             sunrise: rx.sys.sunrise,
             sunset: rx.sys.sunset
         };
-        
+
         this.id = rx.id;
 
         this.name = rx.name;
@@ -99,82 +102,84 @@ export class WeatherNow {
         this.cod = rx.cod;
     }
 
+    /**Returns an Array<Data> prepared to display weather info in a mat Table in the city component */
     displayValues(): Array<Data> {
 
         this.result = [];
 
         //coord
-        this.checkAndSave('longitude', this.coord.lon,'');
-        this.checkAndSave('latitude', this.coord.lat,'');
+        this.checkAndSave('longitude', this.coord.lon, '');
+        this.checkAndSave('latitude', this.coord.lat, '');
 
-      
+
         //weather
         let i = 0;
-        this.weather.forEach(w =>{
+        this.weather.forEach(w => {
             i++;
-            this.checkAndSave('id', w.id,'(' + i + ')');
-            this.checkAndSave('main', w.main,'(' + i + ')');
-            this.checkAndSave('description', w.description,'(' + i + ')');
-            this.checkAndSave('icon', w.icon,'(' + i + ')');
-            
+            this.checkAndSave('id', w.id, '(' + i + ')');
+            this.checkAndSave('main', w.main, '(' + i + ')');
+            this.checkAndSave('description', w.description, '(' + i + ')');
+            this.checkAndSave('icon', w.icon, '(' + i + ')');
+
         });
 
         //base
-        this.checkAndSave('base', this.base,'');
-        
+        this.checkAndSave('base', this.base, '');
+
         //main
-        this.checkAndSave('temperature', this.main.temp - 273.15,' ℃');
-        this.checkAndSave('pressure', this.main.pressure,'');
-        this.checkAndSave('humidity', this.main.humidity,'');
-        this.checkAndSave('minimum temperature', this.main.temp_min - 273.15,' ℃');
-        this.checkAndSave('maximum temperature', this.main.temp_max - 273.15,' ℃');
-        this.checkAndSave('pressure at sea level', this.main.sea_level,'');
-        this.checkAndSave('pressure at ground level', this.main.grnd_level,'');
-        
+        this.checkAndSave('temperature', this.main.temp - 273.15, ' ℃');
+        this.checkAndSave('pressure', this.main.pressure, '');
+        this.checkAndSave('humidity', this.main.humidity, '');
+        this.checkAndSave('minimum temperature', this.main.temp_min - 273.15, ' ℃');
+        this.checkAndSave('maximum temperature', this.main.temp_max - 273.15, ' ℃');
+        this.checkAndSave('pressure at sea level', this.main.sea_level, '');
+        this.checkAndSave('pressure at ground level', this.main.grnd_level, '');
+
 
         //wind
-        this.checkAndSave('Wind speed', this.wind.speed,'');
-        this.checkAndSave('Wind direction', this.wind.deg,'');
-        
+        this.checkAndSave('Wind speed', this.wind.speed, '');
+        this.checkAndSave('Wind direction', this.wind.deg, '');
+
         //clouds
-        this.checkAndSave('Clouds percentage', this.clouds.all,'%');
-        
+        this.checkAndSave('Clouds percentage', this.clouds.all, '%');
+
         //rain
-        this.checkAndSave('Rain volume in the last 3 hours', this.rain,' litres');
-        
+        this.checkAndSave('Rain volume in the last 3 hours', this.rain, ' litres');
+
         //snow
-        this.checkAndSave('Snow volume in the last 3 hours', this.snow,' litres');
-       
+        this.checkAndSave('Snow volume in the last 3 hours', this.snow, ' litres');
+
         //dt
-        this.checkAndSave('dt', this.dt,'');
+        this.checkAndSave('dt', this.dt, '');
 
         //sys
-        this.checkAndSave('sys type', this.sys.type,'');
-        this.checkAndSave('sys id', this.sys.id,'');
-        this.checkAndSave('sys message', this.sys.message,'');
-        this.checkAndSave('sys country', this.sys.country,'');
-        this.checkAndSave('sys sunrise', this.sys.sunrise,'');
-        this.checkAndSave('sys sunset', this.sys.sunset,'');
-        
+        this.checkAndSave('sys type', this.sys.type, '');
+        this.checkAndSave('sys id', this.sys.id, '');
+        this.checkAndSave('sys message', this.sys.message, '');
+        this.checkAndSave('sys country', this.sys.country, '');
+        this.checkAndSave('sys sunrise', this.sys.sunrise, '');
+        this.checkAndSave('sys sunset', this.sys.sunset, '');
+
         //id
-        this.checkAndSave('id', this.id,'');
+        this.checkAndSave('id', this.id, '');
 
         //name
-        this.checkAndSave('name', this.name,'');
+        this.checkAndSave('name', this.name, '');
 
         //cod
-        this.checkAndSave('cod', this.cod,'');
-        
-        
+        this.checkAndSave('cod', this.cod, '');
+
+
         return this.result;
         //result is an Array<Data>
         //Data is an object with a parameter and a value
     }
 
-    checkAndSave(text: string, variable: any, additional: string = ''){
-        
-        if(!( variable === undefined || variable === null)){
-            
+    /**Gives a format and pushes data to an array */
+    checkAndSave(text: string, variable: any, additional: string = '') {
+
+        if (!(variable === undefined || variable === null)) {
+
             this.aux = { //aux is a Data object
                 parameter: text,
                 value: variable + additional
@@ -185,7 +190,3 @@ export class WeatherNow {
 
     }
 }
-
-/* This Object stores the information about a city's current weather received from the API and prepares it to being displayed in a mat table
-
-*/

@@ -1,10 +1,11 @@
-export class SavedCity{
+/**This class is for displaying and linking to the searched cities. It is used too for storing favourite cities.*/
+export class SavedCity {
     name: string;
     id: string;
-    sys : {country : string};
+    sys: { country: string };
     country: string;
-    coord : {
-        lon : number,
+    coord: {
+        lon: number,
         lat: number
     };
 
@@ -12,7 +13,7 @@ export class SavedCity{
         this.name = name;
         this.id = id;
         this.sys = {
-            country : country
+            country: country
         };
 
         this.coord = {
@@ -21,8 +22,8 @@ export class SavedCity{
         };
     }
 
-    insertBody(): string{
-        //Prepares a string to make an insert to the server
+    /**Prepares a string to make an insert to the server*/
+    insertBody(): string {
         return `{
             "data": {
               "ID": ` + this.id + `,
@@ -34,5 +35,4 @@ export class SavedCity{
             
            }`;
     }
-}
-//This object is for displaying and linking to the searched cities. It is used too for storing favourite cities. 
+} 

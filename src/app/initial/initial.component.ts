@@ -15,6 +15,19 @@ import { CitiesServerService } from '../cities-server.service';
   templateUrl: './initial.component.html',
   styleUrls: ['./initial.component.css']
 })
+/*
+This component is meant to show an initial view of the application.
+
+It has got a search utility with which new cities can be accessed
+
+Displays two answers from two different sources:
+
+  An answer obtained searching by city name in the API
+
+  An answer obtained searching in the Ontimize EE database through the server OR searching in a local list of cities downloaded from assets
+
+Also display not recomended actions that may be necessary to perform when administrating the app
+*/
 export class InitialComponent implements OnInit {
 
   rxCity: SavedCity;
@@ -38,14 +51,14 @@ export class InitialComponent implements OnInit {
 
   }
 
+  /**The code includes a class in the body that produces from styles.css the display of a wallpaper */
   ngOnInit() {
-    /**The code includes a class in the body that produces from styles.css the display of a wallpaper */
     const body = document.getElementsByTagName("body");
     body[0].classList.add("initial-view");
   }
 
+  /**Requests to the assets folder the JSON with all the cities. Heavy download*/
   getCitiesList() {
-    /**Requests to the assets folder the JSON with all the cities. Heavy download*/
     this.citiesList = new Array<SavedCity>();
     this.http.get<Array<SavedCity>>(this.citiesListURL).subscribe(rx => {
       //Stores every city in the cities List were searches will be accomplished
@@ -59,8 +72,8 @@ export class InitialComponent implements OnInit {
   }
 
 
+  /**This function looks for a service response searching with a city name*/
   getCity() {
-    /**This function looks for a service response searching with a city name*/
     if (this.city.length == 0) {
       //If the city field has no value the search is not launched
       return;
@@ -85,8 +98,8 @@ export class InitialComponent implements OnInit {
   }
 
 
+  /**If there exist a local list it is used to search, but if not available asks the API for results through getCity and the API for suggestions */
   search(): void {
-    /**If there exist a local list it is used to search, but if not available asks the API for results through getCity and the API for suggestions */
     if (this.city.length == 0) {
       //If the city field has no value the search is not launched
       return;
@@ -108,8 +121,8 @@ export class InitialComponent implements OnInit {
 
   }
 
+  /**This function should not be called because it makes the app crash. However, it has been able to make all the inserts correctly in the dataBase.*/
   uploadAll() {
-    /**This function should not be called because it makes the app crash. However, it has been able to make all the inserts correctly in the dataBase.*/
     this.citiesServer.log();
     console.log(
       this.citiesServer.upload(<Array<SavedCity>>this.citiesList)
@@ -118,8 +131,8 @@ export class InitialComponent implements OnInit {
     console.log("complete upload of citiesList to the dataBase");
   }
 
+  /**Show/Hide admin options*/
   toggleAdmin() {
-    /**Show/Hide admin options*/
     this.admin = !this.admin;
   }
 
@@ -136,16 +149,3 @@ export class InitialComponent implements OnInit {
   }
 
 }
-/*
-This component is meant to show an initial view of the application.
-
-It has got a search utility with which new cities can be accessed
-
-Displays two answers from two different sources:
-
-  An answer obtained searching by city name in the API
-
-  An answer obtained searching in the Ontimize EE database through the server OR searching in a local list of cities downloaded from assets
-
-Also display not recomended actions that may be necessary to perform when administrating the app
-*/

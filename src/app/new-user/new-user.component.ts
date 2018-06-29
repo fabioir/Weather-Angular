@@ -8,6 +8,7 @@ import { LogService } from '../log.service';
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.css']
 })
+/** This component simply launches a form to ask the log service to create a new user with the info adquired in the form */
 export class NewUserComponent implements OnInit {
 
 
@@ -23,8 +24,8 @@ export class NewUserComponent implements OnInit {
     this.launchForm();
   }
 
+  /**Creates the form with its Validators*/
   launchForm() {
-    /**Creates the form with its Validators*/
     this.form = this.formBuilder.group({
       username: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(20), Validators.required])],
       password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
@@ -34,8 +35,8 @@ export class NewUserComponent implements OnInit {
       });
   }
 
+  /**Checks if the form is valid and asks the log service to create a new user */
   submit() {
-    /**Checks if the form is valid and asks the log service to create a new user */
     if (this.form.valid) {
 
       this.logService.createUser(this.form.value.username, this.form.value.password);
@@ -46,8 +47,8 @@ export class NewUserComponent implements OnInit {
   }
 }
 
+/**Validates that the password has been repeated correctly*/
 export class PasswordValidation {
-  /**Validates that the password has been repeated correctly*/
   static MatchPassword(AC: AbstractControl) {
     let p1 = AC.get('password');
     let p2 = AC.get('password2');
@@ -59,4 +60,3 @@ export class PasswordValidation {
 
   }
 }
-/** This component simply launches a form to ask the log service to create a new user with the info adquired in the form */

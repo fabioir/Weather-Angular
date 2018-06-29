@@ -12,6 +12,8 @@ import { ActivatedRoute, Route } from '@angular/router';
   templateUrl: './graphs.component.html',
   styleUrls: ['./graphs.component.css']
 })
+
+/* This component shows and deletes the charts and obtains them from the corresponding services */
 export class GraphsComponent implements OnInit {
 
   forecastValues: Array<Forecast>;
@@ -75,8 +77,8 @@ export class GraphsComponent implements OnInit {
     });
   }
 
+  /**Changes button color to displayed and erases the other charts to show temperatures chart or erases temperatures chart */
   temperature() {
-    /**Changes button color to displayed and erases the other charts to show temperatures chart or erases temperatures chart */
     if (this.temperatureChart === undefined) {
       this.temperatureColor = "primary";
       this.cloudColor = "";
@@ -95,8 +97,9 @@ export class GraphsComponent implements OnInit {
 
   }
 
+
+  /**Changes button color to displayed and erases the other charts to show raind and snow chart or erases raind and snow chart */
   rainAndSnow() {
-    /**Changes button color to displayed and erases the other charts to show raind and snow chart or erases raind and snow chart */
     if (this.rainAndSnowChart === undefined) {
       this.rainColor = "primary";
       this.temperatureColor = "";
@@ -114,8 +117,9 @@ export class GraphsComponent implements OnInit {
     }
   }
 
+
+  /**Changes button color to displayed and erases the other charts to show clouds and wind chart or erases clouds and wind chart */
   cloudsAndWind() {
-    /**Changes button color to displayed and erases the other charts to show clouds and wind chart or erases clouds and wind chart */
     if (this.cloudsAndWindChart === undefined) {
       this.cloudColor = "primary";
       this.temperatureColor = "";
@@ -134,4 +138,3 @@ export class GraphsComponent implements OnInit {
   }
 
 }
-/* This component shows and deletes the charts and obtains them from the corresponding services */

@@ -12,6 +12,8 @@ import { PasswordValidation } from '../new-user/new-user.component';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
+
+/**This component shows the settings that can be changed for the current user and asks the log service to perform such changes */
 export class SettingsComponent implements OnInit {
 
   currentUser: UserServer;
@@ -42,8 +44,8 @@ export class SettingsComponent implements OnInit {
     this.logSubscription.unsubscribe();
   }
 
+  /**Gets the info about the current user and navigates to home if there isn'n any user */
   setCurrentUser() {
-    /**Gets the info about the current user and navigates to home if there isn'n any user */
     if (this.log.currentUser === undefined) {
       this.router.navigate(['initial']);
     } else {
@@ -52,8 +54,10 @@ export class SettingsComponent implements OnInit {
     }
 
   }
+
+
+  /**Builds the form to change password with its validators */
   buildPsswdForm() {
-    /**Builds the form to change password with its validators */
     this.formPassword = this.formBuilder.group({
       password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
       password2: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
@@ -62,15 +66,15 @@ export class SettingsComponent implements OnInit {
       })
   }
 
+  /**Builds the Form to delete account (asks for the password)*/
   buildDeleteForm() {
-    /**Builds the Form to delete account (asks for the password)*/
     this.formDelete = this.formBuilder.group({
       password: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
     });
   }
 
+  /**If session is closed redirect to home*/
   isLogged() {
-    /**If session is closed redirect to home*/
     this.logSubscription = this.log.getUpdates().subscribe(logged => {
       if (!logged) {
         this.router.navigate(['initial']);
@@ -78,13 +82,13 @@ export class SettingsComponent implements OnInit {
     });
   }
 
+  /**Asks log service to update the password */
   changePassword(passwd: string) {
-    /**Asks log service to update the password */
     this.log.updatePassword(passwd);
   }
 
+  /**If the password change form is valid executes changePassword() */
   submitPassword() {
-    /**If the password change form is valid executes changePassword() */
     if (this.formPassword.valid) {
       this.changePassword(this.formPassword.value.password);
       //Resets the form
@@ -92,35 +96,35 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-//Bug, deletes even if password is wrong
+  /**If the delete account form is valid asks log service to delete the account  */
   submitDelete() {
-    /**If the delete account form is valid asks log service to delete the account  */
     if (this.formDelete.valid) {
       let username = this.currentUser.username;
       this.log.closeSession();
-      this.log.deleteUser(username,this.formDelete.value.password);
+      this.log.deleteUser(username, this.formDelete.value.password);
     }
   }
 
-//Methods to show different contents
+  //Methods to show different contents
+
+  /**Shows changing password form */
   passwd() {
-    /**Shows changing password form */
     this.pwd = true;
     this.deleteAccount = false;
     this.deleteAccount1 = false;
   }
-  
+
+  /**Shows deleting account confirmation form */
   delAccnt() {
-    /**Shows deleting account confirmation form */
     this.pwd = false;
     this.deleteAccount = false;
     this.deleteAccount1 = true;
   }
+
+  /**Shows deleting account options */
   showDelete() {
-    /**Shows deleting account options */
     this.pwd = false;
     this.deleteAccount = true;
     this.deleteAccount1 = false;
   }
 }
-/**This component shows the settings that can be changed for the current user and asks the log service to perform such changes */

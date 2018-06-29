@@ -3,7 +3,6 @@ import { SavedCity } from '../savedCity';
 import { WeatherService } from '../weather.service';
 import { WeatherNow } from '../weatherNow';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { SavedCitiesService } from '../saved-cities.service';
 import { ForecastValuesService } from '../forecast-values.service';
@@ -20,6 +19,17 @@ import { MatSnackBar } from '@angular/material'
   templateUrl: './city.component.html',
   styleUrls: ['./city.component.css']
 })
+
+
+/* 
+This component shows the information adquired from the microservice through the weather service. It gets the city code from the URL.
+
+From this component it is possible to save a new city to the local storage.
+
+Asks for a WeatherNow object with the city weather info to
+
+Includes in its template a button that routes to the GraphsComponent, which shows several forecast graphs.
+*/
 export class CityComponent implements OnInit {
 
   cityShown: SavedCity;
@@ -36,7 +46,7 @@ export class CityComponent implements OnInit {
     private weatherService: WeatherService,
     private savedCitiesService: SavedCitiesService,
     private forecastValuesService: ForecastValuesService,
-    private snackBar : MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     //listen to a change in the path to refresh info
     this.route.params.subscribe((value: PopStateEvent) => {
@@ -44,11 +54,10 @@ export class CityComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
- 
+  ngOnInit() { }
 
+  /**Gets id from URL and asks weather service for the current weather and forecast storing it in Objects and preparing table data. Updates forecast service Data */
   getCityWeather() {
-    /**Gets id from URL and asks weather service for the current weather and forecast storing it in Objects and preparing table data. Updates forecast service Data */
 
     //Get the parameters from the URL
     const id = this.route.snapshot.paramMap.get('id');
@@ -61,7 +70,7 @@ export class CityComponent implements OnInit {
       //Put the values received in the object weatherNow
       this.weatherNow = new WeatherNow();
       this.weatherNow.set(<WeatherNow>rx);
-    
+
       //Display the values
       this.valuesDisplayed = this.weatherNow.displayValues();
       //dataSource is used to represent the data in the mat table
@@ -82,8 +91,8 @@ export class CityComponent implements OnInit {
     });
   }
 
+  /**Completes the cityShown info before storing it to localhost (Favourites) */
   saveCity() {
-    /**Completes the cityShown info before storing it to localhost (Favourites) */
     this.cityShown.country = this.weatherNow.sys.country;
     this.cityShown.coord = this.weatherNow.coord;
     this.savedCitiesService.save(this.cityShown);
@@ -93,12 +102,3 @@ export class CityComponent implements OnInit {
 
 
 }
-/* 
-This component shows the information adquired from the microservice through the weather service. It gets the city code from the URL.
-
-From this component it is possible to save a new city to the local storage.
-
-Asks for a WeatherNow object with the city weather info to
-
-Includes in its template a button that routes to the GraphsComponent, which shows several forecast graphs.
-*/

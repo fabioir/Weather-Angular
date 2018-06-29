@@ -5,6 +5,8 @@ import { Chart } from 'chart.js';
 @Injectable({
   providedIn: 'root'
 })
+
+/* This service gets the forecast values formated and returns a rain and snow chart*/
 export class RainAndSnowService {
 
   chart: Chart;
@@ -13,9 +15,9 @@ export class RainAndSnowService {
   dates: string[];
 
   constructor() { }
-
+  /**Returns a chart with Rain and Snow data */
   getRainAndSnowChart(forecast: Array<Forecast>): Chart {
-    /**Returns a chart with Rain and Snow data */
+
     this.rain = forecast.map(item => {
       //extracts a Array with numbers indicating the rain forecast l/m^2
       return item.rain;
@@ -72,5 +74,3 @@ export class RainAndSnowService {
     return this.chart;
   }
 }
-
-/* This service gets the forecast values formated and returns a rain and snow chart*/

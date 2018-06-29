@@ -5,6 +5,8 @@ import { Chart } from 'chart.js';
 @Injectable({
   providedIn: 'root'
 })
+
+/** This service gets the forecast values formated and returns a clouds and wind chart*/
 export class CloudsAndWindService {
 
   chart: Chart;
@@ -12,8 +14,9 @@ export class CloudsAndWindService {
   clouds: number[];
   dates: string[];
 
+  /**Returns a chart with Clouds and Wind data */
   getCloudsAndWindChart(forecast: Array<Forecast>): Chart {
-    /**Returns a chart with Clouds and Wind data */
+
     this.clouds = forecast.map(item => {
       //extracts a Array with numbers indicating the clouds percentage
       return item.clouds.all;
@@ -87,4 +90,3 @@ export class CloudsAndWindService {
 
   constructor() { }
 }
-/** This service gets the forecast values formated and returns a clouds and wind chart*/

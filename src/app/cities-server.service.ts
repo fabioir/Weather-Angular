@@ -2,27 +2,28 @@ import { Injectable } from '@angular/core';
 
 import { SavedCity } from './savedCity';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import { ServerResponse, ServedCity } from './servedCity'
+import { ServerResponse } from './servedCity'
 import { SavedCitiesService } from './saved-cities.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
+/* This service interacts with the server Ontimize, with the service of cities */
 export class CitiesServerService {
 
   citiesList: Array<SavedCity>;
 
   commonUrl = "http://localhost:8080/citiesservice-server/services/rest/cities/city";
-  contentType = 'application/json';
-  authorization = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGlvbi10aW1lIjoxNTI4OTU2OTY0MTE2LCJ1c2VybmFtZSI6ImRlbW8ifQ.xKAhjdQ9yEy2AuS8Dp3qtoBmEFL0wAclsK4LRmKZ9nE';
-
+  
   constructor(
     private http: HttpClient,
     private savedCitiesService: SavedCitiesService
   ) { }
 
+  /**Inserts a new city to the database */
   upload(citiesList: Array<SavedCity>): Boolean {
     //Used to fill in the database
     if (citiesList === undefined) {
@@ -30,38 +31,27 @@ export class CitiesServerService {
     }
 
     let ok = true;
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': this.contentType,
-        'Authorization': this.authorization
-      })
-    };
+
     citiesList.forEach(city => {
-      this.http.post(this.commonUrl, city.insertBody(), httpOptions).subscribe(rx => {
+      this.http.post(this.commonUrl, city.insertBody()).subscribe(rx => {
         //We subscribe for the insert results
         console.log("Upload request results");
         console.log(rx);
       },
         error => {
-          console.log("Tried to upload an existing city: " + city.name);
+          if (error.status === 500)
+            console.log("Tried to upload an existing city: " + city.name);
           ok = false;
         });
     });
     return ok;
   }
 
+  /**Searches cities by name in the database and returns an Array of them */
   searchByName(name: string): Array<SavedCity> {
     const ans = new Array<SavedCity>();
 
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': this.contentType,
-        'Authorization': this.authorization
-      })
-    };
-
-
-    this.http.post<ServerResponse>(this.commonUrl + "/search", this.complexSearch(name, "NAME"), httpOptions).subscribe(rx => {
+    this.http.post<ServerResponse>(this.commonUrl + "/search", this.complexSearch(name, "NAME")).subscribe(rx => {
       //We subscribe for the search results
       if (rx.data.length === undefined) {
         console.log("Query without results");
@@ -74,18 +64,14 @@ export class CitiesServerService {
       }, error => {
         console.log("Query to city dataBase failed");
       });
-    },
-    );
-
+    }, err => {
+      console.log(err);
+    });
 
     return ans;
   }
 
-  log(): Boolean {
-    console.log("LOG");
-    return true;
-  }
-
+/**Returns a complex search body using any parameter and its value in the city database */
   complexSearch(value: string, param: string): string {
     //primero comprobamos que el parámetro es válido
     if (param !== "NAME" && param !== "ID" && param !== "COUNTRY" && param !== "LAT" && param !== "LON") {
@@ -104,6 +90,7 @@ export class CitiesServerService {
      }`;
   }
 
+/**Returns a complex search body using ID and its value in the city database */
   complexSearchId(value: number, param: string): string {
     //primero comprobamos que el parámetro es válido
     if (param !== "NAME" && param !== "ID" && param !== "COUNTRY" && param !== "LAT" && param !== "LON") {
@@ -122,17 +109,12 @@ export class CitiesServerService {
      }`;
   }
 
+  /**Performs a city search by ID (primary key) in the database */
   searchById(city: number): SavedCity {
+    //It is not considered the case of a wrong id as it is internally managed and the user cannot introduce its value directly
     let ans: SavedCity;
 
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': this.contentType,
-        'Authorization': this.authorization
-      })
-    };
-
-    this.http.post<ServerResponse>(this.commonUrl + "/search", this.complexSearchId(city, "ID"), httpOptions).subscribe(rx => {
+    this.http.post<ServerResponse>(this.commonUrl + "/search", this.complexSearchId(city, "ID")).subscribe(rx => {
       //We subscribe for the search results
       console.log(rx);
       rx.data.forEach(item => {
@@ -143,15 +125,10 @@ export class CitiesServerService {
     return ans;
   }
 
+  /**Fills local array of cities after querying by IDs to the server */
   loadFavourites(cities: Array<string>) {
     //Queries every city by id in the user and stores it in localStorage as favourites
 
-    /*let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': this.contentType,
-        'Authorization': this.authorization
-      })
-    };*/
     cities.forEach(city => {
       this.http.post<ServerResponse>(this.commonUrl + "/search", this.complexSearchId(parseInt(city), "ID")).subscribe(rx =>
         this.savedCitiesService.save(new SavedCity(rx.data[0].NAME, rx.data[0].ID.toString(), rx.data[0].COUNTRY, rx.data[0].LON, rx.data[0].LAT))
@@ -160,4 +137,3 @@ export class CitiesServerService {
   }
 
 }
-/* This service interacts with the server Ontimize, with the service of cities */

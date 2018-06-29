@@ -5,6 +5,8 @@ import { Chart } from 'chart.js';
 @Injectable({
   providedIn: 'root'
 })
+
+/* This service gets the forecast values formated and returns a temperature chart*/
 export class TemperatureService {
 
   chart: Chart;
@@ -15,6 +17,7 @@ export class TemperatureService {
 
   constructor() { }
 
+  /**Returns a chart with temperatures data */
   getTemperatureChart(forecast: Array<Forecast>): Chart {
 
     this.temperatures = forecast.map(item => {
@@ -87,5 +90,3 @@ export class TemperatureService {
   }
 
 }
-
-/* This service gets the forecast values formated and returns a temperature chart*/
