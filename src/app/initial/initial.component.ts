@@ -123,7 +123,6 @@ export class InitialComponent implements OnInit {
 
   /**This function should not be called because it makes the app crash. However, it has been able to make all the inserts correctly in the dataBase.*/
   uploadAll() {
-    this.citiesServer.log();
     console.log(
       this.citiesServer.upload(<Array<SavedCity>>this.citiesList)
     );
