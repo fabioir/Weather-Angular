@@ -838,16 +838,19 @@ export class RainAndSnowService {
   constructor() { }
 
   getRainAndSnowChart(forecast: Array&lt;Forecast&gt;): Chart {
-
+    /**Returns a chart with Rain and Snow data */
     this.rain &#x3D; forecast.map(item &#x3D;&gt; {
+      //extracts a Array with numbers indicating the rain forecast l/m^2
       return item.rain;
     });
 
     this.snow &#x3D; forecast.map(item &#x3D;&gt; {
+      //extracts a Array with numbers indicating the snow forecast l/m^2
       return item.snow;
     });
 
     this.dates &#x3D; forecast.map(item &#x3D;&gt; {
+      //extracts a Array with strings indicating dates
       return item.dt_txt;
     });
 
@@ -857,7 +860,7 @@ export class RainAndSnowService {
         labels: this.dates,
         datasets: [
           {
-            label: &#x27;Rain&#x27;,
+            label: &#x27;Rain l/m^2&#x27;,
             data: this.rain,
             borderColor: &quot;#0000ff&quot;,
             fill: false,
@@ -865,7 +868,7 @@ export class RainAndSnowService {
             backgroundColor: &quot;#0000ff&quot;
           },
           {
-            label: &#x27;Snow&#x27;,
+            label: &#x27;Snow l/m^2&#x27;,
             data: this.snow,
             borderColor: &quot;#ffffff&quot;,
             fill: false,
@@ -876,10 +879,7 @@ export class RainAndSnowService {
       options: {
 
         legend: {
-          display: true,
-          labels: {
-
-          }
+          display: true
         },
         scales: {
           xAxes: [{
@@ -896,7 +896,7 @@ export class RainAndSnowService {
   }
 }
 
-/* This service gets the forecast vakues formated and returns a chart*/</code></pre>
+/* This service gets the forecast values formated and returns a rain and snow chart*/</code></pre>
     </div>
 
 </div>

@@ -765,31 +765,28 @@ export class InterceptorComponent implements HttpInterceptor {
   constructor(private auth: LogService) { }
 
   intercept(request: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
-    if(request.method &#x3D;&#x3D;&#x3D; &quot;DELETE&quot;){
-      console.log(&quot;Filtered the DELETE&quot;);
+    if (request.method &#x3D;&#x3D;&#x3D; &quot;DELETE&quot;) {
       return next.handle(request);
     }
-    if(request.url.includes(&#x60;http://localhost:8080/citiesservice-server/services/rest/users/login&#x60;)){
+    if (request.url.includes(&#x60;http://localhost:8080/citiesservice-server/services/rest/users/login&#x60;)) {
       return next.handle(request);
     }
 
-    if(request.url.includes(&#x60;http://localhost:8080/citiesservice-server/services/rest&#x60;)){
-    request &#x3D; request.clone({
-      setHeaders: {
-        &#x27;Authorization&#x27; : &#x60;${localStorage.getItem(&quot;Token&quot;)}&#x60;,
-        &#x27;Content-Type&#x27; : &#x60;application/json&#x60;
-      }
-    });
-    //console.log(&quot;Interceptor working&quot;);
-    //console.log(request);
+    if (request.url.includes(&#x60;http://localhost:8080/citiesservice-server/services/rest&#x60;)) {
+      request &#x3D; request.clone({
+        setHeaders: {
+          &#x27;Authorization&#x27;: &#x60;${localStorage.getItem(&quot;Token&quot;)}&#x60;,
+          &#x27;Content-Type&#x27;: &#x60;application/json&#x60;
+        }
+      });
     }
 
-    
+
     return next.handle(request);
   }
 
 }
-</code></pre>
+/**This component intercepts every outgoing http requests and filters them to perform changes. The most important, adding the current token. */</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">

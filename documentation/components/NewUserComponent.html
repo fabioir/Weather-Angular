@@ -633,12 +633,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, logService: <a href="../injectables/LogService.html">LogService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
+<code>constructor(formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, logService: <a href="../injectables/LogService.html">LogService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/new-user/new-user.component.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/new-user/new-user.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -672,18 +672,6 @@
                                                   
                                                         <td>
                                                                     <code><a href="../injectables/LogService.html" target="_self" >LogService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>router</td>
-                                                  
-                                                        <td>
-                                                                    <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -731,7 +719,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/new-user/new-user.component.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/new-user/new-user.component.ts:26</a></div>
                             </td>
                         </tr>
 
@@ -769,7 +757,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/new-user/new-user.component.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/new-user/new-user.component.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -807,7 +795,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/new-user/new-user.component.ts:39</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/new-user/new-user.component.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -857,7 +845,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/new-user/new-user.component.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/new-user/new-user.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -891,7 +879,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/new-user/new-user.component.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/new-user/new-user.component.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -905,7 +893,6 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { UserServer } from &#x27;../userServer&#x27;;
 import { Router } from &quot;@angular/router&quot;;
 import { FormGroup, FormBuilder, Validators, AbstractControl } from &#x27;@angular/forms&#x27;;
 import { LogService } from &#x27;../log.service&#x27;;
@@ -923,16 +910,15 @@ export class NewUserComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private logService: LogService,
-    private router: Router
+    private logService: LogService
   ) { }
 
   ngOnInit() {
     this.launchForm();
-
   }
 
   launchForm() {
+    /**Creates the form with its Validators*/
     this.form &#x3D; this.formBuilder.group({
       username: [&#x27;&#x27;, Validators.compose([Validators.minLength(5), Validators.maxLength(20), Validators.required])],
       password: [&#x27;&#x27;, Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
@@ -943,18 +929,19 @@ export class NewUserComponent implements OnInit {
   }
 
   submit() {
+    /**Checks if the form is valid and asks the log service to create a new user */
     if (this.form.valid) {
 
       this.logService.createUser(this.form.value.username, this.form.value.password);
 
     } else {
-      console.log(&quot;Not valid&quot;);
+      console.log(&quot;Form values not valid&quot;);
     }
   }
 }
 
 export class PasswordValidation {
-  //Validates that the password has been repeated correctly
+  /**Validates that the password has been repeated correctly*/
   static MatchPassword(AC: AbstractControl) {
     let p1 &#x3D; AC.get(&#x27;password&#x27;);
     let p2 &#x3D; AC.get(&#x27;password2&#x27;);
@@ -966,42 +953,7 @@ export class PasswordValidation {
 
   }
 }
-
-/* This component simply launches a form to ask the log service to create a new user with the info adquired in the form */
-
-/* launchForm() {
-    validator : PasswordValidation;
-    this.form &#x3D; new FormGroup({
-      username: new FormControl(this.username,[Validators.minLength(5), Validators.maxLength(20), Validators.required]),
-      password: new FormControl(this.password,[Validators.minLength(5), Validators.maxLength(25), Validators.required]),
-      password2: new FormControl(this.password2,[Validators.minLength(5), Validators.maxLength(25), Validators.required, validatePassword(this.form)])
-    }
-  }
-
-  submit() {
-    if (this.form.valid) {
-
-      this.logService.createUser(this.form.value.username, this.form.value.password);
-
-    } else {
-      console.log(&quot;Not valid&quot;);
-    }
-  }
-}
-
-export class PasswordValidation {
-  //Validates that the password has been repeated correctly
-  static MatchPassword(AC: AbstractControl) {
-    let p1 &#x3D; AC.get(&#x27;password&#x27;);
-    let p2 &#x3D; AC.get(&#x27;password2&#x27;);
-    if (p1.value !&#x3D; p2.value) {
-      AC.get(&#x27;password2&#x27;).setErrors({ MatchPassword: true })
-    } else {
-      return null
-    }
-
-  }
-}*/</code></pre>
+/** This component simply launches a form to ask the log service to create a new user with the info adquired in the form */</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">

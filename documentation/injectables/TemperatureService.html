@@ -876,24 +876,25 @@ export class TemperatureService {
   constructor() { }
 
   getTemperatureChart(forecast: Array&lt;Forecast&gt;): Chart {
-    
+
     this.temperatures &#x3D; forecast.map(item &#x3D;&gt; {
-      //console.log(item.main.temp);
+      //extracts a Array with numbers indicating the expected temperatures ºC
       return item.main.temp - 273.15;
     });
 
 
     this.temperaturesMax &#x3D; forecast.map(item &#x3D;&gt; {
-      //console.log(item.main.temp);
+      //extracts a Array with numbers indicating the maximum temperatures ºC
       return item.main.temp_max - 273.15;
     });
 
     this.temperaturesMin &#x3D; forecast.map(item &#x3D;&gt; {
-      //console.log(item.main.temp);
+      //extracts a Array with numbers indicating the minimum temperatures ºC
       return item.main.temp_min - 273.15;
     });
 
     this.dates &#x3D; forecast.map(item &#x3D;&gt; {
+      //extracts a Array with strings indicating dates
       return item.dt_txt;
     });
 
@@ -903,20 +904,20 @@ export class TemperatureService {
         labels: this.dates,
         datasets: [
           {
-            label: &#x27;temperature&#x27;,
+            label: &#x27;temperature ºC&#x27;,
             data: this.temperatures,
             borderColor: &quot;#3cba9f&quot;,
             fill: false,
             showLine: true
           },
           {
-            label: &#x27;Max temperature&#x27;,
+            label: &#x27;Max temperature ºC&#x27;,
             data: this.temperaturesMax,
             borderColor: &quot;#ff0000&quot;,
             fill: false
           },
           {
-            label: &#x27;Min temperature&#x27;,
+            label: &#x27;Min temperature ºC&#x27;,
             data: this.temperaturesMin,
             borderColor: &quot;#0000FF&quot;,
             fill: false
@@ -947,7 +948,7 @@ export class TemperatureService {
 
 }
 
-/* This service gets the forecast vakues formated and returns a chart*/</code></pre>
+/* This service gets the forecast values formated and returns a temperature chart*/</code></pre>
     </div>
 
 </div>

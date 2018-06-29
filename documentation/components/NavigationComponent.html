@@ -851,7 +851,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/app/navigation/navigation.component.ts:118</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/app/navigation/navigation.component.ts:124</a></div>
                             </td>
                         </tr>
 
@@ -889,7 +889,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/app/navigation/navigation.component.ts:90</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">src/app/navigation/navigation.component.ts:93</a></div>
                             </td>
                         </tr>
 
@@ -927,7 +927,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/navigation/navigation.component.ts:76</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/navigation/navigation.component.ts:78</a></div>
                             </td>
                         </tr>
 
@@ -965,7 +965,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/navigation/navigation.component.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/navigation/navigation.component.ts:57</a></div>
                             </td>
                         </tr>
 
@@ -1041,7 +1041,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/app/navigation/navigation.component.ts:130</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">src/app/navigation/navigation.component.ts:138</a></div>
                             </td>
                         </tr>
 
@@ -1079,7 +1079,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/navigation/navigation.component.ts:63</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/navigation/navigation.component.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -1117,7 +1117,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="105" class="link-to-prism">src/app/navigation/navigation.component.ts:105</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">src/app/navigation/navigation.component.ts:108</a></div>
                             </td>
                         </tr>
 
@@ -1155,7 +1155,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/app/navigation/navigation.component.ts:134</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/navigation/navigation.component.ts:143</a></div>
                             </td>
                         </tr>
 
@@ -1193,7 +1193,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/navigation/navigation.component.ts:127</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/app/navigation/navigation.component.ts:134</a></div>
                             </td>
                         </tr>
 
@@ -1702,19 +1702,20 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private savedCitiesService: SavedCitiesService,
     private logService: LogService,
     public dialog: MatDialog,
-    private snackBar : MatSnackBar
+    private snackBar: MatSnackBar
   ) {
-    //Trying to listen to a change in the path to refresh info
-    router.events.subscribe(value &#x3D;&gt; {
-      if(!(this.router.url.includes(&#x60;/initial&#x60;))){
+    //listening to changes in the url to remove background image
+    router.events.subscribe(() &#x3D;&gt; {
+      if (!(this.router.url.includes(&#x60;/initial&#x60;))) {
         const body &#x3D; document.getElementsByTagName(&quot;body&quot;);
         body[0].classList.remove(&quot;initial-view&quot;);
       }
     });
   }
 
-  
+
   ngOnInit() {
+    /**Initial tasks */
     this.relog();
     this.getCities();
     this.getLog();
@@ -1722,17 +1723,18 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    //Unsubscribe from Observables to avoid inefficiency
+    /**Unsubscribe from Observables to avoid inefficiency*/
     this.routeSubscription.unsubscribe();
     this.citiesSubscription.unsubscribe();
     this.logSubscription.unsubscribe();
   }
 
   relog() {
+    /**If there is a available token tries to restore session */
     let token &#x3D; localStorage.getItem(&quot;Token&quot;);
     this.profile &#x3D; localStorage.getItem(&quot;session&quot;);
     if ((token !&#x3D;&#x3D; null) &amp;&amp; (this.profile !&#x3D; null)) {
-      this.profile &#x3D; this.profile.replace(/[&#x27;&quot;]+/g,&#x27;&#x27;);
+      this.profile &#x3D; this.profile.replace(/[&#x27;&quot;]+/g, &#x27;&#x27;);
       localStorage.setItem(&quot;session&quot;, this.profile);
       this.logService.logRefresh();
     }
@@ -1742,12 +1744,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
   getLog() {
+    /**Subscribes to changes in the current user from the log service observable */
     this.logSubscription &#x3D; this.logService.getUpdates().subscribe(logged &#x3D;&gt; {
       this.logged &#x3D; logged;
-      if(this.logService.currentUser &#x3D;&#x3D;&#x3D; undefined){
+      if (this.logService.currentUser &#x3D;&#x3D;&#x3D; undefined) {
         this.profile &#x3D; &quot;USER&quot;;
-      }else{
-      this.profile &#x3D; this.logService.currentUser.username.replace(/[&#x27;&quot;]+/g,&#x27;&#x27;); //For showing settings
+      } else {
+        this.profile &#x3D; this.logService.currentUser.username.replace(/[&#x27;&quot;]+/g, &#x27;&#x27;); //For showing settings
       }
       if ((this.savedCities.length &lt; 1) &amp;&amp; this.opened) {
         this.toggleFavourites();
@@ -1756,7 +1759,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   getCities() {
-    //Asks the savedCities service to load the cities in the localhost
+    /**Asks the savedCities service to load the cities in the localhost and updates the saved cities list*/
     this.savedCities &#x3D; this.savedCitiesService.getSavedCities();
     this.citiesSubscription &#x3D; this.savedCitiesService.getUpdates().subscribe(cities &#x3D;&gt; {
 
@@ -1771,41 +1774,48 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   toggleFavourites() {
-    if(this.youSureButton){
+    /**Shows (if available) or hides the favourites sidenav */
+    if (this.youSureButton) {
+      //Hides confirming deleted button
       this.youSureButton &#x3D; false;
     }
     if (this.notEmpty) {
       this.opened &#x3D; !this.opened;
       this.emptyList &#x3D; &#x27;none&#x27;;
     } else {
+      //Not shown without cities
       this.opened &#x3D; false;
       this.emptyList &#x3D; &#x27;block&#x27;;
     }
   }
 
   deleteCities() {
+    /**Asks cities service to delete de list and updates its own */
     this.youSureButton &#x3D; false;
     this.savedCitiesService.deleteCities();
     this.getCities();
     this.opened &#x3D; false;
     this.notEmpty &#x3D; false;
-    this.snackBar.open(&quot;Favourite cities have been deleted&quot;, &quot;Ok&quot;, { duration: 3000 }); 
+    this.snackBar.open(&quot;Favourite cities have been deleted&quot;, &quot;Ok&quot;, { duration: 3000 });
   }
 
-  youSure(){
+  youSure() {
+    /**Shows the confirmation option to delete the cities list */
     this.youSureButton &#x3D; true; //Activates the button to deleteCities()
   }
-  notSure(){
+  notSure() {
+    /**Cancels deletion of cities list */
     this.youSureButton &#x3D; false;
   }
 
   toggleSession() {
-
+    /**Closes session if logged in, shows dialog component to log in if there isn&#x27;t a current running session*/
     if (this.logged) {
       this.logService.closeSession();
       this.deleteCities();
       return;
     }
+
     //Opens a dialog ref with a form to log in
     this.dialogRef &#x3D; this.dialog.open(LogginDialogComponent);
 
@@ -1822,15 +1832,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
 
 }
-
-
-/*
-This component picks the saved cities from the SavedCitiesService and displays the links to city/cod in a sidenav that can be hidden
+/**This component picks the saved cities from the SavedCitiesService and displays the links to city/cod in a sidenav that can be hidden
 
 Also, presents a link to the inicial view and a menu with the options to log in, settings and about.
 
-Logged in indicator (Check icon).
-*/</code></pre>
+Logged in indicator (Check icon).*/</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">

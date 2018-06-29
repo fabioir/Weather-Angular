@@ -791,7 +791,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/settings/settings.component.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/settings/settings.component.ts:65</a></div>
                             </td>
                         </tr>
 
@@ -829,7 +829,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/settings/settings.component.ts:58</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/settings/settings.component.ts:55</a></div>
                             </td>
                         </tr>
 
@@ -867,7 +867,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/settings/settings.component.ts:85</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/settings/settings.component.ts:81</a></div>
                             </td>
                         </tr>
 
@@ -936,7 +936,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">src/app/settings/settings.component.ts:117</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">src/app/settings/settings.component.ts:113</a></div>
                             </td>
                         </tr>
 
@@ -974,7 +974,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/settings/settings.component.ts:75</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/settings/settings.component.ts:72</a></div>
                             </td>
                         </tr>
 
@@ -1012,7 +1012,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/settings/settings.component.ts:45</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/settings/settings.component.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -1088,7 +1088,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/app/settings/settings.component.ts:111</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">src/app/settings/settings.component.ts:106</a></div>
                             </td>
                         </tr>
 
@@ -1126,7 +1126,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/settings/settings.component.ts:49</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/settings/settings.component.ts:45</a></div>
                             </td>
                         </tr>
 
@@ -1164,7 +1164,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/settings/settings.component.ts:122</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">src/app/settings/settings.component.ts:119</a></div>
                             </td>
                         </tr>
 
@@ -1202,7 +1202,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">src/app/settings/settings.component.ts:97</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">src/app/settings/settings.component.ts:96</a></div>
                             </td>
                         </tr>
 
@@ -1240,7 +1240,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">src/app/settings/settings.component.ts:88</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/settings/settings.component.ts:86</a></div>
                             </td>
                         </tr>
 
@@ -1611,13 +1611,9 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.setCurrentUser();
-
     this.isLogged();
-
     this.buildPsswdForm();
-
     this.buildDeleteForm();
   }
   ngOnDestroy() {
@@ -1625,6 +1621,7 @@ export class SettingsComponent implements OnInit {
   }
 
   setCurrentUser() {
+    /**Gets the info about the current user and navigates to home if there isn&#x27;n any user */
     if (this.log.currentUser &#x3D;&#x3D;&#x3D; undefined) {
       this.router.navigate([&#x27;initial&#x27;]);
     } else {
@@ -1634,7 +1631,7 @@ export class SettingsComponent implements OnInit {
 
   }
   buildPsswdForm() {
-    //Form to change password
+    /**Builds the form to change password with its validators */
     this.formPassword &#x3D; this.formBuilder.group({
       password: [&#x27;&#x27;, Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
       password2: [&#x27;&#x27;, Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
@@ -1644,14 +1641,14 @@ export class SettingsComponent implements OnInit {
   }
 
   buildDeleteForm() {
-    //Form to delete account
+    /**Builds the Form to delete account (asks for the password)*/
     this.formDelete &#x3D; this.formBuilder.group({
       password: [&#x27;&#x27;, Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])]
     });
   }
 
   isLogged() {
-    //If session expires or is closed redirect to home
+    /**If session is closed redirect to home*/
     this.logSubscription &#x3D; this.log.getUpdates().subscribe(logged &#x3D;&gt; {
       if (!logged) {
         this.router.navigate([&#x27;initial&#x27;]);
@@ -1659,11 +1656,13 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-
   changePassword(passwd: string) {
+    /**Asks log service to update the password */
     this.log.updatePassword(passwd);
   }
+
   submitPassword() {
+    /**If the password change form is valid executes changePassword() */
     if (this.formPassword.valid) {
       this.changePassword(this.formPassword.value.password);
       //Resets the form
@@ -1671,39 +1670,38 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-
+//Bug, deletes even if password is wrong
   submitDelete() {
+    /**If the delete account form is valid asks log service to delete the account  */
     if (this.formDelete.valid) {
       let username &#x3D; this.currentUser.username;
-      this.log.logIn(username, this.formDelete.value.password);
-      this.log.deleteUser(this.currentUser);
-      
-      console.log(&quot;Deleting user&quot;);
-
+      this.log.closeSession();
+      this.log.deleteUser(username,this.formDelete.value.password);
     }
   }
 
-
-
-  //Methods to show different contents
+//Methods to show different contents
   passwd() {
+    /**Shows changing password form */
     this.pwd &#x3D; true;
     this.deleteAccount &#x3D; false;
     this.deleteAccount1 &#x3D; false;
   }
   
   delAccnt() {
+    /**Shows deleting account confirmation form */
     this.pwd &#x3D; false;
     this.deleteAccount &#x3D; false;
     this.deleteAccount1 &#x3D; true;
   }
   showDelete() {
+    /**Shows deleting account options */
     this.pwd &#x3D; false;
     this.deleteAccount &#x3D; true;
     this.deleteAccount1 &#x3D; false;
   }
 }
-</code></pre>
+/**This component shows the settings that can be changed for the current user and asks the log service to perform such changes */</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">

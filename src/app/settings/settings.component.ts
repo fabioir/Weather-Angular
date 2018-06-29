@@ -94,31 +94,30 @@ export class SettingsComponent implements OnInit {
 
 //Bug, deletes even if password is wrong
   submitDelete() {
-    /**If the delete account form is valid  */
+    /**If the delete account form is valid asks log service to delete the account  */
     if (this.formDelete.valid) {
       let username = this.currentUser.username;
       this.log.closeSession();
-      this.log.logIn(username, this.formDelete.value.password);
-      this.log.deleteUser(this.currentUser);
-      
-      console.log("Deleting user");
-
+      this.log.deleteUser(username,this.formDelete.value.password);
     }
   }
 
 //Methods to show different contents
   passwd() {
+    /**Shows changing password form */
     this.pwd = true;
     this.deleteAccount = false;
     this.deleteAccount1 = false;
   }
   
   delAccnt() {
+    /**Shows deleting account confirmation form */
     this.pwd = false;
     this.deleteAccount = false;
     this.deleteAccount1 = true;
   }
   showDelete() {
+    /**Shows deleting account options */
     this.pwd = false;
     this.deleteAccount = true;
     this.deleteAccount1 = false;

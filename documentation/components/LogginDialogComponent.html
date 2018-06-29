@@ -654,7 +654,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, dialogRef: <a href="../components/LogginDialogComponent.html">MatDialogRef<LogginDialogComponent></a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
+<code>constructor(dialogRef: <a href="../components/LogginDialogComponent.html">MatDialogRef<LogginDialogComponent></a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -676,18 +676,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                <tr>
-                                                        <td>formBuilder</td>
-                                                  
-                                                        <td>
-                                                                    <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                </tr>
                                                 <tr>
                                                         <td>dialogRef</td>
                                                   
@@ -790,7 +778,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/loggin-dialog/loggin-dialog.component.ts:63</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/loggin-dialog/loggin-dialog.component.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -828,7 +816,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/loggin-dialog/loggin-dialog.component.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/loggin-dialog/loggin-dialog.component.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -866,7 +854,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/loggin-dialog/loggin-dialog.component.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/loggin-dialog/loggin-dialog.component.ts:35</a></div>
                             </td>
                         </tr>
 
@@ -1164,8 +1152,8 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { FormGroup, FormBuilder, Validators, FormControl } from &#x27;@angular/forms&#x27;;
-import { MAT_DIALOG_DATA, MatDialogRef } from &quot;@angular/material&quot;;
+import { FormGroup, Validators, FormControl } from &#x27;@angular/forms&#x27;;
+import { MatDialogRef } from &quot;@angular/material&quot;;
 import { Router } from &quot;@angular/router&quot;;
 
 @Component({
@@ -1185,7 +1173,6 @@ export class LogginDialogComponent implements OnInit {
   usernameRequiredError &#x3D; false;
 
   constructor(
-    private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef&lt;LogginDialogComponent&gt;,
     private router: Router
   ) { }
@@ -1199,12 +1186,14 @@ export class LogginDialogComponent implements OnInit {
   }
   
   submit() {
+    /**If the validation is Ok returns the data and closes the dialog component */
     this.checkErrors();
     if (!this.form.valid) { return; }
     this.dialogRef.close(this.form.value);
   }
 
   checkErrors(){
+    /**Shows or hides input help messages */
     this.minLengthError &#x3D; this.maxLengthError &#x3D; this.passwordRequiredError &#x3D; this.usernameRequiredError &#x3D; false;
     if(this.form.get(&#x27;username&#x27;).errors !&#x3D;&#x3D; null){
       if(this.form.get(&#x27;username&#x27;).errors.minlength !&#x3D;&#x3D; undefined){
@@ -1226,12 +1215,13 @@ export class LogginDialogComponent implements OnInit {
   }
 
   newUser() {
+    /**Closes the dialog component and navigates to the user component */
     this.dialogRef.close();
     this.router.navigate([&#x27;user&#x27;]);
   }
 }
 
-/* This log in dialog pops up when the sign in button in the navigation bar is clicked.
+/** This log-in dialog pops up when the sign-in button in the navigation bar is clicked.
 
 It just launches a form, validates it and returns the data when closed.
 

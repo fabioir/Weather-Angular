@@ -14,7 +14,6 @@ export class InterceptorComponent implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (request.method === "DELETE") {
-      console.log("Filtered the DELETE");
       return next.handle(request);
     }
     if (request.url.includes(`http://localhost:8080/citiesservice-server/services/rest/users/login`)) {

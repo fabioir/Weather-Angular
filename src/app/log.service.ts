@@ -3,13 +3,10 @@ import { SavedCitiesService } from './saved-cities.service';
 import { SavedCity } from './savedCity';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { ServerResponse, ServedCity } from './servedCity';
-import { UserServer, CitiesResponse, CitiesResponseUnit } from './userServer';
-import { WeatherService } from './weather.service';
+import { UserServer, CitiesResponse } from './userServer';
 import { CitiesServerService } from './cities-server.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { isNumber } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +19,9 @@ export class LogService {
   exists: Subject<boolean>;
   currentUser: UserServer; //Holds the info of the current logged user
 
-  commonUrl = "http://localhost:8080/citiesservice-server/services/rest/log/log";
-  goodCommonUrl = "http://localhost:8080/citiesservice-server/services/rest";
+  commonUrl = "http://localhost:8080/citiesservice-server/services/rest";
   contentType = 'application/json';
-  authorization = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGlvbi10aW1lIjoxNTI4OTU2OTY0MTE2LCJ1c2VybmFtZSI6ImRlbW8ifQ.xKAhjdQ9yEy2AuS8Dp3qtoBmEFL0wAclsK4LRmKZ9nE';
-
+ 
   constructor(
     private savedCitiesService: SavedCitiesService,
     private http: HttpClient,
@@ -34,15 +29,19 @@ export class LogService {
     private router: Router,
     private snackBar: MatSnackBar
   ) { }
+
   getToken(): string {
+    /**Returns the Token from localStorage */
     return `${localStorage.getItem("Token")}`;
   }
   getUpdates(): Observable<boolean> {
-    //Observable indicating if someone is logged in
+    /**Observable indicating if someone is logged in*/
     return <Observable<boolean>>this.updated.asObservable();
   }
 
   closeSession() {
+    /**Saves the cities to the server and closes session */
+    //Should invalidate the token in the server, yet to do
     if (this.currentUser === undefined) {
       this.updated.next(false);
       return;
@@ -54,11 +53,8 @@ export class LogService {
     this.currentUser.citiesList = this.savedCitiesService.getSavedCities();
     this.citiesServerService.upload(this.currentUser.citiesList);
 
-
-    this.updateUserCities() //New
-    //this.updateSettings("CITIES", this.currentUser.favouriteCities); //To delete
-
-
+    this.updateUserCities() //creates the request body and sends it
+    //Remove session data
     this.savedCitiesService.deleteCities();
     localStorage.removeItem("session");
     localStorage.removeItem("Token");
@@ -67,24 +63,25 @@ export class LogService {
   }
 
   updateUserCities() {
-    //New
+    /**Returns the cities update request body and sends it */
     const body = `{
       "CITIES" : "` + this.currentUser.favouriteCities + `"
     }`;
 
-    this.http.post(this.goodCommonUrl + "/fav/update", body).subscribe(res => { }, err => {
+    this.http.post(`${this.commonUrl}/fav/update`, body).subscribe(() => { }, err => {
       console.log("There's been an error trying to update user's list of cities in the db");
       console.log(body);
     });
   }
 
   logIn(username: string, password: string) {
+    /**Asks the server for the user information and stores it to the app memory (currentUser and localStorage) */
     let citiesList = "";
     //base64 coded
     let auth = "Basic " + btoa(`${username}:${password}`);
 
 
-    this.http.post(this.goodCommonUrl + "/users/login", "", {
+    this.http.post(`${this.commonUrl}/users/login`, "", {
       headers: new HttpHeaders({
         'Authorization': auth
       }),
@@ -94,9 +91,8 @@ export class LogService {
       localStorage.setItem("Token", "Bearer " + res.headers.get('X-Auth-Token'));
 
       //Get the favourite cities
-      this.http.post<CitiesResponse>(`${this.goodCommonUrl}/fav/query`, "").subscribe(response => {
-        //console.log(response.data[0].CITIES);
-        //console.log(response);
+      this.http.post<CitiesResponse>(`${this.commonUrl}/fav/query`, "").subscribe(response => {
+  
         citiesList = response.data[0].CITIES;
         //Fill in the cities server service
         if (citiesList !== "") {
@@ -138,10 +134,10 @@ export class LogService {
 
 
   logRefresh(){
+    /**Gets back user info in case it is available (the session has not been closed) */
     let citiesList = "";
-    this.http.post<CitiesResponse>(`${this.goodCommonUrl}/fav/query`, "").subscribe(response => {
-      //console.log(response.data[0].CITIES);
-      //console.log(response);
+    this.http.post<CitiesResponse>(`${this.commonUrl}/fav/query`, "").subscribe(response => {
+     
       citiesList = response.data[0].CITIES;
       //Fill in the cities server service
       if (citiesList !== "") {
@@ -158,7 +154,6 @@ export class LogService {
       this.currentUser.citiesList = this.savedCitiesService.getSavedCities();
 
       this.updated.next(true);
-      //console.log(this.currentUser.display())
       this.snackBar.open("Logged as " + this.currentUser.username, "Ok", {
         duration: 1500
       });
@@ -169,9 +164,10 @@ export class LogService {
 
 
   createUser(username: string, password: string){
+    /**Creates a new user using demo demouser token */
     //Default Token for demo demouser. Don`t delete the demouser in the db because it would be complicated to create any other user afterwards
     localStorage.setItem("Token","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGlvbi10aW1lIjoxNTI4Nzk5MTY4MzgxLCJ1c2VybmFtZSI6ImRlbW8ifQ.vwEZijOag2iCSN0UPRTS8jqre1NGzHCrg6fVkDH2-mw")
-    this.http.post(`${this.goodCommonUrl}/users/user`,`
+    this.http.post(`${this.commonUrl}/users/user`,`
     {
       "data": {
         "USER_": "${username}",
@@ -205,18 +201,17 @@ export class LogService {
 
   
 
-  deleteUser(user: UserServer) {
-    let deleteBody = this.deleteBody(user.username);
-    let bearer = localStorage.getItem("Token");
-    this.closeSession();
+  deleteUser(username: string, password: string) {
+    /**Asks the server to delete the user corresponding to the username and password in the input */
+    let deleteBody = this.deleteBody(username);
+    let basic = 'Basic ' + btoa(`${username}:${password}`);
 
-    this.http.request(new HttpRequest("DELETE", `${this.goodCommonUrl}/users/user`, deleteBody, {
+    this.http.request(new HttpRequest("DELETE", `${this.commonUrl}/users/user`, deleteBody, {
       headers: new HttpHeaders({
         'Content-Type': "application/json",
-        'Authorization': bearer
+        'Authorization': basic
       })
-    })).subscribe(rx => {
-      console.log("Deleted");
+    })).subscribe(() => {
       this.snackBar.open( `The user has been deleted`, "Ok", {
         duration: 2500
       });
@@ -225,8 +220,9 @@ export class LogService {
 
 
   }
+
   deleteBody(username: string): string {
-  //The service is always going to delete the current logged in user, no matter what the body contains
+  /**The service is always going to delete the current logged in user, no matter what the body contains*/
     return `{
        "filter": {
          "USER_": "` + username + `"
@@ -235,13 +231,14 @@ export class LogService {
   }
 
   updatePassword(password: string){
-    this.http.post(`${this.goodCommonUrl}/users/updatePassword`,`{ "PASSWORD" : "${password}"}`).subscribe(res => {
+    /**Updates current user password */
+    this.http.post(`${this.commonUrl}/users/updatePassword`,`{ "PASSWORD" : "${password}"}`).subscribe(() => {
       this.snackBar.open( `Password changed`, "Ok", {
         duration: 2500
       });
-    }, err => {
+    }, () => {
       console.log("Something went wrong when changing the password");
     });
   }
 }
-/* This service interacts with the Ontimize Server, with the service of users*/
+/** This service interacts with the Ontimize Server, with the service of users*/
