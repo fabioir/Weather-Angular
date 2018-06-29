@@ -590,7 +590,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -625,13 +625,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:19</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns a chart with Rain and Snow data </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -706,7 +708,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -740,7 +742,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -774,7 +776,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -808,7 +810,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/graphs/rainAndSnow/rain-and-snow.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -828,6 +830,8 @@ import { Chart } from &#x27;chart.js&#x27;;
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
+
+/* This service gets the forecast values formated and returns a rain and snow chart*/
 export class RainAndSnowService {
 
   chart: Chart;
@@ -836,9 +840,9 @@ export class RainAndSnowService {
   dates: string[];
 
   constructor() { }
-
+  /**Returns a chart with Rain and Snow data */
   getRainAndSnowChart(forecast: Array&lt;Forecast&gt;): Chart {
-    /**Returns a chart with Rain and Snow data */
+
     this.rain &#x3D; forecast.map(item &#x3D;&gt; {
       //extracts a Array with numbers indicating the rain forecast l/m^2
       return item.rain;
@@ -895,8 +899,7 @@ export class RainAndSnowService {
     return this.chart;
   }
 }
-
-/* This service gets the forecast values formated and returns a rain and snow chart*/</code></pre>
+</code></pre>
     </div>
 
 </div>

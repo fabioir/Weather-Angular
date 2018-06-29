@@ -588,7 +588,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/weather.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/weather.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -653,13 +653,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/weather.service.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/weather.service.ts:32</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Gets the free forecast by unique ID from OpenWeatherMap API </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -722,13 +724,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/weather.service.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/weather.service.ts:20</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Unique identifier search </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -791,13 +795,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/weather.service.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/weather.service.ts:26</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Search by name, used to get city objects, may lead to missunderstanding with city location </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -878,7 +884,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/weather.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/weather.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -899,6 +905,8 @@ import { Observable, of } from &#x27;rxjs&#x27;
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
+
+/** Service that makes requests to the API &quot;OpenWeather&quot; and return its responses*/
 export class WeatherService {
 
   private weatherURL &#x3D; &#x27;https://api.openweathermap.org/data/2.5/weather?q&#x3D;Vigo&amp;APPID&#x3D;888b7bb3ed5f95fb9894b5c33589e6a6&#x27;;
@@ -907,24 +915,24 @@ export class WeatherService {
 
   constructor(private http: HttpClient) { }
 
+  /**Unique identifier search */
   getWeather(id: string): Observable&lt;Object&gt; {
-    /**Unique identifier search */
     this.weatherURL &#x3D; &#x60;https://api.openweathermap.org/data/2.5/weather?id&#x3D;${id}&amp;APPID&#x3D;888b7bb3ed5f95fb9894b5c33589e6a6&#x60;;
     return this.http.get(this.weatherURL);
   }
+
+  /**Search by name, used to get city objects, may lead to missunderstanding with city location */
   getWeatherByCityName(name: string): Observable&lt;Object&gt; {
-    /**Search by name, used to get city objects, may lead to missunderstanding with city location */
     this.weatherURL &#x3D; &#x60;https://api.openweathermap.org/data/2.5/weather?q&#x3D;${name}&amp;APPID&#x3D;888b7bb3ed5f95fb9894b5c33589e6a6&#x60;;
     return this.http.get(this.weatherURL);
   }
 
+  /**Gets the free forecast by unique ID from OpenWeatherMap API */
   getForecast(id: string): Observable&lt;Object&gt; {
-    /**Gets the free forecast by unique ID from OpenWeatherMap API */
     this.weatherURL &#x3D; &#x60;https://api.openweathermap.org/data/2.5/forecast?id&#x3D;${id}&amp;APPID&#x3D;888b7bb3ed5f95fb9894b5c33589e6a6&#x60;;
     return this.http.get(this.weatherURL);
   }
-}
-/** Service that makes requests to the API &quot;OpenWeather&quot; and return its responses*/</code></pre>
+}</code></pre>
     </div>
 
 </div>

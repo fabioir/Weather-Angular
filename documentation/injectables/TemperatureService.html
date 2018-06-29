@@ -593,7 +593,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -628,13 +628,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:21</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns a chart with temperatures data </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -709,7 +711,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -743,7 +745,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -777,7 +779,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -811,7 +813,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -845,7 +847,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/graphs/temperature/temperature.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -865,6 +867,8 @@ import { Chart } from &#x27;chart.js&#x27;;
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
+
+/* This service gets the forecast values formated and returns a temperature chart*/
 export class TemperatureService {
 
   chart: Chart;
@@ -875,6 +879,7 @@ export class TemperatureService {
 
   constructor() { }
 
+  /**Returns a chart with temperatures data */
   getTemperatureChart(forecast: Array&lt;Forecast&gt;): Chart {
 
     this.temperatures &#x3D; forecast.map(item &#x3D;&gt; {
@@ -947,8 +952,7 @@ export class TemperatureService {
   }
 
 }
-
-/* This service gets the forecast values formated and returns a temperature chart*/</code></pre>
+</code></pre>
     </div>
 
 </div>

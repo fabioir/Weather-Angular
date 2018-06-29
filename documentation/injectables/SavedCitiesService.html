@@ -596,7 +596,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/saved-cities.service.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/saved-cities.service.ts:17</a></div>
                             </td>
                         </tr>
 
@@ -631,13 +631,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/saved-cities.service.ts:55</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/saved-cities.service.ts:59</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Removes cities list data from local Storage and updates the component&#39;s city list emmiting a Observable with the list empty </p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -669,13 +671,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/saved-cities.service.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/saved-cities.service.ts:28</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Gets the cities list from the localStorage and launches an Observable through updated</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/SavedCity.html" target="_self" >SavedCity[]</a></code>
@@ -707,13 +711,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/saved-cities.service.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/saved-cities.service.ts:23</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns an Observable that emits new values of the Saved cities List </p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/SavedCity.html" target="_self" >Observable&lt;SavedCity[]&gt;</a></code>
@@ -745,13 +751,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/saved-cities.service.ts:41</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/saved-cities.service.ts:45</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Includes a non existing city in the list and updates the localStorage cities list </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -826,7 +834,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/saved-cities.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/saved-cities.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -860,7 +868,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/saved-cities.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/saved-cities.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -893,7 +901,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/saved-cities.service.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/saved-cities.service.ts:17</a></div>
                             </td>
                         </tr>
 
@@ -915,24 +923,27 @@ import { Observable, Subject } from &#x27;rxjs&#x27;
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
+
+/** This service manages the list of cities saved in the local storage.
+Returns an Observable with changes in the cities list an can modify or delete the list*/
 export class SavedCitiesService {
 
-  cities : SavedCity[];
-  city : SavedCity;
+  cities: SavedCity[];
+  city: SavedCity;
   updated &#x3D; new Subject();
 
 
   constructor() { }
 
-  getUpdates(): Observable&lt;SavedCity[]&gt;{
-    /**Returns an Observable that emits new values of the Saved cities List */
-    return &lt;Observable&lt;SavedCity[]&gt;&gt; this.updated.asObservable();
+  /**Returns an Observable that emits new values of the Saved cities List */
+  getUpdates(): Observable&lt;SavedCity[]&gt; {
+    return &lt;Observable&lt;SavedCity[]&gt;&gt;this.updated.asObservable();
   }
 
+  /**Gets the cities list from the localStorage and launches an Observable through updated*/
   getSavedCities(): SavedCity[] {
-    /**Gets the cities list from the localStorage and launches an Observable through updated*/
     this.cities &#x3D; [];
-    if(JSON.parse(localStorage.getItem(&quot;favouriteCities&quot;)) &#x3D;&#x3D;&#x3D; null){ //if there are no cities in the local storage
+    if (JSON.parse(localStorage.getItem(&quot;favouriteCities&quot;)) &#x3D;&#x3D;&#x3D; null) { //if there are no cities in the local storage
       this.updated.next(this.cities); //return cities &#x3D; [] from the Observable
       return [];
     }
@@ -942,35 +953,31 @@ export class SavedCitiesService {
       this.updated.next(this.cities); //Return Array&lt;SavedCity&gt; from the Observable
       return this.cities;
     });
-    
-   return this.cities; //Never reaches this instruction? Yes, surpridingly it does, and everything crashed when I commented it
+
+    return this.cities; //Never reaches this instruction? Yes, surpridingly it does, and everything crashed when I commented it
   }
 
-  save(cityToSave : SavedCity){
-    /**Includes a non existing city in the list and updates the localStorage cities list */
-    if(
+  /**Includes a non existing city in the list and updates the localStorage cities list */
+  save(cityToSave: SavedCity) {
+    if (
       this.cities.find(city &#x3D;&gt; city.id &#x3D;&#x3D;&#x3D; cityToSave.id) &#x3D;&#x3D; undefined
-    ){
-    this.cities.push(cityToSave);
-    localStorage.setItem(&quot;favouriteCities&quot;,JSON.stringify(this.cities));
-    this.updated.next(this.cities); //Metemos cities en el Subject
-  }else{
-    //console.log(&#x27;This city has already been saved&#x27;);
-  }
+    ) {
+      this.cities.push(cityToSave);
+      localStorage.setItem(&quot;favouriteCities&quot;, JSON.stringify(this.cities));
+      this.updated.next(this.cities); //Metemos cities en el Subject
+    } else {
+      //console.log(&#x27;This city has already been saved&#x27;);
+    }
 
   }
 
-  deleteCities(){
-    /**Removes cities list data from local Storage and updates the component&#x27;s city list emmiting a Observable with the list empty */
+  /**Removes cities list data from local Storage and updates the component&#x27;s city list emmiting a Observable with the list empty */
+  deleteCities() {
     localStorage.removeItem(&quot;favouriteCities&quot;);
     this.getSavedCities(); //Send an updated observable with the cities available
   }
- 
-}
- /* 
- This service manages the list of cities saved in the local storage.
- Returns an Observable with changes in the cities list an can modify or delete the list
-  */</code></pre>
+
+}</code></pre>
     </div>
 
 </div>

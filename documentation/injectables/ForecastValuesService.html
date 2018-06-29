@@ -599,7 +599,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/forecast-values.service.ts:34</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/forecast-values.service.ts:40</a></div>
                             </td>
                         </tr>
 
@@ -634,13 +634,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/forecast-values.service.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/forecast-values.service.ts:38</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns the current city </p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/SavedCity.html" target="_self" >SavedCity</a></code>
@@ -672,13 +674,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/forecast-values.service.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/forecast-values.service.ts:18</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns an Observable to get changes in the current forecast values </p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/Forecast.html" target="_self" >Observable&lt;Array&lt;Forecast&gt;&gt;</a></code>
@@ -710,13 +714,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/forecast-values.service.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/forecast-values.service.ts:29</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns the current forecast values </p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="../classes/Forecast.html" target="_self" >Array&lt;Forecast&gt;</a></code>
@@ -748,13 +754,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/forecast-values.service.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/forecast-values.service.ts:34</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Sets the current city (may not be used in the app)</p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -817,13 +825,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/forecast-values.service.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/forecast-values.service.ts:23</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Sets the current forecast values </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -898,7 +908,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/forecast-values.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/forecast-values.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -931,7 +941,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/forecast-values.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/forecast-values.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -964,7 +974,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/forecast-values.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/forecast-values.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -985,38 +995,42 @@ import { SavedCity } from &#x27;./savedCity&#x27;;
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
+
+/**Simply stores and shares updates of the forecast values used in the current moment in the application*/
 export class ForecastValuesService {
 
   forecastValues &#x3D; Array&lt;Forecast&gt;();
   updated &#x3D; new Subject();
   city: SavedCity;
 
-  getUpdates(): Observable&lt;Array&lt;Forecast&gt;&gt;{
-    return &lt;Observable&lt;Array&lt;Forecast&gt;&gt;&gt; this.updated.asObservable();
+  /**Returns an Observable to get changes in the current forecast values */
+  getUpdates(): Observable&lt;Array&lt;Forecast&gt;&gt; {
+    return &lt;Observable&lt;Array&lt;Forecast&gt;&gt;&gt;this.updated.asObservable();
   }
 
+  /**Sets the current forecast values */
   setValues(values: Array&lt;Forecast&gt;) {
     this.forecastValues &#x3D; values;
     this.updated.next(this.forecastValues);
   }
 
+  /**Returns the current forecast values */
   getValues(): Array&lt;Forecast&gt; {
     return this.forecastValues;
   }
 
-  setCity(city: SavedCity){
+  /**Sets the current city (may not be used in the app)*/
+  setCity(city: SavedCity) {
     this.city &#x3D; city;
   }
-
-  getCity(): SavedCity{
+  /**Returns the current city */
+  getCity(): SavedCity {
     return this.city;
   }
-  
+
   constructor() { }
 }
-
-//Simply stores and shares updates of the forecast values used in the current moment in the application
- </code></pre>
+</code></pre>
     </div>
 
 </div>

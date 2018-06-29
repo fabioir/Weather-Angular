@@ -590,7 +590,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:86</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:89</a></div>
                             </td>
                         </tr>
 
@@ -625,13 +625,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:18</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns a chart with Clouds and Wind data </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -706,7 +708,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -740,7 +742,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -774,7 +776,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -808,7 +810,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/graphs/cloudsAndWind/clouds-and-wind.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -828,6 +830,8 @@ import { Chart } from &#x27;chart.js&#x27;;
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
+
+/** This service gets the forecast values formated and returns a clouds and wind chart*/
 export class CloudsAndWindService {
 
   chart: Chart;
@@ -835,8 +839,9 @@ export class CloudsAndWindService {
   clouds: number[];
   dates: string[];
 
+  /**Returns a chart with Clouds and Wind data */
   getCloudsAndWindChart(forecast: Array&lt;Forecast&gt;): Chart {
-    /**Returns a chart with Clouds and Wind data */
+
     this.clouds &#x3D; forecast.map(item &#x3D;&gt; {
       //extracts a Array with numbers indicating the clouds percentage
       return item.clouds.all;
@@ -909,8 +914,7 @@ export class CloudsAndWindService {
   }
 
   constructor() { }
-}
-/** This service gets the forecast values formated and returns a clouds and wind chart*/</code></pre>
+}</code></pre>
     </div>
 
 </div>

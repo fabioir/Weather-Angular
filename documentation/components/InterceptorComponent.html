@@ -615,7 +615,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/interceptor/interceptor.component.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/interceptor/interceptor.component.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -684,7 +684,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/interceptor/interceptor.component.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/interceptor/interceptor.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -760,6 +760,7 @@ import { LogService } from &#x27;../log.service&#x27;
   templateUrl: &#x27;./interceptor.component.html&#x27;,
   styleUrls: [&#x27;./interceptor.component.css&#x27;]
 })
+/**This component intercepts every outgoing http requests and filters them to perform changes. The most important, adding the current token. */
 export class InterceptorComponent implements HttpInterceptor {
 
   constructor(private auth: LogService) { }
@@ -785,8 +786,7 @@ export class InterceptorComponent implements HttpInterceptor {
     return next.handle(request);
   }
 
-}
-/**This component intercepts every outgoing http requests and filters them to perform changes. The most important, adding the current token. */</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">

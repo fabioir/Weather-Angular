@@ -537,7 +537,6 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule, Routes } from &#x27;@angular/router&#x27;;
 import { InitialComponent } from &#x27;./initial/initial.component&#x27;;
 import { CityComponent } from &#x27;./city/city.component&#x27;;
@@ -568,10 +567,8 @@ const routes: Routes &#x3D; [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
-/*
-This is the routing module. It is responsible for the navigation across the different components, redirecting the application to the right one for each URL.
-*/</code></pre>
+/**This is the routing module. It is responsible for the navigation across the different components, redirecting the application to the right one for each URL.*/
+export class AppRoutingModule { }</code></pre>
     </div>
 </div>
 

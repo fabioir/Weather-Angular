@@ -638,7 +638,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/new-user/new-user.component.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/new-user/new-user.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -719,13 +719,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/new-user/new-user.component.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/new-user/new-user.component.ts:28</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Creates the form with its Validators</p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -757,7 +759,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/new-user/new-user.component.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/new-user/new-user.component.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -795,13 +797,15 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/new-user/new-user.component.ts:37</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/new-user/new-user.component.ts:39</a></div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Checks if the form is valid and asks the log service to create a new user </p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -845,7 +849,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/new-user/new-user.component.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/new-user/new-user.component.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -879,7 +883,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/new-user/new-user.component.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/new-user/new-user.component.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -902,6 +906,7 @@ import { LogService } from &#x27;../log.service&#x27;;
   templateUrl: &#x27;./new-user.component.html&#x27;,
   styleUrls: [&#x27;./new-user.component.css&#x27;]
 })
+/** This component simply launches a form to ask the log service to create a new user with the info adquired in the form */
 export class NewUserComponent implements OnInit {
 
 
@@ -917,8 +922,8 @@ export class NewUserComponent implements OnInit {
     this.launchForm();
   }
 
+  /**Creates the form with its Validators*/
   launchForm() {
-    /**Creates the form with its Validators*/
     this.form &#x3D; this.formBuilder.group({
       username: [&#x27;&#x27;, Validators.compose([Validators.minLength(5), Validators.maxLength(20), Validators.required])],
       password: [&#x27;&#x27;, Validators.compose([Validators.minLength(5), Validators.maxLength(25), Validators.required])],
@@ -928,8 +933,8 @@ export class NewUserComponent implements OnInit {
       });
   }
 
+  /**Checks if the form is valid and asks the log service to create a new user */
   submit() {
-    /**Checks if the form is valid and asks the log service to create a new user */
     if (this.form.valid) {
 
       this.logService.createUser(this.form.value.username, this.form.value.password);
@@ -940,8 +945,8 @@ export class NewUserComponent implements OnInit {
   }
 }
 
+/**Validates that the password has been repeated correctly*/
 export class PasswordValidation {
-  /**Validates that the password has been repeated correctly*/
   static MatchPassword(AC: AbstractControl) {
     let p1 &#x3D; AC.get(&#x27;password&#x27;);
     let p2 &#x3D; AC.get(&#x27;password2&#x27;);
@@ -952,8 +957,7 @@ export class PasswordValidation {
     }
 
   }
-}
-/** This component simply launches a form to ask the log service to create a new user with the info adquired in the form */</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">

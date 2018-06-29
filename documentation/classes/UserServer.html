@@ -529,6 +529,13 @@
             <code>src/app/userServer.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>This is a class to manage User&#39;s information </p>
+
+            </p>
 
 
 
@@ -820,6 +827,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Returns a string displaying the user information </p>
+</div>
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
@@ -858,6 +867,8 @@
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Fills from a unique string (as stored in DB) an Array of strings containing IDs </p>
+</div>
 
                             <div class="io-description">
                                     <b>Parameters :</b>
@@ -910,36 +921,32 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { SavedCity } from &quot;./savedCity&quot;;
-
+/**This is a class to manage User&#x27;s information */
 export class UserServer {
-    username : string;
-    password : string;
-    favouriteCities : string;
-    citiesId : Array&lt;string&gt;;
-    citiesList : Array&lt;SavedCity&gt;;
+    username: string;
+    password: string;
+    favouriteCities: string;
+    citiesId: Array&lt;string&gt;;
+    citiesList: Array&lt;SavedCity&gt;;
 
-    constructor(){}
-    
+    constructor() { }
 
-    display(): string{
+    /**Returns a string displaying the user information */
+    display(): string {
         return &quot;Username: &quot; + this.username + &quot;\nPassword: &quot; + this.password + &quot;\nCities ids: &quot; + this.citiesId;
     }
-
-    setFromList(list : Array&lt;SavedCity&gt;){
+    /**Fills from a unique string (as stored in DB) an Array of strings containing IDs */
+    setFromList(list: Array&lt;SavedCity&gt;) {
         this.favouriteCities &#x3D; list.map(item &#x3D;&gt; item.id).join(&#x27;,&#x27;);
     }
 }
 
-
-
-
-//New
 export class CitiesResponse {
-    data : Array&lt;CitiesResponseUnit&gt;;
+    data: Array&lt;CitiesResponseUnit&gt;;
 }
 
 export class CitiesResponseUnit {
-    CITIES : string;
+    CITIES: string;
 }</code></pre>
     </div>
 </div>
