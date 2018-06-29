@@ -107,13 +107,13 @@ export class InitialComponent implements OnInit {
 
     this.getCity(); //Asks the API
 
-    //Search in the cities.JSON is enabled. It produces a performance leakage
-    if ((this.city.length > 0) && (this.citiesList !== undefined)) {
+    //Search in the cities.JSON is disabled. It produces a performance leakage
+  /*  if ((this.city.length > 0) && (this.citiesList !== undefined)) {
       this.foundCities = this.citiesList.filter(element => {
 
         return (element.name.includes(this.city));
       });
-    }
+    }*/
 
 
     //Search in the dataBase through the server Ontimize EE
